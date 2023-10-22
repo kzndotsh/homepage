@@ -11,6 +11,8 @@ import clsx from 'clsx'
 import { Container } from '@/components/Container'
 import avatarImage from '@/images/avatar.jpg'
 
+import DropdownMenu from './DropdownMenu'
+
 function CloseIcon(props) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
@@ -417,6 +419,9 @@ export function Header() {
               <div className="flex justify-end md:flex-1">
                 <div className="pointer-events-auto">
                   <ThemeToggle />
+                </div>
+                <div className="pointer-events-auto">
+                  <DropdownMenu />
                 </div>
               </div>
             </div>
