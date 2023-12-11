@@ -32,6 +32,7 @@
     "tailwindcss": "^3.3.3"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.8.2",
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.16",
     "prettier": "^3.0.1",
