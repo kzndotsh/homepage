@@ -21,6 +21,11 @@ function LinkIcon(props) {
   )
 }
 
+// function Tooltip({ name }) {
+//   return (
+//   )
+// }
+
 export const metadata = {
   title: 'Projects',
   description: 'Things I’ve made trying to put my dent in the universe.',
@@ -34,18 +39,33 @@ export default function Projects() {
     >
       <ul
         role="list"
-        className="grid grid-cols-1 gap-x-12 gap-y-16 sm:grid-cols-2 lg:grid-cols-3"
+        className="grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 "
       >
         {projects.map((project) => (
-          <Card as="li" key={project.name}>
-            <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
+          <Card
+            className="bg-secondary rounded-2xl border-2 border-transparent px-6 py-10 hover:border-teal-400/50"
+            as="li"
+            key={project.name}
+          >
+            <div className="dark:bg-accent relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:ring-0">
               {project.logo}
             </div>
-            <h2 className="mt-6 text-base font-semibold text-zinc-800 dark:text-zinc-100">
+            <h2 className="mt-6 text-base font-semibold">
               <Card.Link href={project.link.href}>{project.name}</Card.Link>
             </h2>
             <Card.Description>{project.description}</Card.Description>
-            <p className="relative z-10 mt-6 flex text-sm font-medium text-zinc-400 transition group-hover:text-teal-500 dark:text-zinc-200">
+            <div className="relative z-10 mt-2 flex gap-2 py-3">
+              {project.stack &&
+                project.stack.map((item) => (
+                  <div
+                    key={item.name}
+                    className="dark:bg-accent flex h-8 w-8 items-center justify-center rounded-full bg-white p-1 shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:ring-0"
+                  >
+                    {item.logo}
+                  </div>
+                ))}
+            </div>
+            <p className="relative z-10 mt-6 flex text-sm font-medium transition group-hover:text-teal-500 ">
               <LinkIcon className="h-6 w-6 flex-none" />
               <span className="ml-2">{project.link.label}</span>
             </p>

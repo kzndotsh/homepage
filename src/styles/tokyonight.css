@@ -1,0 +1,23 @@
+:root {
+  /* background colors */
+  --bg-dark: #16161e;
+  --bg-light: #1a1b26;
+  /* commented text */
+  --text-dark: #444b6a;
+  /* hightlighted line number */
+  --text-muted: #737aa2;
+  /* css custom property */
+  --text: #c0caf5;
+  /* syntax highlighting */
+  --pink: #ba3c97;
+  --red-orange: #de5971;
+  --orange: #ff9e64;
+  --yellow: #ffd700;
+  --green: #9ece6a;
+  --blue: #3d59a1;
+  --sky-blue: #7aa2f7;
+  --turquoise: #0db9d7;
+  --light-blue: #7dcfff;
+  --light-purple: #bb9af7;
+  --purple: #9d7cd8;
+}

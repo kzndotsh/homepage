@@ -1,39 +1,71 @@
-import { GitHubIcon } from 'src/components/SocialIcons'
+import { FaGithub, FaReact } from 'react-icons/fa'
+
+import { TbBrandNextjs, TbBrandTailwind, TbMarkdown } from 'react-icons/tb'
+
+import { SiArchlinux, SiMui, SiSupabase, SiVite } from 'react-icons/si'
 
 const projects = [
   {
     name: 'homepage',
-    description: 'Check out the very source code that powers this website.',
-    link: { href: 'https://github.com/kaizensh/homepage', label: 'github.com' },
-    logo: <GitHubIcon />,
+    description:
+      'Check out the very source code that powers this website - base template by Tailwind UI',
+    link: { href: 'https://github.com/kzndotsh/homepage', label: 'github.com' },
+    logo: <FaGithub />,
+    stack: [
+      {
+        name: 'Next.js',
+        logo: <TbBrandNextjs />,
+      },
+      {
+        name: 'Tailwind CSS',
+        logo: <TbBrandTailwind />,
+      },
+      {
+        name: 'MDX',
+        logo: <TbMarkdown />,
+      },
+    ],
   },
   {
-    name: 'dotfiles', 
+    name: 'dotfiles',
     description:
       'My personal dotfiles that I use to make my Arch Linux daily driver feel like home.',
-    link: { href: 'https://github.com/kaizensh/dotfiles', label: 'github.com' },
-    logo: <GitHubIcon />,
+    link: { href: 'https://github.com/kzndotsh/dotfiles', label: 'github.com' },
+    logo: <FaGithub />,
+    stack: [
+      {
+        name: 'Arch Linux',
+        logo: <SiArchlinux />,
+      },
+    ],
   },
   {
-    name: 'HelioStream',
+    name: 'keeptrack',
     description:
-      'Real-time video streaming library, optimized for interstellar transmission.',
-    link: { href: '#', label: 'github.com' },
-    logo: <GitHubIcon />,
-  },
-  {
-    name: 'cosmOS',
-    description:
-      'The operating system that powers our Planetaria space shuttles.',
-    link: { href: '#', label: 'github.com' },
-    logo: <GitHubIcon />,
-  },
-  {
-    name: 'OpenShuttle',
-    description:
-      'The schematics for the first rocket I designed that successfully made it to orbit.',
-    link: { href: '#', label: 'github.com' },
-    logo: <GitHubIcon />,
+      'Simple contact management app built with React, Material UI, Supabase, Vite, and more.',
+    link: {
+      href: 'https://github.com/kzndotsh/keeptrack',
+      label: 'github.com',
+    },
+    logo: <FaGithub />,
+    stack: [
+      {
+        name: 'React',
+        logo: <FaReact />,
+      },
+      {
+        name: 'Material UI',
+        logo: <SiMui />,
+      },
+      {
+        name: 'Supabase',
+        logo: <SiSupabase />,
+      },
+      {
+        name: 'Vite',
+        logo: <SiVite />,
+      },
+    ],
   },
 ]
 

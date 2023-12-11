@@ -38,8 +38,8 @@ function MailIcon(props) {
 
 export const metadata = {
   title: 'About',
-  description:
-    'I’m Spencer Sharp. I live in New York City, where I design the future.',
+  // description:
+  //   'I’m Spencer Sharp. I live in New York City, where I design the future.',
 }
 
 export default function About() {
@@ -57,59 +57,76 @@ export default function About() {
           </div>
         </div>
         <div className="lg:order-first lg:row-span-2">
-          <h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
-            I’m Spencer Sharp. I live in New York City, where I design the
-            future.
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+            Hello 👋
+            <br />
+            my name is Logan.
           </h1>
-          <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
+
+          <div className="mt-6 space-y-7 text-base">
+            <span className="bg-accent inline-flex items-center rounded-md px-2 py-1 text-xs font-medium">
+              Web Developer
+            </span>
             <p>
-              I’ve loved making things for as long as I can remember, and wrote
-              my first program when I was 6 years old, just two weeks after my
-              mom brought home the brand new Macintosh LC 550 that I taught
-              myself to type on.
+              I am a full stack developer with a passion for building things and
+              solving problems through code. My current tech stack includes
+              React, Next.js, Tailwind CSS, Express, Node, Supabase, and other
+              great tools.
             </p>
+
+            <span className="bg-accent inline-flex items-center rounded-md px-2 py-1 text-xs font-medium">
+              Digital Marketer
+            </span>
             <p>
-              The only thing I loved more than computers as a kid was space.
-              When I was 8, I climbed the 40-foot oak tree at the back of our
-              yard while wearing my older sister’s motorcycle helmet, counted
-              down from three, and jumped — hoping the tree was tall enough that
-              with just a bit of momentum I’d be able to get to orbit.
+              Growth is the mission for whatever project is at hand but at the
+              end of the day I genuinely enjoy all things marketing like data
+              analytics, content creation, and SaaS. I previously worked as an
+              event marketer producing events for thousands of attendees.
             </p>
+
+            <span className="bg-accent inline-flex items-center rounded-md px-2 py-1 text-xs font-medium">
+              Systems Engineer
+            </span>
             <p>
-              I spent the next few summers indoors working on a rocket design,
-              while I recovered from the multiple surgeries it took to fix my
-              badly broken legs. It took nine iterations, but when I was 15 I
-              sent my dad’s Blackberry into orbit and was able to transmit a
-              photo back down to our family computer from space.
-            </p>
-            <p>
-              Today, I’m the founder of Planetaria, where we’re working on
-              civilian space suits and manned shuttle kits you can assemble at
-              home so that the next generation of kids really <em>can</em> make
-              it to orbit — from the comfort of their own backyards.
+              I love to dive deep into systems and operations. I am a creative
+              at heart with the mind of an engineer. When working with clients,
+              I dissect complex problems and design innovative solutions through
+              creative outlook and systematic thinking.
             </p>
           </div>
         </div>
         <div className="lg:pl-20">
           <ul role="list">
-            <SocialLink href="#" icon={TwitterIcon}>
+            <SocialLink href="https://twitter.com/kzndotsh" icon={TwitterIcon}>
               Follow on Twitter
             </SocialLink>
-            <SocialLink href="#" icon={InstagramIcon} className="mt-4">
+            <SocialLink
+              href="https://instagram.com/growwithlogan"
+              icon={InstagramIcon}
+              className="mt-4"
+            >
               Follow on Instagram
             </SocialLink>
-            <SocialLink href="#" icon={GitHubIcon} className="mt-4">
+            <SocialLink
+              href="https://github.com/kzndotsh"
+              icon={GitHubIcon}
+              className="mt-4"
+            >
               Follow on GitHub
             </SocialLink>
-            <SocialLink href="#" icon={LinkedInIcon} className="mt-4">
+            <SocialLink
+              href="https://linkedin.com/in/growwithlogan"
+              icon={LinkedInIcon}
+              className="mt-4"
+            >
               Follow on LinkedIn
             </SocialLink>
             <SocialLink
-              href="mailto:spencer@planetaria.tech"
+              href="mailto:me@kzn.sh"
               icon={MailIcon}
               className="mt-8 border-t border-zinc-100 pt-8 dark:border-zinc-700/40"
             >
-              spencer@planetaria.tech
+              me@kzn.sh
             </SocialLink>
           </ul>
         </div>

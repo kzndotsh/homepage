@@ -9,7 +9,7 @@ import { Popover, Transition } from '@headlessui/react'
 import clsx from 'clsx'
 
 import { Container } from '@/components/Container'
-import avatarImage from '@/images/avatar.jpg'
+import avatarImage from '@/images/photos/avatar.png'
 
 import DropdownMenu from './DropdownMenu'
 
@@ -127,10 +127,10 @@ function MobileNavigation(props) {
             <nav className="mt-6">
               <ul className="-my-2 divide-y divide-zinc-100 text-base text-zinc-800 dark:divide-zinc-100/5 dark:text-zinc-300">
                 <MobileNavItem href="/about">About</MobileNavItem>
-                <MobileNavItem href="/articles">Articles</MobileNavItem>
+                {/* <MobileNavItem href="/articles">Articles</MobileNavItem> */}
                 <MobileNavItem href="/projects">Projects</MobileNavItem>
-                <MobileNavItem href="/speaking">Speaking</MobileNavItem>
-                <MobileNavItem href="/uses">Uses</MobileNavItem>
+                {/* <MobileNavItem href="/speaking">Speaking</MobileNavItem>
+                <MobileNavItem href="/uses">Uses</MobileNavItem> */}
               </ul>
             </nav>
           </Popover.Panel>
@@ -156,7 +156,7 @@ function NavItem({ href, children }) {
       >
         {children}
         {isActive && (
-          <span className="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-teal-500/0 via-teal-500/40 to-teal-500/0 dark:from-teal-400/0 dark:via-teal-400/40 dark:to-teal-400/0" />
+          <span className="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-teal-400/0 via-teal-400/50 to-teal-400/0 dark:from-teal-400/0 dark:via-teal-400/50 dark:to-teal-400/0" />
         )}
       </Link>
     </li>
@@ -166,12 +166,13 @@ function NavItem({ href, children }) {
 function DesktopNavigation(props) {
   return (
     <nav {...props}>
-      <ul className="flex rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
+      <ul className="bg-secondary flex rounded-full px-3 text-sm font-medium text-zinc-800 dark:text-zinc-200 ">
+        <NavItem href="/">Home</NavItem>
         <NavItem href="/about">About</NavItem>
-        <NavItem href="/articles">Articles</NavItem>
         <NavItem href="/projects">Projects</NavItem>
-        <NavItem href="/speaking">Speaking</NavItem>
-        <NavItem href="/uses">Uses</NavItem>
+        {/* <NavItem href="/articles">Articles</NavItem> 
+         <NavItem href="/speaking">Speaking</NavItem>
+        <NavItem href="/uses">Uses</NavItem> */}
       </ul>
     </nav>
   )
@@ -190,7 +191,7 @@ function ThemeToggle() {
     <button
       type="button"
       aria-label={mounted ? `Switch to ${otherTheme} theme` : 'Toggle theme'}
-      className="group rounded-full bg-white/90 px-3 py-2 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur transition dark:bg-zinc-800/90 dark:ring-white/10 dark:hover:ring-white/20"
+      className="dark:bg-secondary/90 group rounded-full bg-zinc-50/90 px-3 py-2 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur transition dark:ring-white/10 dark:hover:ring-white/20"
       onClick={() => setTheme(otherTheme)}
     >
       <SunIcon className="h-6 w-6 fill-zinc-100 stroke-zinc-500 transition group-hover:fill-zinc-200 group-hover:stroke-zinc-700 dark:hidden [@media(prefers-color-scheme:dark)]:fill-teal-50 [@media(prefers-color-scheme:dark)]:stroke-teal-500 [@media(prefers-color-scheme:dark)]:group-hover:fill-teal-50 [@media(prefers-color-scheme:dark)]:group-hover:stroke-teal-600" />
@@ -412,16 +413,19 @@ export function Header() {
                   </AvatarContainer>
                 )}
               </div>
+
               <div className="flex flex-1 justify-end md:justify-center">
                 <MobileNavigation className="pointer-events-auto md:hidden" />
                 <DesktopNavigation className="pointer-events-auto hidden md:block" />
               </div>
-              <div className="flex justify-end md:flex-1">
-                <div className="pointer-events-auto">
+
+              <div className="flex justify-end gap-3 md:flex-1">
+                {/* <div className="pointer-events-auto">
                   <ThemeToggle />
-                </div>
+                </div> */}
+
                 <div className="pointer-events-auto">
-                  <DropdownMenu />
+                  {/* <DropdownMenu /> */}
                 </div>
               </div>
             </div>
