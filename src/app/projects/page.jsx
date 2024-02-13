@@ -37,39 +37,36 @@ export default function Projects() {
       title="Things I’ve made trying to put my dent in the universe."
       intro="I’ve worked on tons of little projects over the years but these are the ones that I’m most proud of. Many of them are open-source, so if you see something that piques your interest, check out the code and contribute if you have ideas for how it can be improved."
     >
-      <ul
-        role="list"
-        className="grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 "
-      >
+      <ul className="grid grid-cols-1 gap-x-2 gap-y-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 ">
         {projects.map((project) => (
-          <Card
-            className="bg-secondary rounded-2xl border-2 border-transparent px-6 py-10 hover:border-teal-400/50"
-            as="li"
-            key={project.name}
-          >
-            <div className="dark:bg-accent relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:ring-0">
-              {project.logo}
-            </div>
-            <h2 className="mt-6 text-base font-semibold">
-              <Card.Link href={project.link.href}>{project.name}</Card.Link>
-            </h2>
-            <Card.Description>{project.description}</Card.Description>
-            <div className="relative z-10 mt-2 flex gap-2 py-3">
-              {project.stack &&
-                project.stack.map((item) => (
-                  <div
-                    key={item.name}
-                    className="dark:bg-accent flex h-8 w-8 items-center justify-center rounded-full bg-white p-1 shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:ring-0"
-                  >
-                    {item.logo}
-                  </div>
-                ))}
-            </div>
-            <p className="relative z-10 mt-6 flex text-sm font-medium transition group-hover:text-teal-500 ">
-              <LinkIcon className="h-6 w-6 flex-none" />
-              <span className="ml-2">{project.link.label}</span>
-            </p>
-          </Card>
+          <div key={project} className="">
+            <Card
+              className="flex min-h-[200px] flex-col justify-between rounded-2xl border-2 border-transparent bg-secondary px-4 py-4 hover:border-teal-400/50"
+              as="li"
+              key={project.name}
+            >
+              <div>
+                <h2 className="text-base font-semibold">
+                  <Card.Link href={project.link.href}>{project.name}</Card.Link>
+                </h2>
+                <Card.Description>{project.description}</Card.Description>
+                <div className="relative z-10 mt-2 flex gap-2 py-3">
+                  {project.stack?.map((item) => (
+                    <div
+                      key={item.name}
+                      className="flex h-8 w-8 items-center justify-center rounded-full bg-white p-1 shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-accent dark:ring-0"
+                    >
+                      {item.logo}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <p className="relative z-10 mt-4 flex text-sm font-medium transition group-hover:text-teal-500 ">
+                <LinkIcon className="h-6 w-6 flex-none" />
+                <span className="ml-2">{project.link.label}</span>
+              </p>
+            </Card>
+          </div>
         ))}
       </ul>
     </SimpleLayout>

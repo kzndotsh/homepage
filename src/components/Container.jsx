@@ -7,7 +7,7 @@ export const ContainerOuter = forwardRef(function OuterContainer(
 ) {
   return (
     <div ref={ref} className={clsx('sm:px-8', className)} {...props}>
-      <div className="mx-auto w-full max-w-7xl lg:px-8">{children}</div>
+      <div className="max-w-8xl mx-auto w-full lg:px-10">{children}</div>
     </div>
   )
 })
@@ -22,7 +22,7 @@ export const ContainerInner = forwardRef(function InnerContainer(
       className={clsx('relative px-4 sm:px-8 lg:px-12', className)}
       {...props}
     >
-      <div className="mx-auto max-w-2xl lg:max-w-5xl">{children}</div>
+      <div className="mx-auto max-w-2xl lg:max-w-7xl">{children}</div>
     </div>
   )
 })

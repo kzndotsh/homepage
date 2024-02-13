@@ -1,11 +1,11 @@
 'use client'
-
 import { createContext, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import { ThemeProvider, useTheme } from 'next-themes'
 
+// Custom hook to get the previous value of a prop or state
 function usePrevious(value) {
-  let ref = useRef()
+  const ref = useRef()
 
   useEffect(() => {
     ref.current = value
@@ -14,37 +14,34 @@ function usePrevious(value) {
   return ref.current
 }
 
+// Component to watch for system theme changes and update accordingly
 function ThemeWatcher() {
-  let { resolvedTheme, setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
 
   useEffect(() => {
-    let media = window.matchMedia('(prefers-color-scheme: dark)')
-
-    function onMediaChange() {
-      let systemTheme = media.matches ? 'dark' : 'light'
-      if (resolvedTheme === systemTheme) {
-        setTheme('system')
-      } else {
-        setTheme('dark')
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    const syncThemeWithSystem = () => {
+      const systemPrefersDark = mediaQuery.matches
+      const newTheme = systemPrefersDark ? 'dark' : 'light'
+      if (resolvedTheme !== newTheme) {
+        setTheme(systemPrefersDark ? 'dark' : 'light')
       }
     }
 
-    onMediaChange()
-    media.addEventListener('change', onMediaChange)
+    syncThemeWithSystem()
+    mediaQuery.addEventListener('change', syncThemeWithSystem)
 
-    return () => {
-      media.removeEventListener('change', onMediaChange)
-    }
+    return () => mediaQuery.removeEventListener('change', syncThemeWithSystem)
   }, [resolvedTheme, setTheme])
 
   return null
 }
 
-export const AppContext = createContext({})
+export const AppContext = createContext(null)
 
 export function Providers({ children }) {
-  let pathname = usePathname()
-  let previousPathname = usePrevious(pathname)
+  const currentPathname = usePathname()
+  const previousPathname = usePrevious(currentPathname)
 
   return (
     <AppContext.Provider value={{ previousPathname }}>

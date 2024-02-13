@@ -64,7 +64,7 @@ export default function About() {
           </h1>
 
           <div className="mt-6 space-y-7 text-base">
-            <span className="bg-accent inline-flex items-center rounded-md px-2 py-1 text-xs font-medium">
+            <span className="inline-flex items-center rounded-md bg-accent px-2 py-1 text-xs font-medium">
               Web Developer
             </span>
             <p>
@@ -74,7 +74,7 @@ export default function About() {
               great tools.
             </p>
 
-            <span className="bg-accent inline-flex items-center rounded-md px-2 py-1 text-xs font-medium">
+            <span className="inline-flex items-center rounded-md bg-accent px-2 py-1 text-xs font-medium">
               Digital Marketer
             </span>
             <p>
@@ -84,7 +84,7 @@ export default function About() {
               event marketer producing events for thousands of attendees.
             </p>
 
-            <span className="bg-accent inline-flex items-center rounded-md px-2 py-1 text-xs font-medium">
+            <span className="inline-flex items-center rounded-md bg-accent px-2 py-1 text-xs font-medium">
               Systems Engineer
             </span>
             <p>
@@ -101,7 +101,7 @@ export default function About() {
               Follow on Twitter
             </SocialLink>
             <SocialLink
-              href="https://instagram.com/growwithlogan"
+              href="https://instagram.com/kzndotsh"
               icon={InstagramIcon}
               className="mt-4"
             >
@@ -115,18 +115,18 @@ export default function About() {
               Follow on GitHub
             </SocialLink>
             <SocialLink
-              href="https://linkedin.com/in/growwithlogan"
+              href="https://linkedin.com/in/kzndotsh"
               icon={LinkedInIcon}
               className="mt-4"
             >
               Follow on LinkedIn
             </SocialLink>
             <SocialLink
-              href="mailto:me@kzn.sh"
+              href="mailto:logan@kzn.sh"
               icon={MailIcon}
               className="mt-8 border-t border-zinc-100 pt-8 dark:border-zinc-700/40"
             >
-              me@kzn.sh
+              logan@kzn.sh
             </SocialLink>
           </ul>
         </div>

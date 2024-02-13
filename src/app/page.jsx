@@ -5,6 +5,7 @@ import clsx from 'clsx'
 import { Button } from '@/components/Button'
 import { Card } from '@/components/Card'
 import { Container } from '@/components/Container'
+
 import {
   GitHubIcon,
   InstagramIcon,
@@ -91,6 +92,21 @@ function ArrowDownIcon(props) {
   )
 }
 
+// function Article({ article }) {
+//   return (
+//     <Card as="article">
+//       <Card.Title href={`/articles/${article.slug}`}>
+//         {article.title}
+//       </Card.Title>
+//       <Card.Eyebrow as="time" dateTime={article.date} decorate>
+//         {formatDate(article.date)}
+//       </Card.Eyebrow>
+//       <Card.Description>{article.description}</Card.Description>
+//       <Card.Cta>Read article</Card.Cta>
+//     </Card>
+//   )
+// }
+
 function Article({ article }) {
   return (
     <Card as="article">
@@ -144,13 +160,14 @@ function Newsletter() {
 }
 
 function Role({ role }) {
-  let startLabel =
-    typeof role.start === 'string' ? role.start : role.start.label
-  let startDate =
-    typeof role.start === 'string' ? role.start : role.start.dateTime
-
-  let endLabel = typeof role.end === 'string' ? role.end : role.end.label
-  let endDate = typeof role.end === 'string' ? role.end : role.end.dateTime
+  const [startLabel, startDate] =
+    typeof role.start === 'string'
+      ? [role.start, role.start]
+      : [role.start.label, role.start.dateTime]
+  const [endLabel, endDate] =
+    typeof role.end === 'string'
+      ? [role.end, role.end]
+      : [role.end.label, role.end.dateTime]
 
   return (
     <li className="flex gap-4">
@@ -182,27 +199,39 @@ function Role({ role }) {
 
 function Resume() {
   let resume = [
+    // open for hire
     {
-      company: 'Your company name here',
+      company: 'Open for Hire',
       title: 'Full Stack Developer',
       logo: hire,
       start: 'Now',
       end: '🚀',
     },
+    // blackbeard media group
     {
-      company: 'Freelance',
-      title: 'Web3 Community Manager',
-      logo: web3,
+      company: 'Blackbeard Media Group',
+      title: 'System Administrator',
+      logo: logoAirbnb,
       start: '2022',
       end: '2023',
     },
+    // web3
     {
-      company: 'F4mily Matters',
-      title: 'Systems Architect',
-      logo: f4milymatters,
-      start: '2021',
+      company: 'Contractual',
+      title: 'Web3 Community Manager',
+      logo: web3,
+      start: '2022',
       end: '2022',
     },
+    // f4mily matters
+    {
+      company: 'F4mily Matters',
+      title: 'Business Systems Manager',
+      logo: f4milymatters,
+      start: '2014',
+      end: '2021',
+    },
+    // artists at scale
     {
       company: 'Artists at Scale',
       title: 'Founder',
@@ -210,6 +239,7 @@ function Resume() {
       start: '2018',
       end: '2020',
     },
+    // events
     {
       company: 'Self Employed',
       title: 'Event Marketing Specialist',
@@ -230,7 +260,12 @@ function Resume() {
           <Role key={roleIndex} role={role} />
         ))}
       </ol>
-      <Button href="#" variant="secondary" className="group mt-6 w-full">
+      <Button
+        href="/files/resume.pdf"
+        variant="secondary"
+        className="group mt-6 w-full"
+        download="resume.pdf"
+      >
         Download CV
         <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
       </Button>
@@ -239,7 +274,13 @@ function Resume() {
 }
 
 function Photos() {
-  let rotations = ['rotate-2', '-rotate-2', 'rotate-2', 'rotate-2', '-rotate-2']
+  const rotations = [
+    'rotate-2',
+    '-rotate-2',
+    'rotate-2',
+    'rotate-2',
+    '-rotate-2',
+  ]
 
   return (
     <div className="mt-16 sm:mt-20">
