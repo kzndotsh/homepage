@@ -13,16 +13,13 @@ import {
   TwitterIcon,
 } from '@/components/SocialIcons'
 
-import logoAirbnb from '@/images/logos/airbnb.svg'
-import logoFacebook from '@/images/logos/facebook.svg'
-import logoPlanetaria from '@/images/logos/planetaria.svg'
-import logoStarbucks from '@/images/logos/starbucks.svg'
-
 import artistsatscale from '@/images/logos/artistsatscale.svg'
 import f4milymatters from '@/images/logos/f4milymatters.svg'
 import web3 from '@/images/logos/web3.svg'
 import hire from '@/images/logos/hire.svg'
 import events from '@/images/logos/events.svg'
+import smile from '@/images/logos/smile.svg'
+import tv from '@/images/logos/tv.svg'
 
 import image1 from '@/images/photos/image-1.jpg'
 import image2 from '@/images/photos/image-2.jpg'
@@ -209,9 +206,17 @@ function Resume() {
     },
     // blackbeard media group
     {
+      company: 'PrintBliss',
+      title: 'Low Code Developer',
+      logo: smile,
+      start: '2023',
+      end: '2024',
+    },
+    // blackbeard media group
+    {
       company: 'Blackbeard Media Group',
       title: 'System Administrator',
-      logo: logoAirbnb,
+      logo: tv,
       start: '2022',
       end: '2023',
     },
@@ -329,7 +334,7 @@ export default async function Home() {
               icon={TwitterIcon}
             />
             <SocialLink
-              href="https://instagram.com"
+              href="https://instagram.com/kzndotsh"
               aria-label="Follow on Instagram"
               icon={InstagramIcon}
             />
@@ -339,7 +344,7 @@ export default async function Home() {
               icon={GitHubIcon}
             />
             <SocialLink
-              href="https://linkedin.com/growwithlogan"
+              href="https://linkedin.com/kzndotsh"
               aria-label="Follow on LinkedIn"
               icon={LinkedInIcon}
             />
