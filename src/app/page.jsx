@@ -223,7 +223,7 @@ function Resume() {
     // web3
     {
       company: 'Contractual',
-      title: 'Web3 Community Manager',
+      title: 'Web3 Community Consultant',
       logo: web3,
       start: '2022',
       end: '2022',
@@ -231,7 +231,7 @@ function Resume() {
     // f4mily matters
     {
       company: 'F4mily Matters',
-      title: 'Business Systems Manager',
+      title: 'Lead Solutions Architect',
       logo: f4milymatters,
       start: '2014',
       end: '2021',
