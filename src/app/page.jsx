@@ -20,6 +20,7 @@ import hire from '@/images/logos/hire.svg'
 import events from '@/images/logos/events.svg'
 import smile from '@/images/logos/smile.svg'
 import tv from '@/images/logos/tv.svg'
+import arch from '@/images/logos/arch.svg'
 
 import image1 from '@/images/photos/image-1.jpg'
 import image2 from '@/images/photos/image-2.jpg'
@@ -204,53 +205,61 @@ function Resume() {
       start: 'Now',
       end: '🚀',
     },
-    // blackbeard media group
+    // all things linux
     {
-      company: 'PrintBliss',
-      title: 'Low Code Developer',
+      company: 'All Things Linux',
+      title: 'Founder',
+      logo: arch,
+      start: 'Nov 2023',
+      end: 'Present',
+    },
+    // globallogic
+    {
+      company: 'GlobalLogic',
+      title: 'Senior Software Engineer',
       logo: smile,
-      start: '2023',
-      end: '2024',
+      start: 'Dec 2023',
+      end: 'Feb 2025',
+    },
+    // f4mily matters
+    {
+      company: 'F4mily Matters',
+      title: 'Software Engineer / Solutions Architect',
+      logo: f4milymatters,
+      start: 'Oct 2021',
+      end: 'Nov 2023',
     },
     // blackbeard media group
     {
       company: 'Blackbeard Media Group',
       title: 'System Administrator',
       logo: tv,
-      start: '2022',
-      end: '2023',
+      start: 'Oct 2018',
+      end: 'Dec 2020',
     },
-    // web3
+    // web3 community consultant
     {
-      company: 'Contractual',
+      company: 'Freelance',
       title: 'Web3 Community Consultant',
       logo: web3,
-      start: '2022',
-      end: '2022',
+      start: 'Jan 2022',
+      end: 'Apr 2022',
     },
-    // f4mily matters
+    // epam
     {
-      company: 'F4mily Matters',
-      title: 'Lead Solutions Architect',
-      logo: f4milymatters,
-      start: '2014',
-      end: '2021',
+      company: 'EPAM',
+      title: 'Junior Web Developer',
+      logo: web3,
+      start: 'Jan 2015',
+      end: 'Dec 2017',
     },
-    // artists at scale
+    // event marketing specialist
     {
-      company: 'Artists at Scale',
-      title: 'Founder',
-      logo: artistsatscale,
-      start: '2018',
-      end: '2020',
-    },
-    // events
-    {
-      company: 'Self Employed',
+      company: 'Self-employed',
       title: 'Event Marketing Specialist',
       logo: events,
-      start: '2013',
-      end: '2017',
+      start: 'Oct 2013',
+      end: 'Dec 2017',
     },
   ]
 

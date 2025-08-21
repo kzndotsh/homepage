@@ -37,11 +37,11 @@ export default function Projects() {
       title="Things I’ve made trying to put my dent in the universe."
       intro="I’ve worked on tons of little projects over the years but these are the ones that I’m most proud of. Many of them are open-source, so if you see something that piques your interest, check out the code and contribute if you have ideas for how it can be improved."
     >
-      <ul className="grid grid-cols-1 gap-x-2 gap-y-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 ">
+      <ul className="grid grid-cols-1 gap-x-2 gap-y-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 ">
         {projects.map((project) => (
-          <div key={project} className="">
+          <div key={project} className="h-full">
             <Card
-              className="flex min-h-[200px] flex-col justify-between rounded-2xl border-2 border-transparent bg-secondary px-4 py-4 hover:border-teal-400/50"
+              className="flex h-full min-h-[200px] flex-col justify-between rounded-2xl border-2 border-transparent bg-secondary px-4 py-4 hover:border-teal-400/50"
               as="li"
               key={project.name}
             >
