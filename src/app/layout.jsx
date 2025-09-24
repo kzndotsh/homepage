@@ -18,7 +18,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="h-full antialiased" suppressHydrationWarning>
+    <html lang="en" className="dark h-full antialiased" suppressHydrationWarning>
       <body className="dark:text-lightText text-darkText dark:bg-darkBackground bg-lightBackground flex h-full">
         <Providers>
           <div className="flex w-full">
