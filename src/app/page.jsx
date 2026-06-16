@@ -5,6 +5,7 @@ import clsx from 'clsx'
 import { Button } from '@/components/Button'
 import { Card } from '@/components/Card'
 import { Container } from '@/components/Container'
+import ActivityStats from '@/components/ActivityStats'
 
 import {
   GitHubIcon,
@@ -197,70 +198,48 @@ function Role({ role }) {
 
 function Resume() {
   let resume = [
-    // open for hire
     {
-      company: 'Open for Hire',
-      title: 'Full Stack Developer',
+      company: 'Doji',
+      title: 'Co-Founder & Full-Stack Engineer',
       logo: hire,
-      start: 'Now',
-      end: '🚀',
-    },
-    // all things linux
-    {
-      company: 'All Things Linux',
-      title: 'Founder',
-      logo: arch,
-      start: 'Nov 2023',
+      start: 'Feb 2026',
       end: 'Present',
     },
-    // globallogic
     {
-      company: 'GlobalLogic',
-      title: 'Senior Software Engineer',
+      company: 'All Things Linux',
+      title: 'Founder & Full-Stack Engineer',
+      logo: arch,
+      start: 'Nov 2023',
+      end: 'May 2026',
+    },
+    {
+      company: 'BloxMania',
+      title: 'Shopify Developer (contract)',
       logo: smile,
-      start: 'Dec 2023',
-      end: 'Feb 2025',
+      start: 'Jul 2025',
+      end: 'Aug 2025',
     },
-    // f4mily matters
     {
-      company: 'F4mily Matters',
-      title: 'Software Engineer / Solutions Architect',
+      company: 'PrintBliss',
+      title: 'Solutions Engineer (contract)',
       logo: f4milymatters,
-      start: 'Oct 2021',
-      end: 'Nov 2023',
+      start: 'Dec 2023',
+      end: 'Aug 2024',
     },
-    // blackbeard media group
     {
       company: 'Blackbeard Media Group',
       title: 'System Administrator',
       logo: tv,
-      start: 'Oct 2018',
-      end: 'Dec 2020',
-    },
-    // web3 community consultant
-    {
-      company: 'Freelance',
-      title: 'Web3 Community Consultant',
-      logo: web3,
       start: 'Jan 2022',
-      end: 'Apr 2022',
+      end: 'Nov 2023',
     },
-    // epam
-    {
-      company: 'EPAM',
-      title: 'Junior Web Developer',
-      logo: web3,
-      start: 'Jan 2015',
-      end: 'Dec 2017',
-    },
-    // event marketing specialist
-    {
-      company: 'Self-employed',
-      title: 'Event Marketing Specialist',
-      logo: events,
-      start: 'Oct 2013',
-      end: 'Dec 2017',
-    },
+  {
+    company: 'Independent',
+    title: 'Web Developer & Technical Consultant',
+    logo: web3,
+    start: 'Aug 2021',
+    end: 'May 2023',
+  },
   ]
 
   return (
@@ -288,31 +267,31 @@ function Resume() {
 }
 
 function Photos() {
-  const rotations = [
-    'rotate-2',
-    '-rotate-2',
-    'rotate-2',
-    'rotate-2',
-    '-rotate-2',
-  ]
+  const rotations = ['-rotate-2', 'rotate-1', '-rotate-1', 'rotate-2', '-rotate-3']
 
   return (
     <div className="mt-16 sm:mt-20">
-      <div className="-my-4 flex justify-center gap-5 overflow-hidden py-4 sm:gap-8">
-        {[image1, image2, image3, image4, image5].map((image, imageIndex) => (
+      <div className="-my-4 flex flex-wrap justify-center gap-6 py-4 sm:gap-8">
+        {[image1, image2, image4, image3].map((image, index) => (
           <div
-            key={image.src}
+            key={index}
             className={clsx(
-              'relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800 sm:w-72 sm:rounded-2xl',
-              rotations[imageIndex % rotations.length],
+              'group relative flex flex-col bg-white p-3 shadow-xl shadow-black/20 transition-transform hover:-translate-y-1 dark:bg-zinc-100',
+              rotations[index % rotations.length],
             )}
           >
-            <Image
-              src={image}
-              alt=""
-              sizes="(min-width: 640px) 18rem, 11rem"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
+            {/* Polaroid frame */}
+            <div className="relative overflow-hidden border border-zinc-200">
+              <Image
+                src={image}
+                alt=""
+                className="h-[260px] w-[240px] object-cover sm:h-[320px] sm:w-[280px]"
+                sizes="(min-width: 640px) 280px, 240px"
+              />
+            </div>
+
+            {/* Caption strip */}
+            <div className="mt-3 h-5 w-full bg-white" />
           </div>
         ))}
       </div>
@@ -364,10 +343,7 @@ export default async function Home() {
       <Container className="mt-24 md:mt-28">
         <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
           <div className="flex flex-col gap-16">
-            {/* {articles.map((article) => (
-              <Article key={article.slug} article={article} />
-            ))} */}
-            {/* <Newsletter /> */}
+            <ActivityStats />
           </div>
           <div className="space-y-10 lg:pl-16 xl:pl-24">
             <Resume />

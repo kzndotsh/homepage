@@ -65,33 +65,24 @@ export default function About() {
 
           <div className="mt-6 space-y-7 text-base">
             <span className="inline-flex items-center rounded-md bg-accent px-2 py-1 text-xs font-medium">
-              Web Developer
+              Full-Stack Engineer
             </span>
             <p>
-              I am a full stack developer with a passion for building things and
-              solving problems through code. My current tech stack includes
-              React, Next.js, Tailwind CSS, Express, Node, Supabase, and other
-              great tools.
+              I love building things and solving problems through code. Most of what I ship these days is TypeScript, React/Next.js, and PostgreSQL. Recent work includes Doji (a Polymarket trading terminal), the ATL platform, and side projects like Chat360 and CoinSwiper.
             </p>
 
             <span className="inline-flex items-center rounded-md bg-accent px-2 py-1 text-xs font-medium">
-              Digital Marketer
+              Solutions &amp; Integrations
             </span>
             <p>
-              Growth is the mission for whatever project is at hand but at the
-              end of the day I genuinely enjoy all things marketing like data
-              analytics, content creation, and SaaS. I previously worked as an
-              event marketer producing events for thousands of attendees.
+              Growth is always the mission, but I genuinely enjoy the systems side too. I’ve built custom ERPs, automation stacks, and client integrations — most recently at PrintBliss and F4mily Matters. I used to do event marketing and growth work, so I still think a lot about how tools actually get used day to day.
             </p>
 
             <span className="inline-flex items-center rounded-md bg-accent px-2 py-1 text-xs font-medium">
-              Systems Engineer
+              Platform &amp; Infrastructure
             </span>
             <p>
-              I love to dive deep into systems and operations. I am a creative
-              at heart with the mind of an engineer. When working with clients,
-              I dissect complex problems and design innovative solutions through
-              creative outlook and systematic thinking.
+              I’m a creative at heart with the mind of an engineer. I love diving deep into systems and operations — Docker fleets, Ansible, observability, self-hosted services. I’ve worked with infrastructure at scale (Blackbeard, ATL) and I enjoy figuring out how things actually work under the hood.
             </p>
           </div>
         </div>

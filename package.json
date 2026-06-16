@@ -29,6 +29,7 @@
     "react-dom": "18.2.0",
     "react-github-user-stats": "^1.0.9",
     "react-icons": "^4.10.1",
+    "react-social-media-embed": "^2.5.18",
     "react-tooltip": "^5.22.0",
     "remark-gfm": "^3.0.1",
     "styled-components": "^6.1.8",

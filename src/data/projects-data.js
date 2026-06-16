@@ -26,6 +26,8 @@ import {
   SiTailwindcss,
   SiAuth0,
   SiFramer,
+  SiRedis,
+  SiSentry,
 } from 'react-icons/si'
 
 const projects = [
@@ -58,7 +60,7 @@ const projects = [
   {
     name: 'Chat360',
     description:
-      'Real-time voice chat platform with Next.js 15, Agora RTC, TypeScript, and Supabase for high-quality audio streaming and party systems.',
+      'Real-time voice party chat — Agora WebRTC (AI denoising, VAD), Supabase auth + realtime presence, Xbox-inspired UI (Next.js 15, TypeScript, Tailwind, shadcn, Zustand).',
     link: {
       href: 'https://github.com/kzndotsh/chat360',
       label: 'github.com',
@@ -87,7 +89,7 @@ const projects = [
   {
     name: 'CoinSwiper',
     description:
-      'Real-time cryptocurrency voting platform with Next.js 15, TypeScript, DexScreener integration, and Prisma with Supabase.',
+      'Full-stack Solana token voting — swipe bullish/bearish on live DexScreener pairs, persisted votes, aggregated leaderboards (Next.js 15, Prisma, TypeScript, shadcn).',
     link: {
       href: 'https://github.com/kzndotsh/coinswiper',
       label: 'github.com',
@@ -107,8 +109,8 @@ const projects = [
         logo: <SiPrisma />,
       },
       {
-        name: 'Supabase',
-        logo: <SiSupabase />,
+        name: 'Tailwind CSS',
+        logo: <SiTailwindcss />,
       },
     ],
   },
@@ -176,7 +178,7 @@ const projects = [
   {
     name: 'tux',
     description:
-      'Open-source Discord bot using Discord.py, coordinating efforts of 30+ contributors with 30,000+ lines of code for community management.',
+      'Open-source Discord bot — moderation cases, XP/leveling, snippets, plugin system (Python, discord.py, SQLModel, PostgreSQL, Redis, ~690 tests, Sentry, Docker).',
     link: {
       href: 'https://github.com/allthingslinux/tux',
       label: 'github.com',
@@ -196,8 +198,12 @@ const projects = [
         logo: <SiPostgresql />,
       },
       {
-        name: 'Github Actions',
-        logo: <SiGithubactions />,
+        name: 'Redis',
+        logo: <SiRedis />,
+      },
+      {
+        name: 'Sentry',
+        logo: <SiSentry />,
       },
     ],
   },
