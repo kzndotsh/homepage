@@ -28,9 +28,36 @@ import {
   SiFramer,
   SiRedis,
   SiSentry,
+  SiSvelte,
+  SiCloudflare,
 } from 'react-icons/si'
 
 const projects = [
+  // gang.guide
+  {
+    name: 'gang.guide',
+    description:
+      'Evidence-backed mapping of criminal organizations across the US — alliances, rivalries, history, and culture. LLM extraction pipeline + interactive Konva canvas (SvelteKit, Python, Cloudflare Workers).',
+    link: {
+      href: 'https://github.com/kzndotsh/gang.guide',
+      label: 'github.com',
+    },
+    logo: <FaGithub />,
+    stack: [
+      {
+        name: 'SvelteKit',
+        logo: <SiSvelte />,
+      },
+      {
+        name: 'Python',
+        logo: <SiPython />,
+      },
+      {
+        name: 'Cloudflare',
+        logo: <SiCloudflare />,
+      },
+    ],
+  },
   // bloxmania
   {
     name: 'BloxMania',
