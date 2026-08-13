@@ -11,6 +11,12 @@
 # next.js
 /.next/
 /out/
+.open-next/
+.wrangler/
+
+# Alchemy state (contains API tokens in plaintext)
+.alchemy/
+wrangler.jsonc
 
 # production
 /build
