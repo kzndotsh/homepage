@@ -1,0 +1,225 @@
+import { type StaticImageData } from 'next/image'
+
+import cratesCover from '@/images/playlists/crates.jpg'
+import deeperCover from '@/images/playlists/deeper.jpg'
+import feelCover from '@/images/playlists/feel.jpg'
+import focusCover from '@/images/playlists/focus.jpg'
+import hustleCover from '@/images/playlists/hustle.jpg'
+import liftedCover from '@/images/playlists/lifted.jpg'
+import lostCover from '@/images/playlists/lost.jpg'
+import massiveCover from '@/images/playlists/massive.jpg'
+import rageCover from '@/images/playlists/rage.jpg'
+import vibesCover from '@/images/playlists/vibes.jpg'
+
+export type Playlist = {
+  name: string
+  genres: string[]
+  href: string
+  cover: StaticImageData
+}
+
+const playlists: Playlist[] = [
+  {
+    name: 'Vibes',
+    href: 'https://open.spotify.com/playlist/03SiC6Yjm4L3IiTojFBiRb',
+    cover: vibesCover,
+    genres: [
+      'Acid Techno',
+      'Ambient',
+      'Analog Techno',
+      'Dark Techno',
+      'Deep House',
+      'Detroit',
+      'Driving Techno',
+      'Experimental',
+      'Hard Techno',
+      'IDM',
+      'Minimal Techno',
+      'Misc',
+      'Proper Techno',
+      'Tech House',
+      'Techno',
+    ],
+  },
+  {
+    name: 'Lifted',
+    href: 'https://open.spotify.com/playlist/58u1JbJuPubgurbxQRnYhx',
+    cover: liftedCover,
+    genres: [
+      'Boom Bap',
+      'Chill',
+      'Conscious Hip Hop',
+      'G Funk',
+      'Gangster Rap',
+      'Indie',
+      'Lyrical Hip Hop',
+      'Motivation Rap',
+      'Stoner Rap',
+    ],
+  },
+  {
+    name: 'Feel',
+    href: 'https://open.spotify.com/playlist/6lV5t652I3wL1yI88A6lE0',
+    cover: feelCover,
+    genres: [
+      'Afrobeat',
+      'Chicago Blues',
+      'Classic Rock',
+      'Down Tempo',
+      'Experimental Jazz',
+      'Funk',
+      'Fusion Jazz',
+      'Indie',
+      'Instrumental',
+      'Jam Bands',
+      'Jazz',
+      'Percussion',
+      'Psychedelic Rock',
+      'Reggae',
+      'Soul',
+      'Spiritual Jazz',
+      'Surf Rock',
+      'Tribal',
+      'World',
+    ],
+  },
+  {
+    name: 'Deeper',
+    href: 'https://open.spotify.com/playlist/3XjYi7ZnShcEMettvXQkQ3',
+    cover: deeperCover,
+    genres: [
+      'Break Beats',
+      'Classic Dubstep',
+      'Deep Dub',
+      'Down Tempo',
+      'Garage',
+      'Grime',
+      'Lounge',
+      'Reggae',
+      'Speed Garage',
+      'UK Dub',
+      'UK Garage',
+      'UK Grime',
+    ],
+  },
+  {
+    name: 'Crates',
+    href: 'https://open.spotify.com/playlist/1tRMcb42H74OdSB10CzsHT',
+    cover: cratesCover,
+    genres: [
+      'Atlanta',
+      'Boom Bap',
+      'Chicago',
+      'Dirty South',
+      'G Funk',
+      'Gangster Rap',
+      'Horrorcore',
+      'Houston',
+      'Memphis',
+      'Mid West',
+      'NY Golden Era',
+      'New Orleans',
+      'Old School Hip Hop',
+    ],
+  },
+  {
+    name: 'Massive',
+    href: 'https://open.spotify.com/playlist/7aRcNN60Bke6q6I8vb0RqG',
+    cover: massiveCover,
+    genres: [
+      'Atmospheric',
+      'Breakcore',
+      'Breaks',
+      'Drum and Bass',
+      'Hardcore',
+      'IDM',
+      'Intelligent',
+      'Jump Up',
+      'Jungle',
+      'Liquid',
+      'Neurofunk',
+      'UK Garage',
+    ],
+  },
+  {
+    name: 'Rage',
+    href: 'https://open.spotify.com/playlist/3jpcawQdX1L7Pe3FkK2l4l',
+    cover: rageCover,
+    genres: [
+      'Alternative',
+      'Classic Rock',
+      'Death Metal',
+      'Emo',
+      'Hardcore',
+      'Heavy Metal',
+      'Indie',
+      'Melodic Hardcore',
+      'Metalcore',
+      'Pop Punk',
+      'Post Hardcore',
+      'Punk',
+      'Screamo',
+      'Swancore',
+      'Thrash Metal',
+    ],
+  },
+  {
+    name: 'Hustle',
+    href: 'https://open.spotify.com/playlist/5GicMZR2cpdXltC5ntmcaj',
+    cover: hustleCover,
+    genres: [
+      'Atlanta',
+      'Club Rap',
+      'Florida',
+      'Instrumental',
+      'Melodic Trap',
+      'Motivation Rap',
+      'New Orleans',
+      'Radio Rap',
+      'Soundcloud Rap',
+      'Southern Rap',
+      'Street Rap',
+      'Trap Music',
+    ],
+  },
+  {
+    name: 'Focus',
+    href: 'https://open.spotify.com/playlist/3HskdDaHvPofo9tHCdkFSq',
+    cover: focusCover,
+    genres: [
+      'Ambient',
+      'Analog',
+      'Chill',
+      'Dub Techno',
+      'Experimental',
+      'IDM',
+      'Minimal Techno',
+      'Noise',
+      'Soundtracks',
+    ],
+  },
+  {
+    name: 'Lost',
+    href: 'https://open.spotify.com/playlist/5VW6eisbWQ35EyKOhyI6Jk',
+    cover: lostCover,
+    genres: [
+      'Ambient',
+      'Break Beats',
+      'Chill',
+      'Down Tempo',
+      'Dub',
+      'Experimental',
+      'Glitch Hop',
+      'IDM',
+      'Lounge',
+      'Noise',
+      'Post Punk',
+      'Psychedelia',
+      'Smooth Jazz',
+      'Soft Rock',
+      'Trip Hop',
+    ],
+  },
+]
+
+export default playlists

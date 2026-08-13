@@ -37,6 +37,7 @@ Package manager: **npm**. Node `>= 20.9`.
     │   ├── page.tsx        # Home: intro, polaroids, Activity + Work
     │   ├── about/
     │   ├── projects/
+    │   ├── playlists/
     │   ├── uses/
     │   ├── not-found.tsx
     │   └── (fun)/          # /stats, /fetch
@@ -46,7 +47,8 @@ Package manager: **npm**. Node `>= 20.9`.
     └── styles/tailwind.css
 ```
 
-Nav (Header + Footer): **Home / About / Projects** only.
+Nav (Header + Footer): **Home / About / Projects / Playlists**.
+Playlist copy lives in `src/data/playlists-data.ts` (from the Sound Therapy Notion list). Always-shuffle note is part of the page intro — keep it.
 
 ## Theme & content
 

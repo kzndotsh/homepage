@@ -30,6 +30,7 @@ export function Footer() {
                 <NavLink href="/">Home</NavLink>
                 <NavLink href="/about">About</NavLink>
                 <NavLink href="/projects">Projects</NavLink>
+                <NavLink href="/playlists">Playlists</NavLink>
               </div>
               <p className="text-sm">
                 &copy; {new Date().getFullYear()} kzn.sh - All rights reserved.
