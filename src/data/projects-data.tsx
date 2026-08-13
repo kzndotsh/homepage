@@ -29,6 +29,8 @@ import {
   SiSentry,
   SiSvelte,
   SiCloudflare,
+  SiJavascript,
+  SiSpotify,
 } from 'react-icons/si'
 
 export type ProjectStackItem = {
@@ -70,6 +72,27 @@ const projects: Project[] = [
       {
         name: 'Cloudflare',
         logo: <SiCloudflare />,
+      },
+    ],
+  },
+  // crate digger
+  {
+    name: 'Crate Digger',
+    description:
+      'Spicetify extension for keyboard-first crate digging — number keys dump the current track into bound playlists, HUD above the seek bar, optional like-cleaner.',
+    link: {
+      href: 'https://github.com/kzndotsh/spicetify-cratedigger',
+      label: 'github.com',
+    },
+    logo: <FaGithub />,
+    stack: [
+      {
+        name: 'JavaScript',
+        logo: <SiJavascript />,
+      },
+      {
+        name: 'Spotify',
+        logo: <SiSpotify />,
       },
     ],
   },
