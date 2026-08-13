@@ -19,7 +19,7 @@ function SpotifyIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
 export const metadata: Metadata = {
   title: 'Playlists',
   description:
-    'Sound Therapy — playlists I actually listen to. Shuffle them.',
+    "Whether it's techno, jazz, classical or rap – here's your source for a dose of Sound Therapy.",
 }
 
 export default function Playlists() {
