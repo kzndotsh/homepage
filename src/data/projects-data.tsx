@@ -4,7 +4,7 @@ import { FaGithub, FaReact } from 'react-icons/fa'
 import { TbBrandNextjs, TbBrandTailwind, TbMarkdown } from 'react-icons/tb'
 
 import {
-  SiArchlinux,
+  SiNixos,
   SiMui,
   SiSupabase,
   SiVite,
@@ -31,6 +31,7 @@ import {
   SiCloudflare,
   SiJavascript,
   SiSpotify,
+  SiSway,
 } from 'react-icons/si'
 
 export type ProjectStackItem = {
@@ -229,13 +230,25 @@ const projects: Project[] = [
   {
     name: 'dotfiles',
     description:
-      'My personal dotfiles that I use to make my Arch Linux daily driver feel like home.',
+      'NixOS flake for ikigai — my Sway daily driver, a throwaway hardened libvirt VM, and kzn.sh on Hetzner. Declarative system modules only (no Home Manager): explicit per-host imports, sops-nix secrets, Terranix/OpenTofu infra, Tokyo Night theming, PipeWire pro-audio, gaming, local AI, and more.',
     link: { href: 'https://github.com/kzndotsh/dotfiles', label: 'github.com' },
     logo: <FaGithub />,
     stack: [
       {
-        name: 'Arch Linux',
-        logo: <SiArchlinux />,
+        name: 'NixOS',
+        logo: <SiNixos />,
+      },
+      {
+        name: 'Sway',
+        logo: <SiSway />,
+      },
+      {
+        name: 'Docker',
+        logo: <SiDocker />,
+      },
+      {
+        name: 'Cloudflare',
+        logo: <SiCloudflare />,
       },
     ],
   },
