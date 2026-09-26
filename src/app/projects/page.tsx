@@ -41,27 +41,27 @@ export default function Projects() {
         {projects.map((project) => (
           <div key={project.name} className="h-full">
             <Card
-              className="flex h-full min-h-[200px] flex-col justify-between rounded-2xl border-2 border-transparent bg-secondary px-4 py-4 hover:border-teal-400/50"
+              className="flex h-full min-h-[200px] flex-col rounded-2xl border-2 border-transparent bg-secondary px-4 py-4 hover:border-teal-400/50"
               as="li"
               key={project.name}
             >
-              <div>
+              <div className="flex-grow">
                 <h2 className="text-base font-semibold">
                   <Card.Link href={project.link.href}>{project.name}</Card.Link>
                 </h2>
                 <Card.Description>{project.description}</Card.Description>
-                <div className="relative z-10 mt-2 flex gap-2 py-3">
-                  {project.stack?.map((item) => (
-                    <div
-                      key={item.name}
-                      className="flex h-8 w-8 items-center justify-center rounded-full bg-white p-1 shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-accent dark:ring-0"
-                    >
-                      {item.logo}
-                    </div>
-                  ))}
-                </div>
               </div>
-              <p className="relative z-10 mt-4 flex text-sm font-medium transition group-hover:text-teal-500 ">
+              <div className="relative z-10 mt-2 flex gap-2 py-3">
+                {project.stack?.map((item) => (
+                  <div
+                    key={item.name}
+                    className="flex h-8 w-8 items-center justify-center rounded-full bg-white p-1 shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-accent dark:ring-0"
+                  >
+                    {item.logo}
+                  </div>
+                ))}
+              </div>
+              <p className="relative z-10 flex text-sm font-medium transition group-hover:text-teal-500">
                 <LinkIcon className="h-6 w-6 flex-none" />
                 <span className="ml-2">{project.link.label}</span>
               </p>
