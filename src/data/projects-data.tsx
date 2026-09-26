@@ -51,6 +51,27 @@ export type Project = {
 }
 
 const projects: Project[] = [
+  // fish-audio-suite
+  {
+    name: 'fish-audio-suite',
+    description:
+      'Unofficial Python toolkit for Fish Audio — OpenAI-compatible TTS/ASR proxy, live websocket voice playback, and a full-duplex CLI voice loop with barge-in, AEC3, and VAD.',
+    link: {
+      href: 'https://github.com/kzndotsh/fish-audio-suite',
+      label: 'github.com',
+    },
+    logo: <FaGithub />,
+    stack: [
+      {
+        name: 'Python',
+        logo: <SiPython />,
+      },
+      {
+        name: 'Docker',
+        logo: <SiDocker />,
+      },
+    ],
+  },
   // gang.guide
   {
     name: 'gang.guide',
