@@ -281,7 +281,8 @@
   border-color: var(--accent-hover);
 }
 
-/* ScrollRow: the edge fades and the progress track only exist on phones. */
+/* ScrollRow: edge fades, a progress track and arrows for a list that scrolls
+   sideways. All of it stays out of the way while the list fits. */
 @property --fl {
   syntax: '<length>';
   inherits: false;
@@ -293,18 +294,103 @@
   initial-value: 0px;
 }
 .scrollRow {
-  display: contents;
+  display: block;
+}
+.scrollMask {
+  --fl: 0px;
+  --fr: 0px;
+  transition:
+    --fl 0.2s ease,
+    --fr 0.2s ease;
+}
+/* Fade the edges only once the list really scrolls (the script sets the data
+   attribute), so a list that fits is never masked. A phone is masked from the
+   start (below), so the right fade is there before the script runs. */
+.scrollMask[data-scroll] {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 var(--fl),
+    #000 calc(100% - var(--fr)),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 var(--fl),
+    #000 calc(100% - var(--fr)),
+    transparent
+  );
+}
+@media (hover: hover) {
+  .scrollMask[data-scroll] {
+    cursor: grab;
+  }
+}
+.scrollMask[data-drag] {
+  cursor: grabbing;
+  user-select: none;
+}
+.scrollFoot {
+  display: none;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+.scrollRow[data-ready]:not([data-fit]) .scrollFoot {
+  display: flex;
+} /* A row that always overflows has its track and arrows from the first paint; if
+   it ever fits they hide but keep their room, so nothing shifts. */
+.scrollRow[data-always] .scrollFoot {
+  display: flex;
+}
+.scrollRow[data-always][data-fit] .scrollFoot {
+  visibility: hidden;
 }
 .scrollTrack {
-  display: none;
+  position: relative;
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--border);
+}
+.scrollTrack i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--tx, 0%);
+  width: var(--tw, 30%);
+  border-radius: 2px;
+  background: var(--faint);
+}
+.scrollArrows {
+  display: flex;
+  gap: 2px;
+}
+.scrollArrow {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  color: var(--muted);
+  transition:
+    color 0.2s,
+    background 0.2s;
+}
+.scrollArrow:hover:not(:disabled) {
+  color: var(--text);
+  background: var(--hover);
+}
+.scrollArrow:disabled {
+  opacity: 0.3;
+}
+.scrollPrev svg {
+  transform: scaleX(-1);
 }
 @media (max-width: 560px) {
-  .scrollRow {
-    display: block;
-  }
+  /* a phone swipes, so no arrows; the track shows even before the script runs */
   .scrollMask {
-    /* the script sets these as you scroll; the right fade shows before it runs */
-    --fl: 0px;
     --fr: 28px;
     -webkit-mask-image: linear-gradient(
       to right,
@@ -320,28 +406,14 @@
       #000 calc(100% - var(--fr)),
       transparent
     );
-    transition:
-      --fl 0.2s ease,
-      --fr 0.2s ease;
   }
-  .scrollTrack {
-    display: block;
-    position: relative;
-    height: 3px;
-    margin-top: 8px;
-    border-radius: 2px;
-    background: var(--border);
+  .scrollArrows {
+    display: none;
   }
-  .scrollTrack i {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: var(--tx, 0%);
-    width: var(--tw, 30%);
-    border-radius: 2px;
-    background: var(--faint);
+  .scrollFoot {
+    display: flex;
   }
-  .scrollRow[data-fit] .scrollTrack {
+  .scrollRow[data-fit] .scrollFoot {
     visibility: hidden;
   }
 }
