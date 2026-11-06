@@ -1,21 +1,21 @@
-import { Button } from '@/components/Button'
-import { Container } from '@/components/Container'
+import Link from 'next/link'
 
 export default function NotFound() {
   return (
-    <Container className="flex h-full items-center pt-16 sm:pt-32">
-      <div className="flex flex-col items-center">
-        <p className="text-base font-semibold ">404</p>
-        <h1 className="mt-4 text-4xl font-bold tracking-tight  sm:text-5xl">
-          Page not found
-        </h1>
-        <p className="mt-4 text-base">
-          Sorry, we couldn’t find the page you’re looking for.
-        </p>
-        <Button href="/" variant="secondary" className="mt-4">
-          Go back home
-        </Button>
-      </div>
-    </Container>
+    <main className="flex min-h-screen flex-col items-center justify-center px-6 text-center">
+      <p className="font-mono text-sm text-fg-muted">404</p>
+      <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
+        Page not found
+      </h1>
+      <p className="mt-4 text-fg-muted">
+        Sorry, there is nothing at this address.
+      </p>
+      <Link
+        href="/"
+        className="mt-8 text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+      >
+        Go back home
+      </Link>
+    </main>
   )
 }
