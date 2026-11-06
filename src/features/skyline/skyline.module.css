@@ -33,10 +33,22 @@
   opacity: 1;
 }
 @media (max-width: 720px) {
+  /* On a phone the photo gets its own band along the bottom, below the text and
+     buttons, so the whole skyline shows at a readable size and nothing sits
+     behind the buttons. The top of the band fades into the panel. It has its
+     own baked still (scripts/skyline-placeholder.mjs --mobile), made at 390px. */
   .backdrop {
-    opacity: 0.55;
-    -webkit-mask-image: linear-gradient(to bottom, transparent 20%, #000 90%);
-    mask-image: linear-gradient(to bottom, transparent 20%, #000 90%);
+    inset: auto 0 0;
+    height: 280px;
+    background: url('/skyline/charlotte-dither-mobile.png') center bottom /
+      cover no-repeat;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 28%);
+    mask-image: linear-gradient(to bottom, transparent, #000 28%);
+  }
+  /* Same fit as the still's background above, so the swap does not move. */
+  .fill {
+    object-fit: cover;
+    object-position: center bottom;
   }
 }
 .credit {

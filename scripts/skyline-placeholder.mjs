@@ -9,6 +9,8 @@
 //   npm run dev                      # in another terminal
 //   node scripts/skyline-placeholder.mjs [url]   # default http://127.0.0.1:3001
 //
+//   node scripts/skyline-placeholder.mjs --mobile   # the phone band -> charlotte-dither-mobile.png
+//
 // CHROME=/path/to/chromium overrides the browser; it defaults to `chromium`.
 import { spawn } from 'node:child_process'
 import { mkdtempSync, rmSync } from 'node:fs'
@@ -17,8 +19,13 @@ import { join } from 'node:path'
 
 import sharp from 'sharp'
 
-const URL_ = process.argv[2] ?? 'http://127.0.0.1:3001/'
-const OUT = 'public/skyline/charlotte-dither.png'
+const MOBILE = process.argv.includes('--mobile')
+const URL_ =
+  process.argv.slice(2).find((a) => !a.startsWith('--')) ??
+  'http://127.0.0.1:3001/'
+const OUT = MOBILE
+  ? 'public/skyline/charlotte-dither-mobile.png'
+  : 'public/skyline/charlotte-dither.png'
 const PIXEL = 2
 const PORT = 9373
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
@@ -72,10 +79,10 @@ try {
     ).result.result.value
 
   await send('Emulation.setDeviceMetricsOverride', {
-    width: 2000,
-    height: 1100,
+    width: MOBILE ? 390 : 2000,
+    height: MOBILE ? 844 : 1100,
     deviceScaleFactor: 1,
-    mobile: false,
+    mobile: MOBILE,
   })
   await send('Page.navigate', { url: URL_ })
 
@@ -94,7 +101,8 @@ try {
     for (const el of wrap.parentElement.children) if (el !== wrap) el.style.visibility = 'hidden'
     c.scrollIntoView({ block: 'center' })
     const r = c.getBoundingClientRect()
-    return { x: r.x, y: r.y, w: c.width, h: c.height, cssW: r.width, cssH: r.height }
+    // the screenshot clip is in page coordinates, so add the scroll offset
+    return { x: r.x + scrollX, y: r.y + scrollY, w: c.width, h: c.height, cssW: r.width, cssH: r.height }
   })()`)
   if (Math.abs(box.cssW - box.w) > 0.01 || Math.abs(box.cssH - box.h) > 0.01)
     throw new Error(`canvas is scaled: ${JSON.stringify(box)}`)

@@ -1037,7 +1037,8 @@ a.sign:hover .signArrow {
     right: auto;
     bottom: auto;
     align-self: flex-start;
-    margin: 28px 0 22px;
+    /* the skyline band is 280px tall: leave its upper part clear above the card */
+    margin: 182px 0 22px;
   }
   .leader {
     display: none;

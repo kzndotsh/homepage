@@ -17,6 +17,9 @@ uniform vec3 u_c0;
 uniform vec3 u_c1;
 uniform vec3 u_c2;
 uniform vec3 u_c3;
+// Extra sky above the photo (a share of its height) and the star block size in cells.
+uniform float u_lift;
+uniform float u_block;
 
 float hash21(vec2 p) {
   p = fract(p * vec2(123.34, 456.21));
@@ -57,18 +60,18 @@ void main() {
   if (ca > 1.0) s.y = 1.0 / ca; else s.x = ca;
   // Zoom in a touch so the window can slide right, which moves the picture left.
   s *= 0.95;
-  float y0 = min(0.1, 1.0 - s.y);
+  float y0 = min(0.1, 1.0 - s.y) - u_lift;
 
   vec3 photo = texture2D(u_tex, vec2((uv.x - 0.5) * s.x + 0.525, y0 + (1.0 - uv.y) * s.y)).rgb;
   float lum = dot(photo, vec3(0.299, 0.587, 0.114));
 
-  // Stars on a jittered grid: one candidate per 14 x 14 block of cells at a
+  // Stars on a jittered grid: one candidate per block (14 x 14 cells, 10 x 10 on a phone) of cells at a
   // random spot inside it (never on the edge), so they spread evenly with no
   // clumps or neighbours. Brightness follows a power law: many dim, few
   // bright. Only the dark sky above the buildings shows them.
-  vec2 blk = floor(cell / 14.0);
-  vec2 inBlk = cell - blk * 14.0;
-  vec2 pos = floor(1.0 + vec2(hash21(blk + 3.1), hash21(blk + 17.7)) * 12.0);
+  vec2 blk = floor(cell / u_block);
+  vec2 inBlk = cell - blk * u_block;
+  vec2 pos = floor(1.0 + vec2(hash21(blk + 3.1), hash21(blk + 17.7)) * (u_block - 2.0));
   float exists = step(hash21(blk + 91.3), 0.75);
   float mag = hash21(blk + 33.9);
   float bright = mix(0.25, 1.0, pow(mag, 2.5));

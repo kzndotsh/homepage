@@ -6,6 +6,8 @@ import { SkylineCanvas } from './SkylineCanvas'
 const PHOTO = '/skyline/charlotte.jpg'
 /** One frame of the shader, baked by scripts/skyline-placeholder.py. */
 const STILL = '/skyline/charlotte-dither.png'
+/** The phone band's frame, baked with `--mobile`. */
+const STILL_MOBILE = '/skyline/charlotte-dither-mobile.png'
 const CREDIT_URL =
   'https://commons.wikimedia.org/wiki/File:Charlotte_night_skyline_2016.jpg'
 
@@ -16,7 +18,16 @@ const CREDIT_URL =
  */
 export function SkylineBackdrop() {
   // Start both downloads with the HTML instead of waiting for the script.
-  preload(STILL, { as: 'image', fetchPriority: 'high' })
+  preload(STILL, {
+    as: 'image',
+    fetchPriority: 'high',
+    media: '(min-width: 721px)',
+  })
+  preload(STILL_MOBILE, {
+    as: 'image',
+    fetchPriority: 'high',
+    media: '(max-width: 720px)',
+  })
   preload(PHOTO, { as: 'image' })
   return (
     <>

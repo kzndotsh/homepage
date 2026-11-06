@@ -5,6 +5,13 @@ import { useEffect, useRef } from 'react'
 import { FRAGMENT, PIXEL, VERTEX } from '../shader'
 import s from '../skyline.module.css'
 
+/**
+ * The phone band is always drawn at this size and scaled to fit by CSS
+ * (object-fit: cover), the same way as its baked still, so the two line up at
+ * every phone width. Keep in sync with scripts/skyline-placeholder.mjs --mobile.
+ */
+const PHONE = { w: 356, h: 280 }
+
 /** Darkest to brightest. Resolved from the site tokens at runtime. */
 const PALETTE = [
   '--color-tn-bg-deep',
@@ -76,6 +83,15 @@ export function SkylineCanvas({
       gl.uniform3fv(u(`u_c${i}`), hex(root.getPropertyValue(name))),
     )
     gl.uniform1f(u('u_pixel'), PIXEL)
+    // On a phone the banner is a short band, so lift the photo to leave sky above
+    // the roofline for the stars, and use a finer star grid so it reads as a field.
+    const phone = matchMedia('(max-width: 720px)')
+    const sky = () => {
+      const on = fill && phone.matches
+      gl.uniform1f(u('u_lift'), on ? 0.13 : 0)
+      gl.uniform1f(u('u_block'), on ? 10 : 14)
+    }
+    sky()
 
     const texture = gl.createTexture()
     gl.bindTexture(gl.TEXTURE_2D, texture)
@@ -123,9 +139,11 @@ export function SkylineCanvas({
 
     const size = () => {
       const r = canvas.getBoundingClientRect()
-      canvas.width = Math.max(1, Math.round(r.width))
-      canvas.height = Math.max(1, Math.round(r.height))
+      const fixed = fill && phone.matches
+      canvas.width = fixed ? PHONE.w : Math.max(1, Math.round(r.width))
+      canvas.height = fixed ? PHONE.h : Math.max(1, Math.round(r.height))
       sized = true
+      sky()
       gl.viewport(0, 0, canvas.width, canvas.height)
       draw()
     }
@@ -151,7 +169,7 @@ export function SkylineCanvas({
       visible.disconnect()
       photo.onload = null
     }
-  }, [src])
+  }, [src, fill])
 
   return (
     <canvas ref={ref} className={fill ? s.fill : s.canvas} aria-hidden="true" />
