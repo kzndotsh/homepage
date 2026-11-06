@@ -218,11 +218,18 @@
   border-color: var(--faint);
   background: var(--surface2);
 }
-@media (max-width: 380px) {
-  /* three buttons share one row on the narrowest phones */
+@media (max-width: 560px) {
+  /* smaller buttons on a phone, so three share a row without feeling heavy */
   .btn {
-    padding: 9px 11px;
+    min-height: 36px;
+    padding: 6px 12px;
     font-size: 13.5px;
+    border-radius: 8px;
+  }
+}
+@media (max-width: 380px) {
+  .btn {
+    padding: 6px 10px;
   }
 }
 .btnPrimary {
