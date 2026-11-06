@@ -1,0 +1,212 @@
+/* Setup: a Sway desktop sketch (square corners, 1px borders, thin gaps, Waybar along the bottom) */
+.dk {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  /* Sway: output * background wallpaper.png fill */
+  background: var(--color-tn-bg-deep) url('/ikigai-wallpaper.png') center
+    bottom / cover no-repeat;
+}
+.dkTiles {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  grid-template-rows: auto auto;
+  min-height: 340px;
+  column-gap: 3px;
+  row-gap: 3px;
+  padding: 1px 1px 3px;
+}
+.dkWin {
+  /* Ghostty: background-opacity = 0.95 */
+  background: color-mix(in srgb, var(--color-tn-bg) 95%, transparent);
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.dkWin:first-child {
+  grid-row: 1 / span 2;
+}
+.dkFocus {
+  box-shadow: inset 0 0 0 1px var(--color-tn-blue);
+}
+.dkBody {
+  padding: 12px 14px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  overflow: hidden;
+}
+.dkFill {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.dkPrompt {
+  margin: 0;
+  color: var(--text);
+}
+.dkPrompt b {
+  font-weight: 700;
+  color: var(--color-tn-blue);
+}
+.dkPrompt i {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--color-tn-magenta);
+}
+.dkPrompt em {
+  font-style: normal;
+  color: var(--color-tn-cyan);
+}
+.dkPrompt span {
+  color: var(--color-tn-green);
+}
+.dkFetch {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+  margin: 10px 0 12px;
+}
+.dkLogo {
+  width: 150px;
+  height: 150px;
+  color: var(--color-tn-blue);
+  flex: none;
+}
+.dkRows {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+.dkRows > div {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 8px;
+}
+.dkRows dt {
+  color: var(--color-tn-blue);
+  font-weight: 600;
+}
+.dkRows dd {
+  margin: 0;
+  color: var(--body);
+  overflow-wrap: anywhere;
+}
+.dkLink {
+  color: var(--color-tn-cyan);
+  text-decoration: underline;
+  text-decoration-color: color-mix(
+    in srgb,
+    var(--color-tn-cyan) 40%,
+    transparent
+  );
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+  transition: text-decoration-color 0.2s;
+}
+.dkLink:hover {
+  text-decoration-color: var(--color-tn-cyan);
+}
+.dkSwatches {
+  margin-top: 12px;
+  flex: 1;
+  min-height: 72px;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-rows: repeat(2, 1fr);
+  gap: 6px;
+}
+.dkSwatches span {
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+}
+/* Waybar: one font, size, weight and line height for every module. */
+.dkBar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  height: 24px;
+  background: var(--color-tn-bg);
+  color: var(--color-tn-fg);
+}
+.dkBar,
+.dkBar * {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+.dkWs {
+  display: inline-flex;
+}
+.dkWs i {
+  padding: 0 6px;
+  color: var(--color-tn-fg);
+}
+.dkWs i[data-on='true'] {
+  background: var(--color-tn-bg-highlight);
+}
+.dkMid {
+  padding: 0 8px;
+}
+.dkEnd {
+  display: inline-flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 24px;
+}
+.dkEnd > * {
+  padding: 0 8px;
+}
+.dkEnd > span:nth-child(-n + 4) {
+  padding: 0 4px;
+}
+.dkBell {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 24px;
+}
+.dkBell svg {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+@media (max-width: 960px) {
+  .dkTiles {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    min-height: 0;
+  }
+  .dkWin:first-child {
+    grid-row: auto;
+  }
+  .dkLogo {
+    width: 96px;
+    height: 96px;
+  }
+  .dkFetch {
+    gap: 18px;
+  }
+  .dkMid {
+    display: none;
+  }
+  .dkBar {
+    grid-template-columns: 1fr auto;
+  }
+}
+@media (max-width: 560px) {
+  .dkEnd > span:nth-child(-n + 4) {
+    display: none;
+  }
+}
+.dkMid a {
+  color: inherit;
+  transition: color 0.2s;
+}
+.dkMid a:hover {
+  color: var(--accent);
+}
