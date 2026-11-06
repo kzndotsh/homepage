@@ -413,6 +413,14 @@ button.ganttRow[data-active='true'] .ganttTrack {
   border-bottom: 1px solid var(--border);
   background: var(--color-deep);
 }
+@media (max-width: 640px) {
+  /* single column: trim the diagram's band, with no padding above or below (the
+     drawing already keeps its own margin) */
+  .fpThumb {
+    height: 112px;
+    padding: 0 8px;
+  }
+}
 .fpBody {
   display: flex;
   flex: 1;
