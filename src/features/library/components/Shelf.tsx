@@ -2,6 +2,7 @@
 
 import { useState, type ReactNode } from 'react'
 
+import { ScrollRow } from '@/components/ui/ScrollRow'
 import { cx } from '@/lib/cx'
 
 import s from '../library.module.css'
@@ -108,6 +109,31 @@ export function Shelf({
           </li>
         ))}
       </ul>
+      {/* Phones get one swipeable row of every item instead of the pager. */}
+      <ScrollRow className={s.libReel}>
+        {items.map((item) => (
+          <li key={item.id}>
+            <a
+              href={item.href}
+              className={s.libCard}
+              title={item.tooltip ?? item.title}
+            >
+              {item.image ? (
+                <img
+                  src={item.image}
+                  alt=""
+                  loading="lazy"
+                  className={s.libArt}
+                />
+              ) : (
+                <span className={cx(s.libArt, s.libNoArt)}>{item.title}</span>
+              )}
+              <span className={s.libCardTitle}>{item.title}</span>
+              <span className={s.libCardSub}>{item.subtitle}</span>
+            </a>
+          </li>
+        ))}
+      </ScrollRow>
     </>
   )
 }

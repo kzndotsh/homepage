@@ -133,3 +133,62 @@
 .libBlank {
   visibility: hidden;
 }
+
+/* Phone: a swipeable row of every item, with no pager. It bleeds to the panel
+   edges and the next card peeks in to say it scrolls. */
+.libReel {
+  display: none;
+}
+@media (max-width: 560px) {
+  .libPager,
+  .libStrip,
+  .libList {
+    display: none;
+  }
+  .libReel {
+    display: flex;
+    gap: 12px;
+    list-style: none;
+    margin: 0 calc(var(--pad) * -1);
+    padding: 0 var(--pad) 6px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--pad);
+    scrollbar-width: none;
+  }
+  .libReel::-webkit-scrollbar {
+    display: none;
+  }
+  .libReel li {
+    flex: 0 0 104px;
+    scroll-snap-align: start;
+    min-width: 0;
+  }
+  .libCard {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .libCard .libArt {
+    margin-bottom: 5px;
+  }
+  .libCardTitle {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--text);
+  }
+  .libCardSub {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+    color: var(--muted);
+  }
+}
