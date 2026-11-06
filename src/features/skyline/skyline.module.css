@@ -54,3 +54,10 @@
 .credit:hover {
   color: var(--text);
 }
+@media (max-width: 720px) {
+  /* the heading sits at the top on a phone, so tuck the credit under the card */
+  .credit {
+    top: auto;
+    bottom: 10px;
+  }
+}

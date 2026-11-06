@@ -107,6 +107,37 @@
 .navlinks a:hover {
   color: var(--text);
 }
+@media (max-width: 720px) {
+  /* five links do not fit a phone: let them scroll, and fade the edge to say so */
+  .navlinks {
+    gap: 16px;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      #000 calc(100% - 28px),
+      transparent
+    );
+    mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+  }
+  .navlinks::-webkit-scrollbar {
+    display: none;
+  }
+  .navlinks a:last-child {
+    padding-right: 28px;
+  }
+  .navIn {
+    gap: 12px;
+  }
+}
+@media (pointer: coarse) {
+  .navlinks a {
+    padding: 12px 0;
+  }
+  .heroAlt a {
+    display: inline-block;
+    padding: 8px 0;
+  }
+}
 .cpTrigger {
   display: inline-flex;
   align-items: center;
@@ -1001,7 +1032,7 @@ a.sign:hover .signArrow {
     right: auto;
     bottom: auto;
     align-self: flex-start;
-    margin-top: 28px;
+    margin: 28px 0 22px;
   }
   .leader {
     display: none;
