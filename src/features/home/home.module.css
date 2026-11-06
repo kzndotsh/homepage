@@ -405,11 +405,36 @@
 .heroAlt a:hover {
   text-decoration-color: var(--accent);
 }
+@media (max-width: 560px) {
+  /* The portrait gets its own line above the greeting. The image comes after the
+     text in the markup, so a reversed column puts it on top. */
+  .h1 > span:first-child {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+  .avatar {
+    width: 72px;
+    height: 72px;
+    margin: 0 0 26px;
+  }
+  /* a bigger tagline that wraps onto two even lines on a phone */
+  .tagline {
+    font-size: 0.9em;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+}
 .actions {
   display: flex;
   gap: 10px;
   margin-top: 52px;
   flex-wrap: wrap;
+}
+@media (max-width: 560px) {
+  .actions {
+    margin-top: 26px;
+  }
 }
 /* api */
 .code {
@@ -1038,7 +1063,7 @@ a.sign:hover .signArrow {
     bottom: auto;
     align-self: flex-start;
     /* the skyline band is 280px tall: leave its upper part clear above the card */
-    margin: 182px 0 22px;
+    margin: 108px 0 22px;
   }
   .leader {
     display: none;
