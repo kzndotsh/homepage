@@ -130,10 +130,39 @@
   border-color: var(--border2);
   background: var(--hover);
 }
+.filtersMin {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+.filterMin {
+  /* A quieter chip: no outline until it is the active one, tight padding. */
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  color: var(--muted);
+  transition:
+    color 0.2s,
+    background 0.2s;
+}
+.filterMin:hover {
+  color: var(--text);
+}
+.filterMin[aria-pressed='true'] {
+  color: var(--text);
+  background: var(--hover);
+}
 @media (pointer: coarse) {
   .filter {
     min-height: 40px;
     padding: 8px 12px;
+  }
+  .filterMin {
+    min-height: 36px;
+    padding: 6px 9px;
   }
 }
 .quiet {
