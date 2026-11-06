@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 }
 
 // Integrations are fetched on the server and cached for 15 minutes.
-export const revalidate = 900
+export const revalidate = 300
 
 export default function Page() {
   return <HomePage />

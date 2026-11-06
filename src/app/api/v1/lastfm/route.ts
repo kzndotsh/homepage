@@ -1,13 +1,9 @@
 import { json, limited, methodGuards } from '@/app/api/_lib/respond'
-import { getLastfmFavorites } from '@/lib/integrations'
+import { snapshot } from '@/lib/snapshots'
 import {
   getCodingVsListening,
-  getGenresByPeriod,
-  getLastfmStats,
-  getNowPlaying,
   getPeriodTops,
   getScrobbleHistory,
-  getTopCharts,
   getWeeklyStream,
 } from '@/lib/integrations/lastfm-history'
 import {
@@ -63,7 +59,7 @@ async function get(request: Request): Promise<Response> {
 
   switch (section) {
     case 'favorites': {
-      const data = await getLastfmFavorites()
+      const data = await snapshot('lastfm-favorites')
       if (!data) return json(none)
       return json({
         ...data,
@@ -73,9 +69,9 @@ async function get(request: Request): Promise<Response> {
       })
     }
     case 'now':
-      return json(await getNowPlaying())
+      return json(await snapshot('lastfm-now'))
     case 'stats':
-      return json((await getLastfmStats()) ?? none)
+      return json((await snapshot('lastfm-stats')) ?? none)
     case 'tops': {
       const data = await getPeriodTops()
       if (!data) return json(none)
@@ -89,7 +85,7 @@ async function get(request: Request): Promise<Response> {
       )
     }
     case 'charts': {
-      const data = await getTopCharts()
+      const data = await snapshot('lastfm-charts')
       if (!data) return json(none)
       const kinds = kind && isMusicKind(kind) ? [kind] : MUSIC_KINDS
       const periods = period && isMusicPeriod(period) ? [period] : MUSIC_PERIODS
@@ -103,7 +99,7 @@ async function get(request: Request): Promise<Response> {
       )
     }
     case 'genres': {
-      const data = await getGenresByPeriod()
+      const data = await snapshot('lastfm-genres')
       if (!data) return json(none)
       const periods = period && isMusicPeriod(period) ? [period] : MUSIC_PERIODS
       return json(

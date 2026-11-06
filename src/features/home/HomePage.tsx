@@ -1,19 +1,6 @@
 import { fontVariables } from '@/config/fonts'
 import { cx } from '@/lib/cx'
-import {
-  getCalAvailability,
-  getGithubActivity,
-  getHardcoverLibrary,
-  getLastfmFavorites,
-  getSpotifyPlaylists,
-  getTraktActivity,
-} from '@/lib/integrations'
-import {
-  getGenresByPeriod,
-  getLastfmStats,
-  getNowPlaying,
-  getTopCharts,
-} from '@/lib/integrations/lastfm-history'
+import { snapshot } from '@/lib/snapshots'
 
 import { BookingSection } from '@/features/booking/sections/BookingSection'
 import { CodingSection } from '@/features/coding/sections/CodingSection'
@@ -34,8 +21,9 @@ import { Hero } from './sections/Hero'
 import s from './home.module.css'
 
 /**
- * The homepage. Every integration degrades to null on failure, so each
- * section decides what to show without its data.
+ * The homepage. Each integration's data comes from a stored snapshot (see
+ * lib/snapshots) and is null when it is missing, so each section decides what
+ * to show without it.
  */
 export async function HomePage() {
   const [
@@ -50,16 +38,16 @@ export async function HomePage() {
     trakt,
     availability,
   ] = await Promise.all([
-    getGithubActivity(),
-    getSpotifyPlaylists(),
-    getLastfmFavorites(),
-    getTopCharts(),
-    getLastfmStats(),
-    getNowPlaying(),
-    getGenresByPeriod(),
-    getHardcoverLibrary(),
-    getTraktActivity(),
-    getCalAvailability(),
+    snapshot('github'),
+    snapshot('spotify'),
+    snapshot('lastfm-favorites'),
+    snapshot('lastfm-charts'),
+    snapshot('lastfm-stats'),
+    snapshot('lastfm-now'),
+    snapshot('lastfm-genres'),
+    snapshot('hardcover'),
+    snapshot('trakt'),
+    snapshot('cal'),
   ])
 
   return (

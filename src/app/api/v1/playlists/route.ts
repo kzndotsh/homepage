@@ -1,9 +1,9 @@
 import { json, limited, methodGuards } from '@/app/api/_lib/respond'
 import { playlists, playlistsIntro } from '@/content'
-import { getSpotifyPlaylists } from '@/lib/integrations'
+import { snapshot } from '@/lib/snapshots'
 
 async function get(): Promise<Response> {
-  const spotify = await getSpotifyPlaylists()
+  const spotify = await snapshot('spotify')
   return json({
     note: playlistsIntro,
     spotifyStats: spotify !== null,
