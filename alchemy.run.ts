@@ -39,6 +39,16 @@ const cache = await R2Bucket('cache', {
 export const website = await Nextjs('website', {
   name: isProd ? 'kzn-sh' : `kzn-sh-${app.stage}`,
   adopt: true,
+  wrangler: {
+    // Alchemy writes the images binding into wrangler.jsonc as `remote: true`, so
+    // every local tool that reads it (next dev, and the build step of a deploy)
+    // opens a remote session that needs a Cloudflare API token. Resize locally
+    // instead; the deployed Worker is not affected.
+    transform: (spec) =>
+      spec.images
+        ? { ...spec, images: { binding: spec.images.binding } }
+        : spec,
+  },
   bindings: {
     ...secretBindings(),
     // The names below are the ones OpenNext looks for.
