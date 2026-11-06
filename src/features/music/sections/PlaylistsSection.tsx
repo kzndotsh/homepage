@@ -3,6 +3,7 @@ import { SiSpotify } from 'react-icons/si'
 
 import { Panel } from '@/components/ui/Panel'
 import { PanelHeader, PanelLink } from '@/components/ui/PanelHeader'
+import { ScrollRow } from '@/components/ui/ScrollRow'
 import { person, playlists, playlistsIntro } from '@/content'
 import { formatNumber } from '@/lib/formatNumber'
 import type { SpotifyPlaylistInfo } from '@/lib/integrations/types'
@@ -10,6 +11,9 @@ import type { SpotifyPlaylistInfo } from '@/lib/integrations/types'
 import { GenreFlow } from '../components/GenreFlow'
 import { findPlaylistInfo } from '../findPlaylistInfo'
 import s from '../music.module.css'
+
+const EMPHASIS = 'always shuffle'
+const emphasisAt = playlistsIntro.indexOf(EMPHASIS)
 
 export function PlaylistsSection({
   spotify,
@@ -31,9 +35,17 @@ export function PlaylistsSection({
         }
       />
       <p className={s.shuffleNote}>
-        <b>Always shuffle.</b> {playlistsIntro}
+        {emphasisAt < 0 ? (
+          playlistsIntro
+        ) : (
+          <>
+            {playlistsIntro.slice(0, emphasisAt)}
+            <b>{EMPHASIS}</b>
+            {playlistsIntro.slice(emphasisAt + EMPHASIS.length)}
+          </>
+        )}
       </p>
-      <ul className={s.pls}>
+      <ScrollRow className={s.pls}>
         {playlists.map((p) => {
           const info = findPlaylistInfo(spotify, p.name)
           return (
@@ -77,7 +89,7 @@ export function PlaylistsSection({
             </li>
           )
         })}
-      </ul>
+      </ScrollRow>
     </Panel>
   )
 }

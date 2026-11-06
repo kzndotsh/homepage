@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react'
 import type { KeyboardEvent } from 'react'
+import { LuPlay } from 'react-icons/lu'
 
 import type {
   TopCharts as TopChartsData,
@@ -112,7 +113,11 @@ export function TopCharts({
                     <a href={item.url}>{item.name}</a>
                     {item.by && <span className={s.topBy}>{item.by}</span>}
                   </span>
-                  <span className={s.topPlays}>{nf(item.plays)} plays</span>
+                  <span className={s.topPlays}>
+                    {nf(item.plays)}
+                    <span className={s.topPlaysWord}> plays</span>
+                    <LuPlay className={s.topPlaysIcon} aria-hidden="true" />
+                  </span>
                   <span className={s.topTrack} aria-hidden="true">
                     <i
                       className={s.topFill}

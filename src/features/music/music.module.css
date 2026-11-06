@@ -457,7 +457,7 @@
 @media (max-width: 1100px) {
   .musicSplit {
     grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 0;
   }
   .musicLeft {
     padding: 20px 20px 24px;
@@ -590,6 +590,9 @@
   color: var(--muted);
   white-space: nowrap;
 }
+.topPlaysIcon {
+  display: none;
+}
 .topTrack {
   grid-column: 2 / -1;
   height: 4px;
@@ -606,6 +609,19 @@
   height: 100%;
   border-radius: 2px;
 }
+/* Stacked layout: room for exactly ten rows (not the extra the side-by-side
+   layout needs to match the map), so a short list still does not make the page
+   jump and a full one leaves no blank band. */
+@media (max-width: 1100px) {
+  .topPanel {
+    min-height: 28.2rem;
+  }
+}
+@media (max-width: 560px) {
+  .topPanel {
+    min-height: 27.2rem;
+  }
+}
 @media (max-width: 960px) {
   .pls {
     grid-template-columns: 1fr;
@@ -616,13 +632,91 @@
   }
 }
 @media (max-width: 560px) {
+  /* A phone gets a swipeable row of cards instead of ten tall rows. The row
+     bleeds to the panel edges, and the next card peeks in to say it scrolls. */
+  .pls {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--pad);
+    scrollbar-width: none;
+    margin: 0 calc(var(--pad) * -1);
+    padding: 2px var(--pad) 10px;
+  }
+  .pls::-webkit-scrollbar {
+    display: none;
+  }
   .pl {
-    grid-template-columns: 96px minmax(0, 1fr);
-    padding: 20px 0;
-    gap: 16px;
+    flex: 0 0 min(72%, 260px);
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 12px 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--ground);
   }
   .plName {
     font-size: 19px;
+  }
+  /* Tighter insets and a narrower rank column, so chart names get the room. */
+  .musicBar {
+    padding: 12px 14px;
+  }
+  .musicLeft {
+    padding: 16px 14px 18px;
+  }
+  .musicRight {
+    padding: 20px 14px;
+  }
+  .topList {
+    gap: 12px;
+  }
+  .topRow {
+    grid-template-columns: 16px minmax(0, 1fr) auto;
+    gap: 6px 8px;
+  }
+  .topRank {
+    font-size: 12px;
+  }
+  /* Cap the name so a long title leaves room for the artist beside it. */
+  .topName a:not(:last-child) {
+    max-width: 54%;
+  }
+  .topBy {
+    flex: 0 1 auto;
+    font-size: 12.5px;
+  }
+  /* "284 plays" becomes "284 ▶": the word is still there for screen readers. */
+  .topPlays {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 5px;
+  }
+  .topPlaysWord {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .topPlaysIcon {
+    display: block;
+    align-self: center;
+    width: 10px;
+    height: 10px;
+    fill: currentColor;
+    opacity: 0.8;
+  }
+  /* even out the five short lines instead of a long, then a stub, then a long */
+  .shuffleNote {
+    font-size: 16px;
+    text-wrap: balance;
   }
 }
 @media (prefers-reduced-motion: no-preference) {
