@@ -218,6 +218,13 @@
   border-color: var(--faint);
   background: var(--surface2);
 }
+@media (max-width: 380px) {
+  /* three buttons share one row on the narrowest phones */
+  .btn {
+    padding: 9px 11px;
+    font-size: 13.5px;
+  }
+}
 .btnPrimary {
   background: var(--accent);
   color: var(--on-accent);

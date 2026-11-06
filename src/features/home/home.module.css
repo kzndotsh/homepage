@@ -107,6 +107,11 @@
 .navlinks a:hover {
   color: var(--text);
 }
+@media (max-width: 380px) {
+  .actions {
+    gap: 8px;
+  }
+}
 @media (max-width: 720px) {
   /* five links do not fit a phone: let them scroll, and fade the edge to say so */
   .navlinks {
