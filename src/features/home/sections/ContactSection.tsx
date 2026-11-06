@@ -164,9 +164,6 @@ export function ContactSection() {
                 </span>
                 <span className={s.signName}>{r.name}</span>
                 <span className={s.signNote}>{r.note}</span>
-                <span className={s.signArrow} aria-hidden="true">
-                  →
-                </span>
               </a>
             </li>
           )

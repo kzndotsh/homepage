@@ -804,7 +804,7 @@
 .signs {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 6px;
+  gap: 10px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -819,19 +819,23 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+/* Each link is a cell of its own: a rounded border makes it read as a button, so
+   it needs no arrow. (Only Discord has an icon, because it copies.) */
 .sign {
   display: grid;
-  grid-template-columns: 44px minmax(0, auto) minmax(0, 1fr) 20px;
+  grid-template-columns: 44px minmax(0, auto) minmax(0, 1fr) auto;
   align-items: center;
   gap: 12px;
-  padding: 8px 14px 8px 8px;
-  border-radius: 8px;
+  padding: 10px 16px 10px 10px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
   background: var(--color-deep);
-  transition: background 0.15s;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
 }
 button.sign {
   width: 100%;
-  border: 0;
   font: inherit;
   text-align: left;
   color: inherit;
@@ -840,6 +844,7 @@ button.sign {
 a.sign:hover,
 button.sign:hover {
   background: var(--surface2);
+  border-color: var(--border2);
 }
 .signCopy {
   justify-self: center;
@@ -904,14 +909,6 @@ button.sign:hover .signCopy[data-done='true'] {
   text-align: right;
   font-size: 12.5px;
   color: var(--muted);
-}
-.signArrow {
-  font-size: 20px;
-  color: var(--text);
-  transition: transform 0.2s;
-}
-a.sign:hover .signArrow {
-  transform: translateX(4px);
 }
 .foot {
   padding: 8px 0 40px;
