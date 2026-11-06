@@ -1,0 +1,759 @@
+.favTop > .via svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+}
+/* music */
+.pls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 72px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.pl {
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+  padding: 24px 0;
+  border-top: 1px solid var(--border);
+  min-width: 0;
+}
+.plCover {
+  display: block;
+}
+.plCover img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+  transition: transform 0.45s var(--ease);
+}
+.plCover:hover img {
+  transform: translateY(-3px);
+}
+.plBody {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.plName {
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+  line-height: 1.15;
+}
+.plHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.plSpotify {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin: -3px 0;
+  border-radius: 50%;
+  color: var(--color-fg-muted);
+  font-size: 20px;
+  transition: color 0.2s;
+}
+.plSpotify:hover {
+  color: var(--color-tn-green);
+}
+.plName a {
+  transition: color 0.2s;
+}
+.plName a:hover {
+  color: var(--accent);
+}
+.plStat {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  margin: 2px 0 6px;
+  padding: 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.plStat span {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--hover);
+  color: var(--body);
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.flow {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+.genresClip {
+  overflow: hidden;
+  width: 100%;
+}
+.genresReserve {
+  padding-right: 36px;
+}
+.genres {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 0 -16px;
+  padding: 0;
+  font-size: 14.5px;
+  line-height: 25px;
+  color: var(--body);
+}
+.genres li {
+  position: relative;
+  padding-left: 16px;
+  white-space: nowrap;
+}
+.genres li::before {
+  content: '\00b7';
+  position: absolute;
+  left: 5px;
+  color: var(--muted);
+  opacity: 0.55;
+}
+.more {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 25px;
+  white-space: nowrap;
+  padding: 0;
+}
+.more:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.morePop {
+  position: absolute;
+  top: 25px;
+  right: 0;
+}
+.morePanel {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 6px);
+  right: 0;
+  width: min(380px, calc(100vw - 48px));
+  padding: 16px 18px 14px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition:
+    opacity 0.16s ease,
+    transform 0.16s var(--ease),
+    visibility 0s linear 0.16s;
+}
+.morePanel::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -10px;
+  height: 10px;
+}
+.morePanel[data-open] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+.morePanelHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.morePanelClose {
+  display: none;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 0 4px 12px;
+}
+.sheetBackdrop {
+  display: none;
+}
+@media (max-width: 560px) {
+  .sheetBackdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: color-mix(in srgb, var(--color-tn-bg-deep) 70%, transparent);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.2s ease,
+      visibility 0s linear 0.2s;
+  }
+  .sheetBackdrop[data-open] {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  .morePanel {
+    position: fixed;
+    z-index: 50;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    max-height: 70vh;
+    overflow-y: auto;
+    padding: 18px 22px calc(22px + env(safe-area-inset-bottom));
+    border-radius: 18px 18px 0 0;
+    border-width: 1px 0 0;
+    box-shadow: 0 -16px 40px rgba(0, 0, 0, 0.5);
+    transform: translateY(24px);
+  }
+  .morePanel::before {
+    display: none;
+  }
+  .morePanel[data-open] {
+    transform: none;
+  }
+  .morePanelHead {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  .morePanelClose {
+    display: inline-block;
+  }
+  .morePanel .genres {
+    font-size: 15.5px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .morePanel,
+  .sheetBackdrop {
+    transition: none;
+  }
+}
+.shuffleNote {
+  color: var(--body);
+  font-size: 17px;
+  line-height: 1.65;
+  margin: 0;
+  max-width: 72ch;
+}
+.shuffleNote b {
+  color: var(--text);
+  font-weight: 600;
+}
+.fav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+}
+.favCol h3 {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+.favList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+  counter-reset: f;
+}
+.favList li {
+  display: grid;
+  grid-template-columns: 18px 1fr auto;
+  gap: 8px;
+  align-items: baseline;
+  font-size: 14px;
+  counter-increment: f;
+}
+.favList li::before {
+  content: counter(f);
+  font-size: 11px;
+  color: var(--muted);
+  font-family: var(--font-geist-mono), monospace;
+}
+.favList a:hover {
+  color: var(--accent);
+}
+.favList small {
+  color: var(--muted);
+  font-size: 12px;
+  display: block;
+}
+.favPlays {
+  font-size: 12px;
+  color: var(--muted);
+}
+.topBody {
+  min-width: 0;
+}
+/* Music card body: top charts on the left, genre treemap on the right. */
+.musicPanel {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(
+    in srgb,
+    var(--color-tn-bg) 45%,
+    var(--color-tn-bg-deep)
+  );
+  overflow: hidden;
+}
+.musicBar {
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border);
+}
+.musicSplit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+.musicLeft {
+  min-width: 0;
+  padding: 20px 32px 24px 24px;
+}
+.musicRight {
+  min-width: 0;
+  padding: 20px 24px 24px 32px;
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+.musicRight .tabsFlush {
+  margin: 0;
+  padding: 0 0 1px;
+  font: inherit;
+}
+/* The map fills whatever height the chart list sets; it never adds height itself. */
+.treeIn {
+  position: relative;
+  flex: 1;
+  min-height: 340px;
+  margin-top: 22px;
+}
+.musicLeft .tabsFlush {
+  margin: 0;
+  padding: 0 0 1px;
+}
+.tree {
+  display: block;
+  /* Hidden until the box is measured, so the server's guessed layout never shows. */
+  max-width: 100%;
+  max-height: 100%;
+  opacity: 0;
+}
+.tree[data-ready] {
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+.treeWrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.treeBox {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+/* Faint placeholder tiles, in the real tier colours, until the map is drawn. */
+.treeSkel {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.treeSkelTile {
+  position: absolute;
+  padding: 1.5px;
+  box-sizing: border-box;
+}
+.treeSkelTile i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 7px;
+  opacity: 0.2;
+}
+.treeBox[data-ready] .treeSkel {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes treepulse {
+    50% {
+      opacity: 0.55;
+    }
+  }
+  .treeBox:not([data-ready]) .treeSkel {
+    animation: treepulse 1.8s ease-in-out infinite;
+  }
+}
+
+.treeAlso {
+  margin: 0;
+  height: 40px;
+  overflow: hidden;
+  font-size: 12.5px;
+  line-height: 20px;
+  color: var(--muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.treeTip {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 7px 11px;
+  border-radius: 9px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.treeTip b {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+}
+.tree text {
+  font-family: var(--font-manrope), sans-serif;
+}
+@media (max-width: 1100px) {
+  .musicSplit {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .musicLeft {
+    padding: 20px 20px 24px;
+  }
+  .musicRight {
+    padding: 24px 20px;
+    border-left: 0;
+    border-top: 1px solid var(--border);
+  }
+  .musicBar {
+    padding: 14px 20px;
+  }
+  .treeIn {
+    flex: none;
+    height: 420px;
+  }
+}
+/* Title and stats in the left half; the status sits in the stats row of the right half,
+   in the same two equal columns as .musicSplit, so it starts on the divider line. */
+.favTop {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  row-gap: 19px;
+  align-items: start;
+}
+.favTop > h3 {
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+}
+.favTop > dl {
+  grid-column: 1;
+  grid-row: 2;
+}
+.favTop > .via {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  align-self: center;
+  font-size: 13px;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+.favTop > .via:hover {
+  color: var(--accent);
+}
+.favTop > .npGrid {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: stretch;
+  margin-left: 0;
+}
+@media (max-width: 1100px) {
+  .favTop {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .favTop > dl {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  .favTop > .npGrid {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    margin-left: 0;
+  }
+}
+/* Room for ten rows so short lists (e.g. 7 days) do not make the page jump. */
+.topPanel {
+  min-height: 29.5rem;
+  margin-top: 22px;
+}
+.topList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+.topRow {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  gap: 6px 12px;
+  align-items: baseline;
+}
+.topRank {
+  font-size: 13px;
+  color: var(--faint);
+}
+.topName {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+.topName a {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+.topName a:hover {
+  color: var(--accent);
+}
+.topBy {
+  flex: 0 100 auto;
+  min-width: 0;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.topBy::before {
+  content: '\00b7';
+  margin-right: 8px;
+  opacity: 0.6;
+}
+.topPlays {
+  font-size: 13px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.topTrack {
+  grid-column: 2 / -1;
+  height: 4px;
+  border-radius: 2px;
+  background: color-mix(
+    in srgb,
+    var(--color-tn-bg-highlight) 50%,
+    var(--color-tn-bg-deep)
+  );
+  overflow: hidden;
+}
+.topFill {
+  display: block;
+  height: 100%;
+  border-radius: 2px;
+}
+@media (max-width: 960px) {
+  .pls {
+    grid-template-columns: 1fr;
+  }
+  .fav {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+@media (max-width: 560px) {
+  .pl {
+    grid-template-columns: 96px minmax(0, 1fr);
+    padding: 20px 0;
+    gap: 16px;
+  }
+  .plName {
+    font-size: 19px;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes treeIn {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .treeIn {
+    animation: treeIn 0.35s var(--ease) both;
+  }
+}
+/* Now playing: one large animated icon on the left spanning both rows, then
+   "Now playing" over "Artist - Song". */
+.npGrid {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  row-gap: 2px;
+  align-items: start;
+  min-width: 0;
+  margin: 0;
+}
+.npBars {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  align-self: stretch;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 6px;
+  padding: 0;
+}
+.npBars i {
+  display: block;
+  width: 8px;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--faint);
+  transform-origin: bottom;
+}
+.npBars i:nth-child(1) {
+  transform: scaleY(0.35);
+}
+.npBars i:nth-child(2) {
+  transform: scaleY(0.6);
+}
+.npBars i:nth-child(3) {
+  transform: scaleY(0.45);
+}
+.npBars i:nth-child(4) {
+  transform: scaleY(0.7);
+}
+.npBars i:nth-child(5) {
+  transform: scaleY(0.4);
+}
+.npLive i {
+  background: var(--accent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes npbar {
+    0%,
+    100% {
+      transform: scaleY(0.25);
+    }
+    50% {
+      transform: scaleY(1);
+    }
+  }
+  .npLive i {
+    animation: npbar 1.2s ease-in-out infinite;
+  }
+  .npLive i:nth-child(2) {
+    animation-duration: 0.9s;
+    animation-delay: -0.3s;
+  }
+  .npLive i:nth-child(3) {
+    animation-duration: 1.4s;
+    animation-delay: -0.7s;
+  }
+  .npLive i:nth-child(4) {
+    animation-duration: 1s;
+    animation-delay: -0.5s;
+  }
+  .npLive i:nth-child(5) {
+    animation-duration: 1.3s;
+    animation-delay: -0.9s;
+  }
+}
+.npState,
+.npName {
+  grid-column: 2;
+  padding-left: 20px;
+  min-width: 0;
+}
+.npState {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 18px;
+}
+.npName {
+  display: block;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 30px;
+  letter-spacing: -0.02em;
+  transition: color 0.2s;
+}
+.npName:hover {
+  color: var(--accent);
+}
+@supports (text-box: trim-both cap alphabetic) {
+  .npState,
+  .npName {
+    text-box: trim-both cap alphabetic;
+  }
+  .npGrid {
+    min-height: 50px;
+    padding: 3px 0 7px;
+    row-gap: 0;
+    grid-template-rows: auto 1fr;
+    box-sizing: border-box;
+  }
+  .npName {
+    align-self: end;
+  }
+  .npBars {
+    margin: 0;
+  }
+}
