@@ -143,14 +143,14 @@ export function GithubLive({ data }: { data: GithubActivity }) {
       {data.events.length > 0 ? (
         <div>
           <div
-            className={ui.filters}
+            className={ui.filtersMin}
             role="group"
             aria-label="Filter by kind"
             style={{ marginBottom: 8 }}
           >
             <button
               type="button"
-              className={ui.filter}
+              className={ui.filterMin}
               aria-pressed={kind === 'all'}
               onClick={() => setKind('all')}
             >
@@ -160,7 +160,7 @@ export function GithubLive({ data }: { data: GithubActivity }) {
               <button
                 key={k}
                 type="button"
-                className={ui.filter}
+                className={ui.filterMin}
                 aria-pressed={kind === k}
                 onClick={() => setKind(k)}
               >
