@@ -1,5 +1,11 @@
 import alchemy from 'alchemy'
-import { Nextjs } from 'alchemy/cloudflare'
+import {
+  DurableObjectNamespace,
+  Images,
+  Nextjs,
+  R2Bucket,
+  Self,
+} from 'alchemy/cloudflare'
 
 const app = await alchemy('kzn-sh')
 const isProd = app.stage === 'production'
@@ -23,10 +29,30 @@ function secretBindings():
   return entries.length ? Object.fromEntries(entries) : undefined
 }
 
+// OpenNext's incremental cache: rendered pages and the fetch data cache live here
+// (see open-next.config.ts).
+const cache = await R2Bucket('cache', {
+  name: isProd ? 'kzn-sh-cache' : `kzn-sh-cache-${app.stage}`,
+  adopt: true,
+})
+
 export const website = await Nextjs('website', {
   name: isProd ? 'kzn-sh' : `kzn-sh-${app.stage}`,
   adopt: true,
-  bindings: secretBindings(),
+  bindings: {
+    ...secretBindings(),
+    // The names below are the ones OpenNext looks for.
+    NEXT_INC_CACHE_R2_BUCKET: cache,
+    // Lets the Worker call itself, which the cache uses to revalidate a page.
+    WORKER_SELF_REFERENCE: Self,
+    // Background re-render queue, backed by a Durable Object the adapter exports.
+    NEXT_CACHE_DO_QUEUE: DurableObjectNamespace('queue', {
+      className: 'DOQueueHandler',
+      sqlite: true,
+    }),
+    // next/image resizes through this; without it /_next/image sends the original.
+    IMAGES: Images(),
+  },
   domains: isProd ? [{ domainName: 'kzn.sh', adopt: true }] : undefined,
 })
 
