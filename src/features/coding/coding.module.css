@@ -1,0 +1,180 @@
+/* live work */
+.liveTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+.heatWrap {
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+.heat {
+  display: block;
+  min-width: 640px;
+  width: 100%;
+  height: auto;
+}
+.heat text {
+  fill: var(--muted);
+  font-size: 10px;
+  font-family: var(--font-geist-mono), monospace;
+}
+.hc0 {
+  fill: var(--color-heat-0);
+}
+.hc1 {
+  fill: var(--color-heat-1);
+}
+.hc2 {
+  fill: var(--color-heat-2);
+}
+.hc3 {
+  fill: var(--color-heat-3);
+}
+.hc4 {
+  fill: var(--color-heat-4);
+}
+.hcFuture {
+  fill: none;
+  stroke: color-mix(in srgb, var(--border2) 38%, transparent);
+  stroke-width: 1;
+  stroke-dasharray: 2 2;
+  vector-effect: non-scaling-stroke;
+}
+.heatLegend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  justify-content: flex-end;
+}
+.heatLegend i {
+  width: 11px;
+  height: 11px;
+  border-radius: 2px;
+  display: inline-block;
+}
+.heatLegend .l0 {
+  background: var(--color-heat-0);
+  box-shadow: inset 0 0 0 1px
+    color-mix(in srgb, var(--border2) 70%, transparent);
+}
+.heatLegend .l1 {
+  background: var(--color-heat-1);
+}
+.heatLegend .l2 {
+  background: var(--color-heat-2);
+}
+.heatLegend .l3 {
+  background: var(--color-heat-3);
+}
+.heatLegend .l4 {
+  background: var(--color-heat-4);
+}
+.filterCount {
+  margin-left: 8px;
+  opacity: 0.7;
+  font-weight: 600;
+  font-variant-numeric: normal;
+}
+.feed {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+}
+.ev {
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  gap: 2px 14px;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+  align-items: baseline;
+}
+.ev:first-child {
+  border-top: 0;
+}
+.evIcon {
+  color: var(--muted);
+  align-self: center;
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+}
+.evTitle {
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.evAction {
+  color: var(--muted);
+  font-weight: 500;
+}
+.evTitle a:hover {
+  color: var(--accent);
+}
+.evMeta {
+  font-size: 12.5px;
+  color: var(--muted);
+  grid-column: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 14px;
+}
+.evRepo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s;
+}
+.evRepo:hover {
+  color: var(--accent);
+}
+.evDiff {
+  font-size: 12px;
+  white-space: nowrap;
+}
+.evAdd {
+  color: var(--color-success);
+}
+.evDel {
+  color: var(--color-danger);
+}
+.evFiles {
+  color: var(--muted);
+}
+.evSha {
+  font-size: 12px;
+  padding: 1px 7px;
+  border-radius: 6px;
+  background: var(--hover);
+  color: var(--body);
+  transition: color 0.2s;
+}
+.evSha:hover {
+  color: var(--accent);
+}
+.evTime {
+  font-size: 12px;
+  color: var(--muted);
+  grid-column: 3;
+  grid-row: 1;
+  white-space: nowrap;
+}
+.empty {
+  border: 1px dashed var(--border2);
+  border-radius: 10px;
+  padding: 24px;
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+.empty a {
+  color: var(--text);
+  border-bottom: 1px solid var(--border2);
+}
