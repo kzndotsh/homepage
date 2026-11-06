@@ -193,7 +193,9 @@ export function GithubLive({ data }: { data: GithubActivity }) {
                       <span aria-hidden="true"> /</span>{' '}
                     </span>
                   )}
-                  <a href={e.url}>{e.title}</a>
+                  <a href={e.url} title={e.title}>
+                    {e.title}
+                  </a>
                 </span>
                 <span className={`${s.evTime} ${ui.mono}`}>
                   {relativeTime(e.at, data.fetchedAt)}

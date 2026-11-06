@@ -116,6 +116,22 @@
   font-weight: 600;
   line-height: 1.4;
   overflow-wrap: anywhere;
+  /* One line, and no wider than half the row, so a long commit message ends in
+     an ellipsis instead of running across the card. The full text is in the
+     link's tooltip. Phones get the full width and two lines (below). */
+  max-width: 50%;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  overflow: hidden;
+}
+@media (max-width: 720px) {
+  .evTitle {
+    max-width: none;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
 }
 .evAction {
   color: var(--muted);
