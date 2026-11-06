@@ -23,13 +23,24 @@ const KINDS: { id: TopKind; label: string }[] = [
   { id: 'tracks', label: 'Tracks' },
 ]
 
-export const PERIODS: { id: TopPeriod; label: string; long: string }[] = [
-  { id: '7day', label: '7 days', long: 'the last 7 days' },
-  { id: '1month', label: '1 month', long: 'the last month' },
-  { id: '3month', label: '3 months', long: 'the last 3 months' },
-  { id: '6month', label: '6 months', long: 'the last 6 months' },
-  { id: '12month', label: '12 months', long: 'the last 12 months' },
-  { id: 'overall', label: 'All time', long: 'all time' },
+export const PERIODS: {
+  id: TopPeriod
+  label: string
+  /** What the button says on a phone. */
+  short: string
+  long: string
+}[] = [
+  { id: '7day', label: '7 days', short: '7d', long: 'the last 7 days' },
+  { id: '1month', label: '1 month', short: '1m', long: 'the last month' },
+  { id: '3month', label: '3 months', short: '3m', long: 'the last 3 months' },
+  { id: '6month', label: '6 months', short: '6m', long: 'the last 6 months' },
+  {
+    id: '12month',
+    label: '12 months',
+    short: '12m',
+    long: 'the last 12 months',
+  },
+  { id: 'overall', label: 'All time', short: 'All', long: 'all time' },
 ]
 
 /** Top artists, albums or tracks for a chosen time range, from Last.fm. */

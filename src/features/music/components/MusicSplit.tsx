@@ -30,7 +30,7 @@ export function MusicSplit({
     <div className={s.musicPanel}>
       <div className={s.musicBar}>
         <div
-          className={ui.filters}
+          className={ui.filtersMin}
           role="group"
           aria-label="Time range for charts and genres"
         >
@@ -38,11 +38,15 @@ export function MusicSplit({
             <button
               key={p.id}
               type="button"
-              className={ui.filter}
+              className={ui.filterMin}
               aria-pressed={period === p.id}
+              aria-label={p.label}
               onClick={() => setPeriod(p.id)}
             >
-              {p.label}
+              <span className={s.periodFull}>{p.label}</span>
+              <span className={s.periodShort} aria-hidden="true">
+                {p.short}
+              </span>
             </button>
           ))}
         </div>

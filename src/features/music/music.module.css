@@ -328,6 +328,9 @@
   );
   overflow: hidden;
 }
+.periodShort {
+  display: none;
+}
 .musicBar {
   padding: 14px 24px;
   border-bottom: 1px solid var(--border);
@@ -662,6 +665,13 @@
   }
   .plName {
     font-size: 19px;
+  }
+  /* "6 months" becomes "6m", so the six range chips share one row. */
+  .periodFull {
+    display: none;
+  }
+  .periodShort {
+    display: inline;
   }
   /* Tighter insets and a narrower rank column, so chart names get the room. */
   .musicBar {
