@@ -215,3 +215,68 @@
   background: var(--accent-hover);
   border-color: var(--accent-hover);
 }
+
+/* ScrollRow: the edge fades and the progress track only exist on phones. */
+@property --fl {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+@property --fr {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+.scrollRow {
+  display: contents;
+}
+.scrollTrack {
+  display: none;
+}
+@media (max-width: 560px) {
+  .scrollRow {
+    display: block;
+  }
+  .scrollMask {
+    /* the script sets these as you scroll; the right fade shows before it runs */
+    --fl: 0px;
+    --fr: 28px;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 var(--fl),
+      #000 calc(100% - var(--fr)),
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 var(--fl),
+      #000 calc(100% - var(--fr)),
+      transparent
+    );
+    transition:
+      --fl 0.2s ease,
+      --fr 0.2s ease;
+  }
+  .scrollTrack {
+    display: block;
+    position: relative;
+    height: 3px;
+    margin-top: 8px;
+    border-radius: 2px;
+    background: var(--border);
+  }
+  .scrollTrack i {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--tx, 0%);
+    width: var(--tw, 30%);
+    border-radius: 2px;
+    background: var(--faint);
+  }
+  .scrollRow[data-fit] .scrollTrack {
+    visibility: hidden;
+  }
+}
