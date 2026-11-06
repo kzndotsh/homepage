@@ -1,0 +1,156 @@
+/*
+  Design tokens: Tokyo Night (Night variant).
+
+  Two layers:
+    1. Palette  (--color-tn-*)  raw values, the only place hex codes live.
+    2. Semantic (--color-page, --color-fg, --color-accent, ...)  what
+       components use. They only reference the palette, so re-theming
+       (Storm, Moon, or a light Day variant) means editing this file only.
+
+  Palette source: folke/tokyonight.nvim lua/tokyonight/colors/{night,storm}.lua
+  (the same palette as the desktop configs in ~/dotfiles). Values marked
+  "derived" are not upstream; they exist to meet WCAG AA contrast.
+
+  Contrast on --color-tn-bg (#1a1b26):
+    fg 10.6, fg-dark 8.1, fg-muted 5.7, accent 6.8, red 6.5 (all >= 4.5).
+    comment 2.8 and dark5 4.1 fail for body text: decoration and large text only.
+
+  Usage:  bg-page  bg-surface  border-line  text-fg  text-fg-muted  text-accent
+  The site is dark-only, so there is no light/dark token switching.
+  CSS modules can use the same tokens: var(--color-surface), var(--color-fg).
+*/
+
+@theme static {
+  /* Drop Tailwind's default palette so only these tokens exist. */
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* ── Palette: Tokyo Night ─────────────────────────────────────────── */
+
+  /* Backgrounds, darkest to lightest */
+  --color-tn-black: #15161e; /* terminal color 0 */
+  --color-tn-bg-deep: #16161e;
+  --color-tn-bg: #1a1b26;
+  --color-tn-bg-card: #1f2335; /* storm bg_dark */
+  --color-tn-bg-raised: #24283b; /* storm bg */
+  --color-tn-bg-highlight: #292e42;
+
+  /* Lines */
+  --color-tn-gutter: #3b4261;
+  --color-tn-terminal-black: #414868;
+
+  /* Text, brightest to dimmest */
+  --color-tn-fg: #c0caf5;
+  --color-tn-fg-dark: #a9b1d6;
+  --color-tn-fg-muted: #8a93bd; /* derived: AA-safe between fg-dark and dark5 */
+  --color-tn-dark5: #737aa2;
+  --color-tn-comment: #565f89;
+
+  /* Accents */
+  --color-tn-blue: #7aa2f7;
+  --color-tn-blue-dim: #3d59a1;
+  --color-tn-cyan: #7dcfff;
+  --color-tn-sky: #2ac3de;
+  --color-tn-magenta: #bb9af7;
+  --color-tn-purple: #9d7cd8;
+  --color-tn-green: #9ece6a;
+  --color-tn-teal: #73daca;
+  --color-tn-yellow: #e0af68;
+  --color-tn-orange: #ff9e64;
+  --color-tn-red: #f7768e;
+  --color-tn-red-dim: #db4b4b;
+
+  /* Light "paper" surface (polaroid frames); Tokyo Night Day background */
+  --color-tn-paper: #e1e2e7;
+}
+
+/* `static` emits every variable even when only a CSS module references it. */
+@theme static {
+  /* ── Surfaces ─────────────────────────────────────────────────────── */
+  --color-page: var(--color-tn-bg); /* body */
+  --color-deep: var(--color-tn-bg-deep); /* nav, footer, code blocks */
+  --color-surface: var(--color-tn-bg-deep); /* cards: a step darker than the page, as in the editor theme */
+  --color-raised: var(--color-tn-bg-raised); /* popovers, menus */
+  --color-hover: var(--color-tn-bg-highlight); /* hover, selected rows, pills */
+  --color-paper: var(--color-tn-paper);
+
+  /* ── Lines ────────────────────────────────────────────────────────── */
+  --color-line: var(--color-tn-bg-highlight); /* default 1px borders */
+  --color-line-strong: var(--color-tn-gutter); /* emphasised borders, rings */
+
+  /* ── Text ─────────────────────────────────────────────────────────── */
+  --color-fg: var(--color-tn-fg); /* headings, primary text */
+  --color-fg-secondary: var(--color-tn-fg-dark); /* body copy */
+  --color-fg-muted: var(--color-tn-fg-muted); /* captions, meta (AA) */
+  --color-fg-faint: var(--color-tn-comment); /* decoration only, never body */
+
+  /* ── Accent ───────────────────────────────────────────────────────── */
+  --color-accent: var(--color-tn-blue);
+  --color-accent-hover: var(--color-tn-cyan);
+  --color-on-accent: var(--color-tn-bg); /* text on a solid accent fill */
+  --color-accent-subtle: color-mix(in srgb, var(--color-tn-blue) 14%, transparent);
+  --color-accent-line: color-mix(in srgb, var(--color-tn-blue) 50%, transparent);
+
+  /* ── State ────────────────────────────────────────────────────────── */
+  --color-success: var(--color-tn-green);
+  --color-warning: var(--color-tn-yellow);
+  --color-danger: var(--color-tn-red);
+  --color-info: var(--color-tn-cyan);
+
+  /* ── Data: activity heatmaps (derived) ────────────────────────────── */
+  /* Steps move from teal toward the palette green so mid levels read as
+     green rather than olive, which is what alpha-blending green on navy gives.
+     The top step is deliberately softer than the palette green (#9ece6a). */
+  --color-heat-0: #22263a;
+  --color-heat-1: #25403f;
+  --color-heat-2: #2f6552;
+  --color-heat-3: #4a8a5e;
+  --color-heat-4: #6aa66a;
+
+  /* ── Brand colours: the contact tiles ─────────────────────────────── */
+  /* Each pair is the tile (bg) and its logo (fg). Taken from the brands' own
+     pages where they publish a colour (Discord, Spotify, LinkedIn, Cal.com's
+     greys, Hardcover's site); GitHub, X and Gmail follow their logos. */
+  --brand-email-bg: #f8f9fa;
+  --brand-email-fg: #ea4335;
+  --brand-discord-bg: #5865f2;
+  --brand-discord-fg: #ffffff;
+  --brand-github-bg: #1e1e2d;
+  --brand-github-fg: #f0f6fc;
+  --brand-linkedin-bg: #0a66c2;
+  --brand-linkedin-fg: #ffffff;
+  --brand-x-bg: #000000;
+  --brand-x-fg: #ffffff;
+  --brand-instagram-bg: linear-gradient(
+    45deg,
+    #feda75,
+    #fa7e1e 28%,
+    #d62976 55%,
+    #962fbf 78%,
+    #4f5bd5
+  );
+  --brand-instagram-fg: #ffffff;
+  --brand-spotify-bg: #1ed760;
+  --brand-spotify-fg: #121212;
+  --brand-lastfm-bg: #d51007;
+  --brand-lastfm-fg: #ffffff;
+  --brand-hardcover-bg: #1f2937;
+  --brand-hardcover-fg: #ffffff;
+  --brand-trakt-bg: #ed1c24;
+  --brand-trakt-fg: #ffffff;
+  --brand-cal-bg: #f7f7f7;
+  --brand-cal-fg: #101010;
+
+  /* ── Syntax highlighting (prism.css) ──────────────────────────────── */
+  --color-syntax-base: var(--color-tn-fg);
+  --color-syntax-keyword: var(--color-tn-magenta);
+  --color-syntax-function: var(--color-tn-blue);
+  --color-syntax-string: var(--color-tn-green);
+  --color-syntax-number: var(--color-tn-orange);
+  --color-syntax-type: var(--color-tn-sky);
+  --color-syntax-punctuation: var(--color-tn-dark5);
+  --color-syntax-comment: var(--color-tn-comment);
+}
