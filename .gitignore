@@ -40,3 +40,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# design explorations, kept locally for now
+/src/app/demo/
+/public/dither/
+
+# local AI tooling state
+/.claude/
+/.impeccable/
+/.kiro/
+/PRODUCT.md
