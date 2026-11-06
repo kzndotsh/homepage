@@ -102,6 +102,16 @@
   font-weight: 600;
   letter-spacing: -0.02em;
 }
+@media (max-width: 560px) {
+  /* Four stats sit in an even two by two on a phone, not three and a stray one.
+     Five or more keep wrapping as before. */
+  .stats:not(:has(> :nth-child(5))) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 24px;
+    width: 100%;
+  }
+}
 .filters {
   display: flex;
   gap: 6px;
