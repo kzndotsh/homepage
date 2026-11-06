@@ -331,6 +331,10 @@
 .periodShort {
   display: none;
 }
+/* The switcher for the stacked layout; a wide screen shows both panels instead. */
+.stackBar {
+  display: none;
+}
 .musicBar {
   padding: 14px 24px;
   border-bottom: 1px solid var(--border);
@@ -462,13 +466,59 @@
     grid-template-columns: 1fr;
     gap: 0;
   }
+  /* Stacked: Artists, Albums, Tracks and Genres are four tabs in one row, and the
+     rankings and the genre map share one slot (the taller sets the height, so
+     switching never moves the page). */
+  .kindTabs,
+  .genresHead {
+    display: none;
+  }
+  .stackBar {
+    display: flex;
+    gap: 2px;
+    padding: 6px 20px 0;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .stackBar::-webkit-scrollbar {
+    display: none;
+  }
+  .stackTab {
+    flex: 1 1 auto;
+    padding: 10px 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition:
+      color 0.2s,
+      border-color 0.2s;
+  }
+  .stackTab:hover {
+    color: var(--text);
+  }
+  .stackTab[aria-selected='true'] {
+    color: var(--text);
+    border-color: var(--accent);
+  }
+  .musicLeft,
+  .musicRight {
+    grid-area: 1 / 1;
+  }
+  .musicSplit[data-view='charts'] .musicRight,
+  .musicSplit[data-view='genres'] .musicLeft {
+    visibility: hidden;
+    pointer-events: none;
+  }
   .musicLeft {
-    padding: 20px 20px 24px;
+    padding: 24px 20px;
   }
   .musicRight {
     padding: 24px 20px;
     border-left: 0;
-    border-top: 1px solid var(--border);
   }
   .musicBar {
     padding: 14px 20px;
@@ -476,6 +526,7 @@
   .treeIn {
     flex: none;
     height: 420px;
+    margin-top: 0;
   }
 }
 /* Title and stats in the left half; the status sits in the stats row of the right half,
@@ -618,6 +669,8 @@
 @media (max-width: 1100px) {
   .topPanel {
     min-height: 28.2rem;
+    /* the tab row sits right above, so the panel's own padding is the whole gap */
+    margin-top: 0;
   }
 }
 @media (max-width: 560px) {
@@ -677,11 +730,14 @@
   .musicBar {
     padding: 12px 14px;
   }
+  .stackBar {
+    padding: 4px 14px 0;
+  }
   .musicLeft {
-    padding: 16px 14px 18px;
+    padding: 18px 14px;
   }
   .musicRight {
-    padding: 20px 14px;
+    padding: 18px 14px;
   }
   .topList {
     gap: 12px;
@@ -727,6 +783,16 @@
   .shuffleNote {
     font-size: 16px;
     text-wrap: balance;
+  }
+}
+@media (max-width: 380px) {
+  /* four tabs fit the narrowest phones without scrolling */
+  .stackBar {
+    padding-inline: 8px;
+  }
+  .stackTab {
+    padding: 10px 5px;
+    font-size: 13.5px;
   }
 }
 @media (prefers-reduced-motion: no-preference) {

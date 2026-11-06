@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import type { KeyboardEvent } from 'react'
 import { LuPlay } from 'react-icons/lu'
 
@@ -17,7 +17,7 @@ import s from '../music.module.css'
 import ui from '@/components/ui/ui.module.css'
 import { TIER_FILLS, tierForRank } from '../tiers'
 
-const KINDS: { id: TopKind; label: string }[] = [
+export const KINDS: { id: TopKind; label: string }[] = [
   { id: 'artists', label: 'Artists' },
   { id: 'albums', label: 'Albums' },
   { id: 'tracks', label: 'Tracks' },
@@ -47,11 +47,14 @@ export const PERIODS: {
 export function TopCharts({
   data,
   period,
+  kind,
+  onKind: setKind,
 }: {
   data: TopChartsData
   period: TopPeriod
+  kind: TopKind
+  onKind: (kind: TopKind) => void
 }) {
-  const [kind, setKind] = useState<TopKind>('artists')
   const tabs = useRef<(HTMLButtonElement | null)[]>([])
 
   const move = (e: KeyboardEvent, i: number) => {
@@ -78,7 +81,7 @@ export function TopCharts({
   return (
     <>
       <div
-        className={cx(ui.tablist, s.tabsFlush)}
+        className={cx(ui.tablist, s.tabsFlush, s.kindTabs)}
         role="tablist"
         aria-label="What to rank"
       >
