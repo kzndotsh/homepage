@@ -6,10 +6,13 @@ import { FeaturedProjects } from '../components/FeaturedProjects'
 import { ProjectMarquee } from '../components/ProjectMarquee'
 import s from '../work.module.css'
 
-const projects = workEntries.filter((e) => e.kind === 'project')
-
 /** The stand-out projects shown large above the strip, in this order. */
 const FEATURED = ['Watchdog', 'gang.guide', 'fish-audio-suite']
+
+// The strip below holds the rest, so no project shows twice.
+const projects = workEntries.filter(
+  (e) => e.kind === 'project' && !FEATURED.includes(e.name),
+)
 
 const featured = FEATURED.flatMap((name) => {
   const entry = workEntries.find((e) => e.name === name)
@@ -23,7 +26,7 @@ export function ProjectsSection() {
       <PanelHeader id="proj" title="What I've been working on" />
       <p className={s.pmLabel}>Featured</p>
       <FeaturedProjects items={featured} />
-      <p className={s.pmLabel}>All projects</p>
+      <p className={s.pmLabel}>Other projects</p>
       <ProjectMarquee entries={projects} />
     </Panel>
   )
