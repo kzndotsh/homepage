@@ -1,0 +1,135 @@
+.libStrip {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+}
+.libStrip a {
+  display: block;
+  transition: transform 0.3s var(--ease);
+}
+.libStrip a:hover {
+  transform: translateY(-3px);
+}
+.libArt {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 6px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+}
+.libNoArt {
+  display: grid;
+  place-items: center;
+  padding: 6px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+  overflow: hidden;
+  color: var(--body);
+}
+.libList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(3, auto);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 24px;
+}
+.libRow {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.libRow > span {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.libTitle {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  height: 18px;
+  color: var(--text);
+  transition: color 0.2s;
+}
+.libRow:hover .libTitle {
+  color: var(--accent);
+}
+.libSub {
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 17px;
+  height: 17px;
+}
+.libNav {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+.libNav:hover {
+  color: var(--accent);
+}
+.libPrev svg {
+  transform: scaleX(-1);
+}
+/* The stats on the left, the pager on the right; the pager drops below when cramped. */
+.libHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px 20px;
+}
+.libPager {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+.libPage {
+  min-width: 3.4em;
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes libInNext {
+    from {
+      opacity: 0;
+      transform: translateX(14px);
+    }
+  }
+  @keyframes libInPrev {
+    from {
+      opacity: 0;
+      transform: translateX(-14px);
+    }
+  }
+  .libStrip[data-dir='next'],
+  .libList[data-dir='next'] {
+    animation: libInNext 0.35s var(--ease) both;
+  }
+  .libStrip[data-dir='prev'],
+  .libList[data-dir='prev'] {
+    animation: libInPrev 0.35s var(--ease) both;
+  }
+}
+.libBlank {
+  visibility: hidden;
+}
