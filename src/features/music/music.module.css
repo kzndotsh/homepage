@@ -851,7 +851,7 @@
   .npGrid {
     min-height: 50px;
     padding: 3px 0 7px;
-    row-gap: 0;
+    row-gap: 8px; /* trimmed text has no leading, so a wrapped title would touch the label */
     grid-template-rows: auto 1fr;
     box-sizing: border-box;
   }
