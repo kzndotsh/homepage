@@ -955,6 +955,29 @@ a.sign:hover .signArrow {
     white-space: nowrap;
   }
 }
+@media (max-width: 430px) {
+  /* no room for the commit chip beside "View source" on a small phone */
+  .footSha {
+    display: none;
+  }
+}
+.footRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+/* the same chip the git activity feed uses for a commit */
+.footSha {
+  padding: 1px 7px;
+  border-radius: 6px;
+  background: var(--hover);
+  color: var(--body);
+  font-size: 12px;
+  transition: color 0.2s;
+}
+.footSha:hover {
+  color: var(--accent);
+}
 .footSource {
   display: inline-flex;
   align-items: center;

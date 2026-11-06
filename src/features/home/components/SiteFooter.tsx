@@ -1,6 +1,9 @@
 import { SiGithub } from 'react-icons/si'
 
 import { site } from '@/config/site'
+import { cx } from '@/lib/cx'
+
+import ui from '@/components/ui/ui.module.css'
 
 import s from '../home.module.css'
 import { EggButton } from './EggButton'
@@ -17,6 +20,9 @@ const WORDMARK: readonly (readonly [string, number])[] = [
   ['s', -0.024],
   ['h', 0],
 ]
+
+// Set at build time in next.config.mjs.
+const SHA = process.env.NEXT_PUBLIC_GIT_SHA
 
 export function SiteFooter() {
   return (
@@ -37,10 +43,21 @@ export function SiteFooter() {
           and ❤️
         </span>
         <EggButton />
-        <a className={s.footSource} href={site.repo}>
-          <SiGithub aria-hidden="true" />
-          View source
-        </a>
+        <div className={s.footRight}>
+          <a className={s.footSource} href={site.repo}>
+            <SiGithub aria-hidden="true" />
+            View source
+          </a>
+          {SHA && (
+            <a
+              className={cx(s.footSha, ui.mono)}
+              href={`${site.repo}/commit/${SHA}`}
+              title="The commit this build is made from"
+            >
+              {SHA}
+            </a>
+          )}
+        </div>
       </div>
     </footer>
   )

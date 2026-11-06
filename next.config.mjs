@@ -1,3 +1,5 @@
+import { execSync } from 'node:child_process'
+
 import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare'
 
 const MARKDOWN = {
@@ -15,8 +17,22 @@ const discovery = (md) => [
   { key: 'Vary', value: 'Accept' },
 ]
 
+/** The commit this build is made from, shown in the footer. Empty outside a git checkout. */
+const commit = (() => {
+  try {
+    return execSync('git rev-parse --short=7 HEAD', {
+      stdio: ['ignore', 'pipe', 'ignore'],
+    })
+      .toString()
+      .trim()
+  } catch {
+    return ''
+  }
+})()
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  env: { NEXT_PUBLIC_GIT_SHA: commit },
   async rewrites() {
     return {
       // A request that asks for Markdown gets the Markdown version of the same URL.
