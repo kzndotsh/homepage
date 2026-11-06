@@ -261,6 +261,7 @@ export function ApiPlayground() {
         {ENDPOINTS.map((e, i) => {
           const r = results[e.path]
           const on = i === sel
+          const bad = r === 'error' || (r !== undefined && !r.ok)
           return (
             <li key={e.path}>
               <button
@@ -273,15 +274,15 @@ export function ApiPlayground() {
                   {e.path.replace('/api/v1', '') || '/api'}
                 </span>
                 {r && (
-                  <span
-                    className={cx(
-                      s.apiChip,
-                      r !== 'error' && (r.ok ? s.apiOk : s.apiBad),
-                      r === 'error' && s.apiBad,
-                    )}
-                  >
-                    {r === 'error' ? 'failed' : r.status}
-                  </span>
+                  <>
+                    <span
+                      className={cx(s.apiDot, bad ? s.apiBad : s.apiOk)}
+                      aria-hidden="true"
+                    />
+                    <span className="sr-only">
+                      {r === 'error' ? 'failed' : r.status}
+                    </span>
+                  </>
                 )}
               </button>
             </li>
