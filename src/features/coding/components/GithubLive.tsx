@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { formatNumber as nf } from '@/lib/formatNumber'
 import type { GithubActivity, GithubEventKind } from '@/lib/integrations/types'
@@ -24,8 +24,15 @@ function Heatmap({
   const step = 14
   const total = calendar.reduce((a, c) => a + c.count, 0)
 
+  // On a narrow screen the calendar scrolls; start at the newest weeks.
+  const wrap = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const el = wrap.current
+    if (el) el.scrollLeft = el.scrollWidth
+  }, [])
+
   return (
-    <div className={s.heatWrap}>
+    <div ref={wrap} className={s.heatWrap}>
       <svg
         className={s.heat}
         viewBox={`0 0 ${weeks.length * step + 4} ${7 * step + 18}`}
