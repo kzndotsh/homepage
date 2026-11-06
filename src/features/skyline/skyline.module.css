@@ -1,0 +1,56 @@
+.canvas {
+  display: block;
+  width: 100%;
+  flex: 1;
+  min-height: clamp(240px, 32vw, 460px);
+  image-rendering: pixelated;
+}
+/* Fills a positioned parent. The left side fades out so text can sit on it.
+   The baked still sits underneath; the canvas fades in on top of it. */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  /* Baked from the live canvas by scripts/skyline-placeholder.mjs at the hero's
+     desktop size (667 cells x 2px = 1334px), anchored bottom left like the
+     canvas's cell grid, so the dither lines up with it. */
+  background: url('/skyline/charlotte-dither.png') left bottom /
+    min(100%, 1334px) auto no-repeat;
+  image-rendering: pixelated;
+  -webkit-mask-image: linear-gradient(to right, transparent 28%, #000 72%);
+  mask-image: linear-gradient(to right, transparent 28%, #000 72%);
+}
+.fill {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.fill[data-ready='true'] {
+  opacity: 1;
+}
+@media (max-width: 720px) {
+  .backdrop {
+    opacity: 0.55;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 20%, #000 90%);
+    mask-image: linear-gradient(to bottom, transparent 20%, #000 90%);
+  }
+}
+.credit {
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  z-index: 1;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-deep) 85%, transparent);
+  color: var(--body);
+  font-size: 11px;
+  transition: color 0.2s;
+}
+.credit:hover {
+  color: var(--text);
+}

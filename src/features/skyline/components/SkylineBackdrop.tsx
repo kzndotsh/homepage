@@ -1,0 +1,31 @@
+import { preload } from 'react-dom'
+
+import s from '../skyline.module.css'
+import { SkylineCanvas } from './SkylineCanvas'
+
+const PHOTO = '/skyline/charlotte.jpg'
+/** One frame of the shader, baked by scripts/skyline-placeholder.py. */
+const STILL = '/skyline/charlotte-dither.png'
+const CREDIT_URL =
+  'https://commons.wikimedia.org/wiki/File:Charlotte_night_skyline_2016.jpg'
+
+/**
+ * The dithered Charlotte night photo as a backdrop. Put it first inside a
+ * positioned, overflow-hidden parent; it fades out towards the left. A baked
+ * still shows at once and the live canvas fades in over it.
+ */
+export function SkylineBackdrop() {
+  // Start both downloads with the HTML instead of waiting for the script.
+  preload(STILL, { as: 'image', fetchPriority: 'high' })
+  preload(PHOTO, { as: 'image' })
+  return (
+    <>
+      <div className={s.backdrop}>
+        <SkylineCanvas src={PHOTO} fill />
+      </div>
+      <a className={s.credit} href={CREDIT_URL}>
+        Photo: Nan Palmero, CC BY 2.0
+      </a>
+    </>
+  )
+}
