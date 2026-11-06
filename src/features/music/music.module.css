@@ -500,7 +500,8 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  align-self: center;
+  align-self: start;
+  margin-top: 4px; /* in line with the other cards' links, even beside a two-line title */
   font-size: 13px;
   color: var(--muted);
   transition: color 0.2s;

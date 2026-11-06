@@ -36,7 +36,11 @@
   justify-content: space-between;
   align-items: baseline;
   gap: 16px;
-  flex-wrap: wrap;
+}
+/* The title wraps inside its own space so the "via ..." link stays top right
+   on every card, instead of dropping under a long title. */
+.secHead > .h2 {
+  min-width: 0;
 }
 .h2 {
   font-size: 22px;
@@ -51,6 +55,8 @@
   margin: 0;
 }
 .secLink {
+  flex: none;
+  white-space: nowrap;
   color: var(--muted);
   font-size: 13px;
   font-weight: 500;
