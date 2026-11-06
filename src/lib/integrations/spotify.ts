@@ -32,9 +32,6 @@ async function accessToken(id: string, secret: string): Promise<string | null> {
     },
     body: 'grant_type=client_credentials',
     signal: AbortSignal.timeout(6000),
-    // A no-store fetch makes the whole page render on every request, which turns
-    // off its `revalidate`. The token lasts an hour, so cache it for 50 minutes.
-    next: { revalidate: 3000 },
   })
   if (!res.ok) return null
   const json = (await res.json()) as TokenResponse
@@ -55,7 +52,6 @@ async function one(
       {
         headers: { Authorization: `Bearer ${token}` },
         signal: AbortSignal.timeout(6000),
-        next: { revalidate: 300 },
       },
     )
     if (!res.ok) return null
@@ -139,7 +135,6 @@ export function findAlbumArt(
         {
           headers: { Authorization: `Bearer ${token}` },
           signal: AbortSignal.timeout(6000),
-          next: { revalidate: 3600 },
         },
       )
       if (!res.ok) return null

@@ -322,7 +322,6 @@ async function get<T>(
   const res = await fetch(url, {
     headers: headers(token),
     signal: AbortSignal.timeout(6000),
-    next: { revalidate: 300 },
   })
   return { status: res.status, data: res.ok ? ((await res.json()) as T) : null }
 }
@@ -336,7 +335,6 @@ async function authenticated(token: string): Promise<GithubActivity | null> {
       headers: { ...headers(token), 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: QUERY, variables: { login: LOGIN } }),
       signal: AbortSignal.timeout(6000),
-      next: { revalidate: 300 },
     }),
     get<RawEvent[]>(`${API}/users/${LOGIN}/events?per_page=50`, token),
   ])

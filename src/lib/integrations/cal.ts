@@ -60,7 +60,6 @@ async function calGet<T>(path: string, version: string): Promise<T | null> {
   const res = await fetch(`${API}${path}`, {
     headers: { Authorization: `Bearer ${token}`, 'cal-api-version': version },
     signal: AbortSignal.timeout(8000),
-    next: { revalidate: 300 },
   })
   if (!res.ok) return null
   return ((await res.json()) as { data: T }).data

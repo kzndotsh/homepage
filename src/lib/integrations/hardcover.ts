@@ -83,7 +83,6 @@ export async function fetchHardcoverLibrary(): Promise<HardcoverLibrary | null> 
       },
       body: JSON.stringify({ query: QUERY }),
       signal: AbortSignal.timeout(8000),
-      next: { revalidate: 3600 },
     })
     if (!res.ok) {
       console.error(`[hardcover] request failed: HTTP ${res.status}`)

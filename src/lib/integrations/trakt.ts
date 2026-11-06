@@ -47,7 +47,6 @@ export async function fetchTraktActivity(): Promise<TraktActivity | null> {
         'user-agent': 'kzn.sh/1.0 (+https://kzn.sh)',
       },
       signal: AbortSignal.timeout(8000),
-      next: { revalidate: 1800 },
     })
     if (!res.ok || res.status === 204) return null
     return (await res.json()) as T

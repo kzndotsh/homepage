@@ -30,7 +30,6 @@ async function call<T>(
   })
   const res = await fetch(`https://ws.audioscrobbler.com/2.0/?${qs}`, {
     signal: AbortSignal.timeout(6000),
-    next: { revalidate: 300 },
   })
   if (!res.ok) throw new Error(`lastfm ${method} ${res.status}`)
   const json = (await res.json()) as T & { error?: number }
