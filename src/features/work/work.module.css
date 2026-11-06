@@ -317,6 +317,13 @@ button.ganttRow[data-active='true'] .ganttTrack {
   border-bottom: 1px solid var(--border);
   background: var(--color-deep);
 }
+@media (max-width: 640px) {
+  /* the strip's diagrams get the same trim as the featured ones */
+  .pmThumb {
+    height: 84px;
+    padding: 0 6px;
+  }
+}
 .pmBody {
   display: flex;
   flex: 1;
