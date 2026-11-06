@@ -9,9 +9,9 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "tsx alchemy.run.ts --stage production",
-    "deploy:preview": "tsx alchemy.run.ts",
-    "destroy": "tsx alchemy.run.ts --stage production --destroy"
+    "deploy": "tsx --env-file=.env alchemy.run.ts --stage production",
+    "deploy:preview": "tsx --env-file=.env alchemy.run.ts",
+    "destroy": "tsx --env-file=.env alchemy.run.ts --stage production --destroy"
   },
   "type": "module",
   "browserslist": "defaults, not ie <= 11",

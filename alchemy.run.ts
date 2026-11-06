@@ -1,3 +1,5 @@
+import { createHmac } from 'node:crypto'
+
 import alchemy from 'alchemy'
 import {
   DurableObjectNamespace,
@@ -22,10 +24,24 @@ const SECRET_ENV = [
 
 function secretBindings():
   Record<string, ReturnType<typeof alchemy.secret>> | undefined {
-  const entries = SECRET_ENV.flatMap((key) => {
-    const value = process.env[key]
-    return value ? [[key, alchemy.secret(value)] as const] : []
-  })
+  const entries: (readonly [string, ReturnType<typeof alchemy.secret>])[] =
+    SECRET_ENV.flatMap((key) => {
+      const value = process.env[key]
+      return value ? [[key, alchemy.secret(value)] as const] : []
+    })
+  // The Worker calls itself to refresh the homepage snapshots (see
+  // src/lib/snapshots); this shared secret is how that route knows it is the
+  // Worker and not a stranger. Derived from the state password, so there is no
+  // extra value to keep.
+  const password = process.env.ALCHEMY_PASSWORD
+  if (password) {
+    entries.push([
+      'REFRESH_SECRET',
+      alchemy.secret(
+        createHmac('sha256', password).update('kzn-sh refresh').digest('hex'),
+      ),
+    ] as const)
+  }
   return entries.length ? Object.fromEntries(entries) : undefined
 }
 
