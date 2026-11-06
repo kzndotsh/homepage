@@ -246,6 +246,15 @@ button.ganttRow[data-active='true'] .ganttTrack {
 .ganttTrack i[data-faint='true'] {
   background: color-mix(in srgb, var(--accent) 35%, transparent);
 }
+@media (pointer: coarse) {
+  /* the bars are tap targets: give each row a thumb-sized band */
+  .ganttList {
+    gap: 0;
+  }
+  button.ganttRow {
+    padding: 7px 0;
+  }
+}
 @media (max-width: 900px) {
   .ganttRow {
     grid-template-columns: 110px minmax(0, 1fr);
