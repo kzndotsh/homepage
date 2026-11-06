@@ -27,7 +27,9 @@ import type {
 
 const USER = 'growwithlogan'
 const TZ = 'America/New_York'
-const TTL_MS = 6 * 60 * 60 * 1000
+// Only dedupes callers within one render; the long-lived copy is a snapshot in
+// R2 (lib/snapshots), which is shared between invocations.
+const TTL_MS = 60 * 1000
 const DAY_S = 86400
 const CONCURRENCY = 6
 const PLACEHOLDER_IMAGE = '2a96cbd8b46e442fc41c2b86b821562f'
@@ -497,6 +499,64 @@ async function buildGenresByPeriod(key: string): Promise<GenresByPeriod> {
     out[p] = weighGenres(lists[i], tags)
   })
   return out
+}
+
+/** Artist tags remembered between refreshes, so only new artists cost a request. */
+export type TagStore = Record<string, { at: number; tags: RawTag[] }>
+
+/** How many artist lookups one refresh may make. The rest wait for the next round. */
+const TAG_LOOKUPS_PER_REFRESH = 30
+
+/**
+ * Genre maps for every time range, built to fit one invocation's request budget:
+ * 6 top-artist calls plus at most TAG_LOOKUPS_PER_REFRESH tag lookups, the most
+ * played unknown artists first. `partial` says some artists still have no tags,
+ * so the caller should refresh again.
+ */
+export async function computeGenres(known: TagStore): Promise<{
+  data: GenresByPeriod
+  tags: TagStore
+  partial: boolean
+} | null> {
+  const key = process.env.LASTFM_TOKEN
+  if (!key) return null
+  const lists = await mapLimit(PERIODS, 3, (p) => topArtistsFor(p, key))
+
+  const played = new Map<string, { name: string; plays: number }>()
+  for (const a of lists.flat()) {
+    const id = a.name.toLowerCase()
+    played.set(id, {
+      name: a.name,
+      plays: (played.get(id)?.plays ?? 0) + a.plays,
+    })
+  }
+  const now = Date.now()
+  const missing = [...played.values()]
+    .filter((a) => {
+      const hit = known[a.name.toLowerCase()]
+      return !hit || now - hit.at >= TAG_TTL_MS
+    })
+    .sort((x, y) => y.plays - x.plays)
+  const batch = missing.slice(0, TAG_LOOKUPS_PER_REFRESH)
+  const looked = await mapLimit(batch, 3, (a) =>
+    artistTags(a.name, key).catch((): null => null),
+  )
+
+  const tags: TagStore = { ...known }
+  batch.forEach((a, i) => {
+    const found = looked[i]
+    if (found) tags[a.name.toLowerCase()] = { at: now, tags: found }
+  })
+  const byName = new Map(
+    Object.entries(tags).map(([name, v]) => [name, v.tags] as const),
+  )
+  const data = {} as GenresByPeriod
+  PERIODS.forEach((p, i) => {
+    data[p] = weighGenres(lists[i], byName)
+  })
+  const partial =
+    missing.length > batch.length || looked.some((found) => found === null)
+  return { data, tags, partial }
 }
 
 export function getGenresByPeriod(): Promise<GenresByPeriod | null> {
