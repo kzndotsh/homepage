@@ -1,3 +1,7 @@
+import { SiGithub } from 'react-icons/si'
+
+import { site } from '@/config/site'
+
 import s from '../home.module.css'
 import { EggButton } from './EggButton'
 
@@ -33,6 +37,10 @@ export function SiteFooter() {
           and ❤️
         </span>
         <EggButton />
+        <a className={s.footSource} href={site.repo}>
+          <SiGithub aria-hidden="true" />
+          View source
+        </a>
       </div>
     </footer>
   )

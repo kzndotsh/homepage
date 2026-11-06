@@ -2,6 +2,8 @@
 export const site = {
   name: 'kzn.sh',
   url: 'https://kzn.sh',
+  /** The site's own source, linked from the footer. */
+  repo: 'https://github.com/kzndotsh/homepage',
 } as const
 
 /** "/resume" -> "https://kzn.sh/resume". */
