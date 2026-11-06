@@ -326,10 +326,97 @@ async function get<T>(
   return { status: res.status, data: res.ok ? ((await res.json()) as T) : null }
 }
 
+// GitHub's events feed is not real time (its docs promise 30 seconds to 6 hours,
+// and pushes can take longer), so the push rows come from the commits API, which
+// is. Commits replace the PushEvent for the same commit; events still supply
+// issues, comments, pull requests and anything older.
+type RawRepo = {
+  full_name: string
+  private: boolean
+  fork: boolean
+  pushed_at: string
+}
+type RawCommit = {
+  sha: string
+  html_url: string
+  commit: { message?: string; committer?: { date?: string } }
+}
+
+async function recentCommits(token?: string): Promise<GithubEvent[]> {
+  const repos = token ? 4 : 2 // an unauthenticated caller has 60 requests an hour
+  const diffs = token ? 8 : 0
+  const listed = await get<RawRepo[]>(
+    `${API}/users/${LOGIN}/repos?type=owner&sort=pushed&per_page=10`,
+    token,
+  )
+  if (!listed.data) return []
+  const cutoff = Date.now() - 30 * 86_400_000
+  const picks = listed.data
+    .filter((r) => !r.private && !r.fork && Date.parse(r.pushed_at) > cutoff)
+    .slice(0, repos)
+  const lists = await Promise.all(
+    picks.map(async (r) => {
+      const { data } = await get<RawCommit[]>(
+        `${API}/repos/${r.full_name}/commits?author=${LOGIN}&per_page=8`,
+        token,
+      )
+      return (data ?? []).map((c) => ({ repo: r.full_name, c }))
+    }),
+  )
+  const rows = lists
+    .flat()
+    .map(({ repo, c }): GithubEvent => ({
+      id: `commit:${c.sha}`,
+      kind: 'push',
+      repo,
+      action: 'pushed',
+      title: firstLine(c.commit.message) ?? 'pushed commits',
+      url: c.html_url,
+      sha: short(c.sha),
+      diff: null,
+      at: c.commit.committer?.date ?? new Date().toISOString(),
+    }))
+    .sort((a, b) => b.at.localeCompare(a.at))
+
+  // Sizes need one request per commit, so only the newest few get them.
+  await Promise.all(
+    rows.slice(0, diffs).map(async (row) => {
+      const { data } = await get<CommitJson>(
+        `${API}/repos/${row.repo}/commits/${row.id.slice('commit:'.length)}`,
+        token,
+      )
+      if (data) {
+        row.diff = diffOf(
+          data.stats?.additions,
+          data.stats?.deletions,
+          data.files?.length,
+        )
+      }
+    }),
+  )
+  return rows
+}
+
+/** Events, minus pushes the commits already cover, merged with the commits. */
+async function withCommits(
+  raw: RawEvent[],
+  commits: GithubEvent[],
+  token?: string,
+): Promise<GithubEvent[]> {
+  const have = new Set(commits.map((c) => c.sha))
+  const rest = raw.filter(
+    (e) => !(e.type === 'PushEvent' && have.has(short(e.payload?.head))),
+  )
+  const events = await mapEvents(rest, token)
+  return [...events, ...commits]
+    .sort((a, b) => b.at.localeCompare(a.at))
+    .slice(0, MAX_EVENTS)
+}
+
 const QUERY = `query($login:String!){user(login:$login){followers{totalCount}repositories(privacy:PUBLIC){totalCount}own:repositories(first:100,privacy:PUBLIC,isFork:false){nodes{stargazerCount}}starredRepositories{totalCount}contributionsCollection{contributionCalendar{totalContributions weeks{contributionDays{date contributionCount}}}}}}`
 
 async function authenticated(token: string): Promise<GithubActivity | null> {
-  const [gql, events] = await Promise.all([
+  const [gql, events, commits] = await Promise.all([
     fetch(`${API}/graphql`, {
       method: 'POST',
       headers: { ...headers(token), 'Content-Type': 'application/json' },
@@ -337,6 +424,7 @@ async function authenticated(token: string): Promise<GithubActivity | null> {
       signal: AbortSignal.timeout(6000),
     }),
     get<RawEvent[]>(`${API}/users/${LOGIN}/events?per_page=50`, token),
+    recentCommits(token).catch((): GithubEvent[] => []),
   ])
   if (!gql.ok || !events.data) return null
   const user = ((await gql.json()) as CalendarResponse).data?.user
@@ -346,7 +434,7 @@ async function authenticated(token: string): Promise<GithubActivity | null> {
     source: 'authenticated',
     login: LOGIN,
     fetchedAt: new Date().toISOString(),
-    events: await mapEvents(events.data, token),
+    events: await withCommits(events.data, commits, token),
     calendar: cal.weeks.flatMap((w) =>
       w.contributionDays.map((d) => ({
         date: d.date,
@@ -364,19 +452,20 @@ async function authenticated(token: string): Promise<GithubActivity | null> {
 }
 
 async function publicOnly(): Promise<GithubActivity | null> {
-  const [events, user, repos] = await Promise.all([
+  const [events, user, repos, commits] = await Promise.all([
     get<RawEvent[]>(`${API}/users/${LOGIN}/events/public?per_page=50`),
     get<RawUser>(`${API}/users/${LOGIN}`),
     get<{ stargazers_count: number; fork: boolean }[]>(
       `${API}/users/${LOGIN}/repos?type=owner&per_page=100`,
     ),
+    recentCommits().catch((): GithubEvent[] => []),
   ])
   if (!events.data || !user.data) return null
   return {
     source: 'public',
     login: LOGIN,
     fetchedAt: new Date().toISOString(),
-    events: await mapEvents(events.data),
+    events: await withCommits(events.data, commits),
     calendar: null,
     totals: {
       publicRepos: user.data.public_repos,
