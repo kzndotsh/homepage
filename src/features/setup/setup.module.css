@@ -202,6 +202,27 @@
   .dkEnd > span:nth-child(-n + 4) {
     display: none;
   }
+  /* The fetch stacks: a small logo, then the rows at full width, so values like
+     the CPU and display wrap once instead of into a four-line sliver. */
+  .dkFetch {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .dkLogo {
+    width: 52px;
+    height: 52px;
+  }
+  .dkRows {
+    width: 100%;
+  }
+  .dkRows > div {
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 4px;
+  }
+  .dkRows dd {
+    text-wrap: balance;
+  }
 }
 .dkMid a {
   color: inherit;
