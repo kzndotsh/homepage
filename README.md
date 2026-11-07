@@ -51,6 +51,7 @@ Every integration is optional. With no token its section shows a fallback instea
 | `TRAKT_CLIENT_ID`, `TRAKT_USERNAME` | Watching |
 | `CAL_TOKEN` | Live booking slots |
 | `ALCHEMY_PASSWORD` | Deploys only. Encrypts the secrets Alchemy stores; keep it |
+| `ALCHEMY_STATE_TOKEN` | Deploys only. Guards the Alchemy state in Cloudflare; the same value everywhere you deploy from |
 
 ### Scripts
 
@@ -106,7 +107,7 @@ npx alchemy login
 
 Then `npm run deploy`. The scripts load `.env` so the tokens and `ALCHEMY_PASSWORD` get bound as Worker secrets; without it none are bound. The first request after a deploy takes several seconds while the snapshots fill, so open the site once afterwards.
 
-Pushing to `main` does not deploy. `wrangler.jsonc` and `.alchemy/` are generated and gitignored.
+Pushing to `main` deploys through GitHub Actions (`.github/workflows/deploy.yml`, which needs the repo secrets listed in `AGENTS.md`); `npm run deploy` still works from a machine that has the same `.env`. `wrangler.jsonc` and `.alchemy/` are generated and gitignored.
 
 More detail on conventions, versions that must move together, and deploy pitfalls is in [`AGENTS.md`](./AGENTS.md).
 

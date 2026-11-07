@@ -8,8 +8,14 @@ import {
   R2Bucket,
   Self,
 } from 'alchemy/cloudflare'
+import { CloudflareStateStore } from 'alchemy/state'
 
-const app = await alchemy('kzn-sh')
+// State lives in the Cloudflare account (a Durable Object worker, alchemy-state-service)
+// so a deploy from CI and one from this machine see the same resources. Both need
+// the same ALCHEMY_STATE_TOKEN.
+const app = await alchemy('kzn-sh', {
+  stateStore: (scope) => new CloudflareStateStore(scope),
+})
 const isProd = app.stage === 'production'
 
 const SECRET_ENV = [

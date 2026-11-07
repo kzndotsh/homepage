@@ -17,6 +17,7 @@
     "knip": "knip --no-config-hints",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "rm -rf .next/cache/fetch-cache && tsx --env-file=.env alchemy.run.ts --stage production",
+    "deploy:ci": "rm -rf .next/cache/fetch-cache && tsx alchemy.run.ts --stage production",
     "deploy:preview": "rm -rf .next/cache/fetch-cache && tsx --env-file=.env alchemy.run.ts",
     "destroy": "tsx --env-file=.env alchemy.run.ts --stage production --destroy",
     "prepare": "lefthook install || true"
