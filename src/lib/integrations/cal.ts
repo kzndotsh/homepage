@@ -1,4 +1,5 @@
 import type { CalAvailability, CalEventType } from '@/lib/integrations/types'
+import { readJson } from '@/lib/readJson'
 
 const API = 'https://api.cal.com/v2'
 // Cal.com versions each endpoint family separately.
@@ -62,7 +63,7 @@ async function calGet<T>(path: string, version: string): Promise<T | null> {
     signal: AbortSignal.timeout(8000),
   })
   if (!res.ok) return null
-  return ((await res.json()) as { data: T }).data
+  return (await readJson<{ data: T }>(res)).data
 }
 
 export async function fetchCalAvailability(): Promise<CalAvailability | null> {
@@ -169,12 +170,12 @@ export async function createCalBooking(
       signal: AbortSignal.timeout(15_000),
       cache: 'no-store',
     })
-    const json = (await res.json().catch(() => null)) as {
+    const json = await readJson<{
       status?: string
       data?: { uid?: string; start?: string; status?: string }
       error?: { message?: string } | string
       message?: string
-    } | null
+    }>(res).catch(() => null)
 
     if (res.ok && json?.status === 'success' && json.data?.uid) {
       return {

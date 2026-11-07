@@ -20,37 +20,37 @@ import type {
 // Every function resolves to null when credentials are missing or the
 // upstream call fails, so callers always render a static fallback.
 export async function getGithubActivity(): Promise<GithubActivity | null> {
-  return await fetchGithubActivity()
+  return fetchGithubActivity()
 }
 
 export async function getSpotifyPlaylists(): Promise<Record<
   string,
   SpotifyPlaylistInfo
 > | null> {
-  return await fetchSpotifyPlaylists()
+  return fetchSpotifyPlaylists()
 }
 
 export async function getLastfmFavorites(): Promise<LastfmFavorites | null> {
-  return await fetchLastfmFavorites()
+  return fetchLastfmFavorites()
 }
 
 export async function getCalAvailability(): Promise<CalAvailability | null> {
-  return await fetchCalAvailability()
+  return fetchCalAvailability()
 }
 
 export { createCalBooking } from '@/lib/integrations/cal'
 export type { BookingOutcome, BookingRequest } from '@/lib/integrations/cal'
 
 export async function getPublicEventTypeIds(): Promise<number[]> {
-  return await fetchPublicEventTypeIds()
+  return fetchPublicEventTypeIds()
 }
 
 export async function getHardcoverLibrary(): Promise<HardcoverLibrary | null> {
-  return await fetchHardcoverLibrary()
+  return fetchHardcoverLibrary()
 }
 
 export async function getTraktActivity(): Promise<TraktActivity | null> {
-  return await fetchTraktActivity()
+  return fetchTraktActivity()
 }
 
 export { playlistIds } from '@/lib/integrations/spotify'

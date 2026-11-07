@@ -171,7 +171,9 @@ function CopyButton({
     <button
       type="button"
       className={cx(s.apiCopy, className)}
-      onClick={copy}
+      onClick={() => {
+        void copy()
+      }}
       aria-label={copied ? 'Copied' : `Copy ${label}`}
     >
       {copied ? (
@@ -305,7 +307,10 @@ export function ApiPlayground() {
             data-m={method}
             value={method}
             aria-label="HTTP method"
-            onChange={(e) => setMethod(e.target.value as Method)}
+            onChange={(e) => {
+              const next = METHODS.find((m) => m === e.target.value)
+              if (next) setMethod(next)
+            }}
           >
             {METHODS.map((m) => (
               <option key={m} value={m}>
@@ -320,7 +325,9 @@ export function ApiPlayground() {
           <button
             type="button"
             className={s.apiSend}
-            onClick={send}
+            onClick={() => {
+              void send()
+            }}
             disabled={busy}
             aria-busy={busy}
           >
@@ -432,6 +439,7 @@ export function ApiPlayground() {
               <CopyButton text={result.body} label="response" />
             )}
           </div>
+          {/* oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- a scrollable code block must be focusable for keyboard users to scroll it */}
           <pre className={cx(s.apiBody, ui.mono)} tabIndex={0}>
             {result && result !== 'error' ? (
               <Json text={result.body} />

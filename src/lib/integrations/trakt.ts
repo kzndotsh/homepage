@@ -1,4 +1,5 @@
 import type { TraktActivity, TraktItem } from '@/lib/integrations/types'
+import { readJson } from '@/lib/readJson'
 
 const API = 'https://api.trakt.tv'
 const DAY = 86_400_000
@@ -49,7 +50,7 @@ export async function fetchTraktActivity(): Promise<TraktActivity | null> {
       signal: AbortSignal.timeout(8000),
     })
     if (!res.ok || res.status === 204) return null
-    return (await res.json()) as T
+    return readJson<T>(res)
   }
 
   try {
@@ -79,17 +80,17 @@ export async function fetchTraktActivity(): Promise<TraktActivity | null> {
       const m = row.type === 'movie' ? row.movie : row.show
       if (!m) continue
       const day = row.watched_at.slice(0, 10)
-      const key = `${row.type}:${m.ids.slug}:${day}`
+      const itemKey = `${row.type}:${m.ids.slug}:${day}`
       const label = row.episode
         ? `${code(row.episode)}${row.episode.title ? ` ${row.episode.title}` : ''}`
         : null
-      const hit = byKey.get(key)
+      const hit = byKey.get(itemKey)
       if (hit) {
         hit.count += 1
         continue
       }
       const item: TraktItem = {
-        id: key,
+        id: itemKey,
         kind: row.type === 'movie' ? 'movie' : 'show',
         title: m.title,
         year: m.year,
@@ -100,7 +101,7 @@ export async function fetchTraktActivity(): Promise<TraktActivity | null> {
         last: label,
         runtime: m.runtime ?? null,
       }
-      byKey.set(key, item)
+      byKey.set(itemKey, item)
       recent.push(item)
     }
 

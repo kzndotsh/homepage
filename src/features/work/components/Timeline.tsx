@@ -1,5 +1,6 @@
 import { earlierWork, experience } from '@/content'
 import { monthIndex, monthLabel, rangeLabel } from '@/content/cvDates'
+import { cssVars } from '@/lib/cssVars'
 
 import s from '../work.module.css'
 
@@ -7,6 +8,8 @@ const FIRST_YEAR = 2013
 
 /** Every role as a bar on one shared time axis, so overlaps and the long arc show at a glance. */
 export function Timeline() {
+  // Roles that are still going end this month. The page is static, so this is the build time.
+  // oxlint-disable-next-line react/purity
   const now = new Date().toISOString().slice(0, 7)
   const rows = [
     ...experience.map((r) => ({
@@ -59,7 +62,7 @@ export function Timeline() {
   return (
     <div
       className={s.gantt}
-      style={{ '--yr': `${(12 / span) * 100}%` } as React.CSSProperties}
+      style={cssVars({ '--yr': `${(12 / span) * 100}%` })}
     >
       <div className={s.ganttAxis} aria-hidden="true">
         {years.map((y) => (

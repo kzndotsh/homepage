@@ -10,13 +10,16 @@ import { EXP_ID } from '../expId'
  */
 export function ExperienceLinks({ children }: { children: ReactNode }) {
   return (
+    // One delegated click handler; every row is already keyboard-operable through its <summary>.
+    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
       onClick={(e) => {
-        const bar = (e.target as Element).closest<HTMLElement>('[data-open]')
+        if (!(e.target instanceof Element)) return
+        const bar = e.target.closest<HTMLElement>('[data-open]')
         const row = bar && document.getElementById(EXP_ID + bar.dataset.open)
         if (!bar) {
           // The summary toggles itself; the rest of the row (dates, padding) should too.
-          const t = e.target as Element
+          const t = e.target
           const item = t.closest<HTMLElement>(`li[id^="${EXP_ID}"]`)
           if (!item || t.closest('summary, ul, a, button')) return
           item.querySelector('details')?.toggleAttribute('open')

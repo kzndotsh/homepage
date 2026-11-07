@@ -33,7 +33,10 @@ const none = { available: false }
  */
 async function get(request: Request): Promise<Response> {
   const q = new URL(request.url).searchParams
-  const pick = (key: string) => q.get(key) || null
+  const pick = (key: string) => {
+    const value = q.get(key)
+    return value === '' ? null : value
+  }
 
   const section = pick('section') ?? 'favorites'
   if (!isMusicSection(section)) {

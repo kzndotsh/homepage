@@ -1,4 +1,5 @@
 import type { LastfmFavorites } from '@/lib/integrations/types'
+import { readJson } from '@/lib/readJson'
 
 const USER = 'growwithlogan'
 
@@ -32,7 +33,7 @@ async function call<T>(
     signal: AbortSignal.timeout(6000),
   })
   if (!res.ok) throw new Error(`lastfm ${method} ${res.status}`)
-  const json = (await res.json()) as T & { error?: number }
+  const json = await readJson<T & { error?: number }>(res)
   if (json.error) throw new Error(`lastfm ${method} error ${json.error}`)
   return json
 }

@@ -59,7 +59,7 @@ export function GenreTreemap({ data }: { data: GenreMap | null }) {
   // under the map instead of sitting there as empty boxes.
   const layout = useMemo(() => {
     if (!all || all.length === 0) return null
-    const box = { x: 0, y: 0, w: size.w, h: size.h }
+    const bounds = { x: 0, y: 0, w: size.w, h: size.h }
     const items: Item[] = all.map((t) => ({
       name: t.name,
       weight: t.weight ** AREA_POWER,
@@ -67,10 +67,10 @@ export function GenreTreemap({ data }: { data: GenreMap | null }) {
     }))
     let shown = all.length
     for (; shown > MIN_TILES; shown--) {
-      const rects = squarify(items.slice(0, shown), box)
+      const rects = squarify(items.slice(0, shown), bounds)
       if (rects.every((r) => fitLabel(r.name, r.w - GAP, r.h - GAP))) break
     }
-    const tiles = squarify(items.slice(0, shown), box).map((r) => ({
+    const tiles = squarify(items.slice(0, shown), bounds).map((r) => ({
       ...r,
       label: fitLabel(r.name, r.w - GAP, r.h - GAP),
     }))
@@ -130,6 +130,7 @@ export function GenreTreemap({ data }: { data: GenreMap | null }) {
           {layout.tiles.map((r, idx) => {
             const tier = idx < 2 ? 0 : idx < 6 ? 1 : idx < 14 ? 2 : 3
             const active = hover?.name === r.name
+            const { label } = r
             return (
               <g
                 key={r.name}
@@ -148,9 +149,9 @@ export function GenreTreemap({ data }: { data: GenreMap | null }) {
                     strokeWidth: 1.5,
                   }}
                 />
-                {r.label && (
+                {label && (
                   <text
-                    fontSize={r.label.fs}
+                    fontSize={label.fs}
                     fontWeight={600}
                     style={{
                       fill:
@@ -160,16 +161,11 @@ export function GenreTreemap({ data }: { data: GenreMap | null }) {
                       pointerEvents: 'none',
                     }}
                   >
-                    {r.label.lines.map((line, i) => (
+                    {label.lines.map((line, i) => (
                       <tspan
                         key={i}
                         x={r.x + PAD + GAP / 2}
-                        y={
-                          r.y +
-                          PAD +
-                          r.label!.fs * 0.9 +
-                          i * r.label!.fs * LEADING
-                        }
+                        y={r.y + PAD + label.fs * 0.9 + i * label.fs * LEADING}
                       >
                         {line}
                       </tspan>

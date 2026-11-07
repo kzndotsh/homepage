@@ -1,5 +1,6 @@
 import playlists from '@/content/playlists-data'
 import type { SpotifyPlaylistInfo } from '@/lib/integrations/types'
+import { readJson } from '@/lib/readJson'
 
 // Not tested live: no Spotify credentials were available when written.
 let cached: { token: string; expires: number } | null = null
@@ -34,7 +35,7 @@ async function accessToken(id: string, secret: string): Promise<string | null> {
     signal: AbortSignal.timeout(6000),
   })
   if (!res.ok) return null
-  const json = (await res.json()) as TokenResponse
+  const json = await readJson<TokenResponse>(res)
   cached = {
     token: json.access_token,
     expires: Date.now() + json.expires_in * 1000,
@@ -55,7 +56,7 @@ async function one(
       },
     )
     if (!res.ok) return null
-    const p = (await res.json()) as PlaylistResponse
+    const p = await readJson<PlaylistResponse>(res)
     return {
       id: p.id,
       name: p.name,
@@ -138,7 +139,7 @@ export async function findAlbumArt(
         },
       )
       if (!res.ok) return null
-      const items = ((await res.json()) as SearchResponse).tracks?.items ?? []
+      const items = (await readJson<SearchResponse>(res)).tracks?.items ?? []
       const wanted = norm(artist)
       const match = items.find((i) =>
         i.artists.some((a) => {

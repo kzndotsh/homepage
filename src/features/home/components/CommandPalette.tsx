@@ -32,14 +32,17 @@ function jump(id: string) {
   history.replaceState(null, '', `#${id}`)
 }
 
-const external = (href: string) => () =>
+const external = (href: string) => () => {
   window.open(href, '_blank', 'noreferrer')
+}
 const same = (href: string) => () => {
   window.location.href = href
 }
 
 /** Opens the palette from anywhere (the nav button uses this). */
-export const openPalette = () => window.dispatchEvent(new Event(OPEN_EVENT))
+export const openPalette = () => {
+  window.dispatchEvent(new Event(OPEN_EVENT))
+}
 
 const isTyping = (t: EventTarget | null) =>
   t instanceof HTMLElement &&
@@ -60,13 +63,11 @@ export function CommandPalette() {
   const uid = useId()
 
   const copy = useCallback(
-    (text: string, what: string) => async () => {
-      try {
-        await navigator.clipboard.writeText(text)
-        setToast(`Copied ${what}`)
-      } catch {
-        setToast('Could not copy')
-      }
+    (text: string, what: string) => () => {
+      void navigator.clipboard.writeText(text).then(
+        () => setToast(`Copied ${what}`),
+        () => setToast('Could not copy'),
+      )
     },
     [],
   )
@@ -139,7 +140,9 @@ export function CommandPalette() {
         group: 'Fun',
         label: 'Make it rain eggs',
         keywords: 'easter egg surprise',
-        run: () => window.dispatchEvent(new Event(RAIN_EVENT)),
+        run: () => {
+          window.dispatchEvent(new Event(RAIN_EVENT))
+        },
       },
     ]
   }, [copy])
@@ -174,7 +177,8 @@ export function CommandPalette() {
   // Open and close from the keyboard, or from the nav button.
   useEffect(() => {
     const show = () => {
-      from.current = document.activeElement as HTMLElement | null
+      const focused = document.activeElement
+      from.current = focused instanceof HTMLElement ? focused : null
       setQ('')
       setAt(0)
       setOpen(true)
@@ -221,6 +225,8 @@ export function CommandPalette() {
     list.current
       ?.querySelector<HTMLElement>('[aria-selected="true"]')
       ?.scrollIntoView({ block: 'nearest' })
+    // Runs when the highlight or the filtered list changes; neither is read inside.
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies
   }, [active, shown])
 
   // The toast clears itself.
@@ -235,12 +241,15 @@ export function CommandPalette() {
   return (
     <>
       {open && (
+        // Clicking the backdrop is a mouse shortcut; Escape closes it from the keyboard.
+        // oxlint-disable-next-line jsx-a11y/no-static-element-interactions
         <div
           className={s.cpOverlay}
           onMouseDown={(e) => {
             if (e.target === e.currentTarget) close()
           }}
         >
+          {/* oxlint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- the keys typed in the field bubble up to this handler */}
           <div
             className={s.cpDialog}
             role="dialog"
@@ -308,6 +317,8 @@ export function CommandPalette() {
             <ul
               ref={list}
               id={`${uid}-list`}
+              // A combobox popup: focus stays in the input, which points at the active option.
+              // oxlint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
               role="listbox"
               aria-label="Commands"
               className={s.cpList}
@@ -318,12 +329,15 @@ export function CommandPalette() {
                 return (
                   <li key={c.id} role="presentation">
                     {head && <p className={s.cpGroup}>{c.group}</p>}
+                    {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/interactive-supports-focus -- options are driven from the input (aria-activedescendant), so they are not focusable */}
                     <div
                       id={`${uid}-${c.id}`}
                       role="option"
                       aria-selected={n === active}
                       className={s.cpRow}
-                      onMouseMove={() => n !== active && setAt(n)}
+                      onMouseMove={() => {
+                        if (n !== active) setAt(n)
+                      }}
                       onClick={() => run(c)}
                     >
                       <span className={s.cpLabel}>{c.label}</span>

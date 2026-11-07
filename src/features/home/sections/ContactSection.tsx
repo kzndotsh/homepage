@@ -41,7 +41,7 @@ const Mail = () => (
 
 /** The account name at the end of a profile URL: github.com/kzndotsh gives kzndotsh. */
 const handle = (url: string) =>
-  new URL(url).pathname.split('/').filter(Boolean).pop()!.replace(/^@/, '')
+  (new URL(url).pathname.split('/').findLast(Boolean) ?? '').replace(/^@/, '')
 
 export function ContactSection() {
   const { links } = person

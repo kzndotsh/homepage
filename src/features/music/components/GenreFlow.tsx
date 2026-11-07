@@ -43,6 +43,8 @@ export function GenreFlow({
     const ro = new ResizeObserver(measure)
     ro.observe(el)
     return () => ro.disconnect()
+    // Measure again whenever the list changes, though the measuring reads only the DOM.
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies
   }, [genres])
 
   const rest = hidden > 0 ? genres.slice(genres.length - hidden) : []
@@ -54,7 +56,12 @@ export function GenreFlow({
     if (timer.current) clearTimeout(timer.current)
     timer.current = null
   }
-  useEffect(() => cancelClose, [])
+  useEffect(
+    () => () => {
+      if (timer.current) clearTimeout(timer.current)
+    },
+    [],
+  )
 
   return (
     <div className={s.flow}>
@@ -70,6 +77,7 @@ export function GenreFlow({
       </div>
       {rest.length > 0 && (
         <div
+          role="presentation"
           className={s.morePop}
           onPointerEnter={(e) => {
             if (e.pointerType !== 'mouse') return

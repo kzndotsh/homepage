@@ -41,7 +41,8 @@ export function MusicSplit({
   const pick = (id: string) => {
     if (id === 'genres') setView('genres')
     else {
-      setKind(id as TopKind)
+      const next = KINDS.find((k) => k.id === id)
+      if (next) setKind(next.id)
       setView('charts')
     }
   }

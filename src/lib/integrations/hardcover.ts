@@ -1,4 +1,5 @@
 import type { HardcoverBook, HardcoverLibrary } from '@/lib/integrations/types'
+import { readJson } from '@/lib/readJson'
 
 const STATUS: Record<number, HardcoverBook['status']> = {
   1: 'want',
@@ -88,7 +89,7 @@ export async function fetchHardcoverLibrary(): Promise<HardcoverLibrary | null> 
       console.error(`[hardcover] request failed: HTTP ${res.status}`)
       return null
     }
-    const body = (await res.json()) as Response
+    const body = await readJson<Response>(res)
     const me = body.data?.me?.[0]
     if (!me) {
       console.error(

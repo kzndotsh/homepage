@@ -35,19 +35,19 @@ export function squarify(items: Item[], box: Rect): (Item & Rect)[] {
     if (w >= h) {
       const rw = rs / h
       let cy = y
-      row.forEach((a, k) => {
+      for (const [k, a] of row.entries()) {
         out.push({ ...items[i + k], x, y: cy, w: rw, h: a / rw })
         cy += a / rw
-      })
+      }
       x += rw
       w -= rw
     } else {
       const rh = rs / w
       let cx = x
-      row.forEach((a, k) => {
+      for (const [k, a] of row.entries()) {
         out.push({ ...items[i + k], x: cx, y, w: a / rh, h: rh })
         cx += a / rh
-      })
+      }
       y += rh
       h -= rh
     }

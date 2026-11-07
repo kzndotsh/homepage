@@ -1,7 +1,8 @@
 'use client'
 
-import { type CSSProperties, type ReactNode, useEffect, useRef } from 'react'
+import { type ReactNode, useEffect, useRef } from 'react'
 
+import { cssVars } from '@/lib/cssVars'
 import { cx } from '@/lib/cx'
 
 import s from './ui.module.css'
@@ -173,7 +174,9 @@ export function ScrollRow({
         // a pause before letting go means no throw
         settle(performance.now() - last.at > 90 ? 0 : speed)
         suppress = true
-        setTimeout(() => (suppress = false), 60)
+        setTimeout(() => {
+          suppress = false
+        }, 60)
       }
       from = null
     }
@@ -229,7 +232,7 @@ export function ScrollRow({
       ref={box}
       className={s.scrollRow}
       data-always={always ? '' : undefined}
-      style={{ '--tw': `${guess * 100}%` } as CSSProperties}
+      style={cssVars({ '--tw': `${guess * 100}%` })}
       suppressHydrationWarning
     >
       <ul ref={list} className={cx(className, s.scrollMask)}>

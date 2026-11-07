@@ -47,7 +47,7 @@ export function PickColumns({
       <div className={s.schedSlots}>
         <p className={s.slotHead}>{slotHead}</p>
         {/* Always rendered, so the times never jump when it appears. */}
-        <p className={`${s.slotSub} ${ui.mono}`}>{slotSub || null}</p>
+        <p className={`${s.slotSub} ${ui.mono}`}>{slotSub}</p>
         <div
           className={`${s.slots} ${s.times}`}
           role="group"

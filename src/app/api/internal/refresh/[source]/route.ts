@@ -13,6 +13,8 @@ const same = (a: string, b: string) => {
   return x.length === y.length && timingSafeEqual(x, y)
 }
 
+const isSource = (name: string): name is SourceName => name in SOURCES
+
 export async function POST(
   req: Request,
   { params }: { params: Promise<{ source: string }> },
@@ -20,9 +22,9 @@ export async function POST(
   const secret = process.env.REFRESH_SECRET
   const given = req.headers.get('x-refresh-secret') ?? ''
   const { source } = await params
-  if (!secret || !same(given, secret) || !(source in SOURCES)) {
+  if (!secret || !same(given, secret) || !isSource(source)) {
     return new Response('Not found', { status: 404 })
   }
-  const out = await refreshSnapshot(source as SourceName)
+  const out = await refreshSnapshot(source)
   return Response.json(out, { headers: { 'cache-control': 'no-store' } })
 }

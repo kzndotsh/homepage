@@ -34,7 +34,13 @@ export function CopyTile({
   }
 
   return (
-    <button type="button" className={s.sign} onClick={copy}>
+    <button
+      type="button"
+      className={s.sign}
+      onClick={() => {
+        void copy()
+      }}
+    >
       <span
         className={s.signIcon}
         style={{

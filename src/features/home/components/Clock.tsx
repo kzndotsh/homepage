@@ -33,6 +33,7 @@ const SET_NOW = `(function(){var r=document.currentScript.parentElement,p={};new
 export function Clock() {
   const now = useNow(15_000)
   // The page may be cached, so the server render is only a guess for visitors without scripts.
+  // oxlint-disable-next-line react/purity
   const f = face(now === null ? new Date() : new Date(now))
 
   return (

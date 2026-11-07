@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState, useTransition, type FormEvent } from 'react'
+import { useMemo, useState, useTransition, type SyntheticEvent } from 'react'
 
 import { person } from '@/content'
 import { useMounted } from '@/hooks/useMounted'
@@ -104,7 +104,7 @@ export function Booker({ availability }: { availability: CalAvailability }) {
   // The details step needs a chosen time; without one, fall back to picking.
   const onDetails = step === 'details' && dayKey !== null && slot !== null
 
-  function submit(e: FormEvent<HTMLFormElement>) {
+  function submit(e: SyntheticEvent<HTMLFormElement>) {
     e.preventDefault()
     if (slot === null) return
     const form = new FormData(e.currentTarget)

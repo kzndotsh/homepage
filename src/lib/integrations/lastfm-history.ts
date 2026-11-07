@@ -15,6 +15,7 @@ import type {
   WeeklyStream,
 } from '@/lib/integrations/lastfm-history-types'
 import { findAlbumArt } from '@/lib/integrations/spotify'
+import { readJson } from '@/lib/readJson'
 
 // Every function resolves to null on missing credentials or upstream failure.
 //
@@ -54,7 +55,7 @@ async function lfm<T>(
         signal: AbortSignal.timeout(8000),
       })
       if (!res.ok) throw new Error(`lastfm ${method} ${res.status}`)
-      const body = (await res.json()) as T & { error?: number }
+      const body = await readJson<T & { error?: number }>(res)
       if (body.error) throw new Error(`lastfm ${method} error ${body.error}`)
       return body
     } catch (error) {
@@ -90,6 +91,7 @@ async function cached<T>(
   fn: () => Promise<T | null>,
 ): Promise<T | null> {
   const hit = cache.get(name)
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- one cache holds many result types, keyed per call
   if (hit && Date.now() - hit.at < TTL_MS) return hit.p as Promise<T | null>
   const p = fn().then(
     (v) => {
@@ -223,7 +225,7 @@ async function buildHistory(key: string): Promise<ScrobbleHistory> {
   }
 
   const monthly = [...monthArtists.keys()].sort().map((month) => {
-    const artists = [...monthArtists.get(month)!]
+    const artists = [...(monthArtists.get(month) ?? [])]
     const scrobbles = artists.reduce((s, [, n]) => s + n, 0)
     const newArtists = artists.filter(
       ([a]) => firstMonth.get(a) === month,
@@ -280,7 +282,7 @@ async function buildHistory(key: string): Promise<ScrobbleHistory> {
 export async function getScrobbleHistory(): Promise<ScrobbleHistory | null> {
   return cached('history', async () => {
     const key = process.env.LASTFM_TOKEN
-    return key ? await buildHistory(key) : null
+    return key ? buildHistory(key) : null
   })
 }
 
@@ -342,7 +344,7 @@ async function buildWeekly(key: string): Promise<WeeklyStream> {
 export async function getWeeklyStream(): Promise<WeeklyStream | null> {
   return cached('weekly', async () => {
     const key = process.env.LASTFM_TOKEN
-    return key ? await buildWeekly(key) : null
+    return key ? buildWeekly(key) : null
   })
 }
 
@@ -493,6 +495,7 @@ async function buildGenresByPeriod(key: string): Promise<GenresByPeriod> {
   const lists = await mapLimit(PERIODS, 3, async (p) => topArtistsFor(p, key))
   const names = [...new Set(lists.flat().map((a) => a.name))]
   const tags = await tagsFor(names, key)
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- every period is filled below
   const out = {} as GenresByPeriod
   PERIODS.forEach((p, i) => {
     out[p] = weighGenres(lists[i], tags)
@@ -549,6 +552,7 @@ export async function computeGenres(known: TagStore): Promise<{
   const byName = new Map(
     Object.entries(tags).map(([name, v]) => [name, v.tags] as const),
   )
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- every period is filled below
   const data = {} as GenresByPeriod
   PERIODS.forEach((p, i) => {
     data[p] = weighGenres(lists[i], byName)
@@ -561,14 +565,14 @@ export async function computeGenres(known: TagStore): Promise<{
 export async function getGenresByPeriod(): Promise<GenresByPeriod | null> {
   return cached('genres-by-period', async () => {
     const key = process.env.LASTFM_TOKEN
-    return key ? await buildGenresByPeriod(key) : null
+    return key ? buildGenresByPeriod(key) : null
   })
 }
 
 export async function getGenreMap(): Promise<GenreMap | null> {
   return cached('genres', async () => {
     const key = process.env.LASTFM_TOKEN
-    return key ? await buildGenres(key) : null
+    return key ? buildGenres(key) : null
   })
 }
 
@@ -583,6 +587,7 @@ export async function getPeriodTops(): Promise<PeriodTops | null> {
         lfm<TopArtistsResp>('user.gettopartists', { period, limit: '10' }, key),
       ),
     )
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- every period is filled below
     const out = {} as PeriodTops
     PERIODS.forEach((p, i) => {
       out[p] = asArray(results[i].topartists.artist).map((a) => ({
@@ -662,6 +667,7 @@ export async function getTopCharts(): Promise<TopCharts | null> {
   return cached('charts', async () => {
     const key = process.env.LASTFM_TOKEN
     if (!key) return null
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- TOP_METHODS is keyed by TopKind
     const kinds = Object.keys(TOP_METHODS) as TopKind[]
     const jobs = kinds.flatMap((kind) =>
       PERIODS.map((period) => ({ kind, period })),
@@ -669,6 +675,7 @@ export async function getTopCharts(): Promise<TopCharts | null> {
     const rows = await mapLimit(jobs, 3, async ({ kind, period }) =>
       lfm<TopChartResp>(TOP_METHODS[kind], { period, limit: '10' }, key),
     )
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- every kind and period is filled below
     const out = { artists: {}, albums: {}, tracks: {} } as TopCharts
     jobs.forEach(({ kind, period }, i) => {
       out[kind][period] = topRows(kind, rows[i])
@@ -693,6 +700,8 @@ export async function getNowPlaying(): Promise<NowPlaying> {
     )
     const nowPlaying = t['@attr']?.nowplaying === 'true'
     let image = images.length ? images[images.length - 1]['#text'] : null
+    // An empty string means no album, the same as a missing one.
+    // oxlint-disable-next-line typescript/prefer-nullish-coalescing
     let album = t.album?.['#text'] || null
     if (!image) {
       // Last.fm has no cover (common for singles and DJ sets): ask Spotify.

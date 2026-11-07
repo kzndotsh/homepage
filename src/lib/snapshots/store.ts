@@ -34,6 +34,7 @@ export async function readStored<T>(name: string): Promise<Stored<T> | null> {
   if (!bucket) return null
   try {
     const obj = await bucket.get(keyFor(name))
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the stored value was written by this module as Stored<T>
     return obj ? ((await obj.json()) as Stored<T>) : null
   } catch (error) {
     console.error(`[snapshots] read ${name} failed:`, error)

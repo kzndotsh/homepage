@@ -70,9 +70,11 @@ export function ProjectMarquee({ entries }: { entries: WorkEntry[] }) {
     if (!el) return
 
     const copy = () => {
-      const a = el.children[0] as HTMLElement | undefined
-      const b = el.children[entries.length] as HTMLElement | undefined
-      return a && b ? b.offsetLeft - a.offsetLeft : 0
+      const a = el.children[0]
+      const b = el.children[entries.length]
+      return a instanceof HTMLElement && b instanceof HTMLElement
+        ? b.offsetLeft - a.offsetLeft
+        : 0
     }
 
     // Measured on resize only: reading offsetLeft every frame forced a layout.
@@ -90,13 +92,13 @@ export function ProjectMarquee({ entries }: { entries: WorkEntry[] }) {
     let fling = 0
     let samples: { t: number; left: number }[] = []
 
-    const wrap = (width: number) => {
-      if (!width) return
-      if (el.scrollLeft >= width * 2) {
-        el.scrollLeft -= width
+    const wrap = (span: number) => {
+      if (!span) return
+      if (el.scrollLeft >= span * 2) {
+        el.scrollLeft -= span
         pos = el.scrollLeft
-      } else if (el.scrollLeft < width) {
-        el.scrollLeft += width
+      } else if (el.scrollLeft < span) {
+        el.scrollLeft += span
         pos = el.scrollLeft
       }
     }
@@ -166,7 +168,7 @@ export function ProjectMarquee({ entries }: { entries: WorkEntry[] }) {
       el.scrollLeft = drag.left - dx
       const now = performance.now()
       samples.push({ t: now, left: el.scrollLeft })
-      samples = samples.filter((s) => now - s.t < 120)
+      samples = samples.filter((sample) => now - sample.t < 120)
     }
     const up = (e: PointerEvent) => {
       if (e.pointerType !== 'mouse') {
@@ -178,7 +180,7 @@ export function ProjectMarquee({ entries }: { entries: WorkEntry[] }) {
       }
       if (drag?.moved) {
         const now = performance.now()
-        const recent = samples.filter((s) => now - s.t < 120)
+        const recent = samples.filter((sample) => now - sample.t < 120)
         const first = recent[0]
         const lastS = recent.at(-1)
         if (first && lastS && lastS.t > first.t && now - lastS.t < 80) {

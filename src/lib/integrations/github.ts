@@ -4,6 +4,7 @@ import type {
   GithubEvent,
   GithubEventKind,
 } from '@/lib/integrations/types'
+import { readJson } from '@/lib/readJson'
 
 const LOGIN = 'kzndotsh'
 const API = 'https://api.github.com'
@@ -137,6 +138,7 @@ async function lookupDetails(
 ): Promise<Map<string, Detail>> {
   const jobs = new Map<string, { url: string; read: (j: unknown) => Detail }>()
   const readPr = (j: unknown): Detail => {
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the job's URL is the pull-request endpoint; every field is read optionally
     const pr = j as PrJson
     return {
       title: firstLine(pr.title),
@@ -145,6 +147,7 @@ async function lookupDetails(
     }
   }
   const readCommit = (j: unknown): Detail => {
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- the job's URL is the commit endpoint; every field is read optionally
     const c = j as CommitJson
     return {
       title: firstLine(c.commit?.message),
@@ -322,7 +325,7 @@ async function get<T>(
     headers: headers(token),
     signal: AbortSignal.timeout(6000),
   })
-  return { status: res.status, data: res.ok ? ((await res.json()) as T) : null }
+  return { status: res.status, data: res.ok ? await readJson<T>(res) : null }
 }
 
 // GitHub's events feed is not real time (its docs promise 30 seconds to 6 hours,
@@ -426,7 +429,7 @@ async function authenticated(token: string): Promise<GithubActivity | null> {
     recentCommits(token).catch((): GithubEvent[] => []),
   ])
   if (!gql.ok || !events.data) return null
-  const user = ((await gql.json()) as CalendarResponse).data?.user
+  const user = (await readJson<CalendarResponse>(gql)).data?.user
   if (!user) return null
   const cal = user.contributionsCollection.contributionCalendar
   return {

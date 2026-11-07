@@ -83,12 +83,20 @@ export default defineConfig({
     'typescript/return-await': 'warn',
     'typescript/promise-function-async': 'warn',
     'typescript/strict-void-return': 'warn',
-    'typescript/consistent-return': 'warn',
+    // Off: React effects return a cleanup on some paths and bare `return` on others,
+    // and `return undefined` trips unicorn/no-useless-undefined.
+    'typescript/consistent-return': 'off',
+    // `void promise()` is how a handler starts async work without returning it.
+    'eslint/no-void': ['warn', { allowAsStatement: true }],
     'typescript/no-misused-promises': 'warn',
     'typescript/no-non-null-assertion': 'warn',
     'typescript/prefer-nullish-coalescing': 'warn',
     'eslint/no-shadow': 'warn',
-    'eslint/no-use-before-define': 'warn',
+    // Hoisted functions and closures that call something declared further down are fine.
+    'eslint/no-use-before-define': [
+      'warn',
+      { functions: false, classes: false, variables: false },
+    ],
     'eslint/no-loop-func': 'warn',
     'react/purity': 'warn',
     'react/exhaustive-effect-dependencies': 'warn',
