@@ -17,7 +17,7 @@ const personNode = {
   alternateName: [person.alias, person.handle],
   url: site.url,
   email: person.email,
-  description: person.summary,
+  description: site.description,
   image: absolute('/opengraph-image.png'),
   address: {
     '@type': 'PostalAddress',

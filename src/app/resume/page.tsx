@@ -6,7 +6,7 @@ import { ResumePage } from '@/features/resume/ResumePage'
 import { resumeJsonLd } from '@/lib/structured-data'
 
 const description =
-  'Logan Honeycutt: full-stack builder. Experience, projects, skills and a PDF download.'
+  'The resume of Logan Honeycutt: experience, projects, skills and a PDF download.'
 
 export const metadata: Metadata = {
   title: 'Resume',
