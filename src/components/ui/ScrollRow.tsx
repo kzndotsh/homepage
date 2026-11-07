@@ -190,10 +190,29 @@ export function ScrollRow({
     el.addEventListener('click', click, true)
     el.addEventListener('dragstart', noGhost)
 
+    // Native listeners, not React's onClick: React reads `disabled` from the JSX
+    // (always true for the back arrow), so it would drop clicks even after the
+    // script above enables the button.
+    const page = (dir: 1 | -1) => () => {
+      const calm = matchMedia('(prefers-reduced-motion: reduce)').matches
+      el.scrollBy({
+        left: dir * el.clientWidth * 0.85,
+        behavior: calm ? 'auto' : 'smooth',
+      })
+    }
+    const back = page(-1)
+    const forward = page(1)
+    const prevBtn = prev.current
+    const nextBtn = next.current
+    prevBtn?.addEventListener('click', back)
+    nextBtn?.addEventListener('click', forward)
+
     return () => {
       if (frame) cancelAnimationFrame(frame)
       el.removeEventListener('scroll', schedule)
       resize.disconnect()
+      prevBtn?.removeEventListener('click', back)
+      nextBtn?.removeEventListener('click', forward)
       stopGlide()
       el.removeEventListener('wheel', stopGlide)
       el.removeEventListener('touchstart', stopGlide)
@@ -205,16 +224,6 @@ export function ScrollRow({
       window.removeEventListener('pointercancel', up)
     }
   }, [])
-
-  const page = (dir: 1 | -1) => {
-    const el = list.current
-    if (!el) return
-    const calm = matchMedia('(prefers-reduced-motion: reduce)').matches
-    el.scrollBy({
-      left: dir * el.clientWidth * 0.85,
-      behavior: calm ? 'auto' : 'smooth',
-    })
-  }
 
   return (
     <div
@@ -238,7 +247,6 @@ export function ScrollRow({
             className={cx(s.scrollArrow, s.scrollPrev)}
             disabled
             aria-label="Scroll left"
-            onClick={() => page(-1)}
           >
             <Chevron />
           </button>
@@ -247,7 +255,6 @@ export function ScrollRow({
             type="button"
             className={s.scrollArrow}
             aria-label="Scroll right"
-            onClick={() => page(1)}
           >
             <Chevron />
           </button>
