@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 
+import { RefIcon } from '@/components/RefIcon'
 import { formatNumber as nf } from '@/lib/formatNumber'
 import type { GithubActivity, GithubEventKind } from '@/lib/integrations/types'
 import { relativeTime } from '@/lib/relativeTime'
@@ -218,27 +219,40 @@ export function GithubLive({ data }: { data: GithubActivity }) {
                     </svg>
                     {e.repo}
                   </a>
-                  {e.diff && (
-                    <span className={`${s.evDiff} ${ui.mono}`}>
-                      <span className={s.evAdd}>+{nf(e.diff.additions)}</span>{' '}
-                      <span className={s.evDel}>
-                        &minus;{nf(e.diff.deletions)}
-                      </span>
-                      {e.diff.files > 0 && (
-                        <span className={s.evFiles}>
-                          {' '}
-                          {e.diff.files} {e.diff.files === 1 ? 'file' : 'files'}
-                        </span>
-                      )}
-                    </span>
+                  {e.thread && (
+                    <a className={s.evRef} href={e.thread.url}>
+                      <RefIcon
+                        kind={e.thread.url.includes('/pull/') ? 'pr' : 'issue'}
+                      />
+                      {e.thread.number}
+                    </a>
                   )}
                   {e.sha && (
                     <a
-                      className={`${s.evSha} ${ui.mono}`}
+                      className={s.evRef}
                       href={`https://github.com/${e.repo}/commit/${e.sha}`}
                     >
+                      <RefIcon kind="commit" />
                       {e.sha}
                     </a>
+                  )}
+                  {e.diff && (
+                    <span className={`${s.evDiff} ${ui.mono}`}>
+                      <RefIcon kind="diff" />
+                      <span>
+                        <span className={s.evAdd}>+{nf(e.diff.additions)}</span>{' '}
+                        <span className={s.evDel}>
+                          &minus;{nf(e.diff.deletions)}
+                        </span>
+                        {e.diff.files > 0 && (
+                          <span className={s.evFiles}>
+                            {' '}
+                            {e.diff.files}{' '}
+                            {e.diff.files === 1 ? 'file' : 'files'}
+                          </span>
+                        )}
+                      </span>
+                    </span>
                   )}
                 </span>
               </li>

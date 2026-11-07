@@ -2,6 +2,7 @@ import type {
   GithubActivity,
   GithubDiff,
   GithubEvent,
+  GithubThread,
   GithubEventKind,
 } from '@/lib/integrations/types'
 import { readJson } from '@/lib/readJson'
@@ -28,7 +29,13 @@ type RawEvent = {
       url?: string
     }
     head?: string
-    issue?: { title?: string; html_url?: string; number?: number }
+    issue?: {
+      title?: string
+      html_url?: string
+      number?: number
+      // Present when the "issue" is really a pull request (comments on one).
+      pull_request?: object
+    }
     comment?: { html_url?: string }
   }
 }
@@ -193,6 +200,7 @@ function mapEvent(e: RawEvent, details: Map<string, Detail>): GithubEvent {
   let title = e.type.replace(/Event$/, '')
   let url = repoUrl
   let sha: string | null = null
+  let thread: GithubThread | null = null
   let diff: GithubDiff | null = null
   const branch = p.ref?.replace('refs/heads/', '')
   const verb = p.action ?? 'updated'
@@ -239,6 +247,17 @@ function mapEvent(e: RawEvent, details: Map<string, Detail>): GithubEvent {
     action = `${e.type === 'DeleteEvent' ? 'deleted' : 'created'} ${p.ref_type ?? 'ref'}`
     title = p.ref ?? e.repo.name
   }
+  // PR events, reviews and review comments carry the pull request; issue events and
+  // issue comments carry the issue (which can itself be a pull request).
+  const number = p.pull_request?.number ?? p.issue?.number
+  if (number && kind !== 'push' && kind !== 'branch') {
+    const isPr =
+      p.pull_request !== undefined || p.issue?.pull_request !== undefined
+    thread = {
+      number,
+      url: `${repoUrl}/${isPr ? 'pull' : 'issues'}/${number}`,
+    }
+  }
   return {
     id: e.id,
     kind,
@@ -247,6 +266,7 @@ function mapEvent(e: RawEvent, details: Map<string, Detail>): GithubEvent {
     title,
     url,
     sha,
+    thread,
     diff,
     at: e.created_at,
   }
@@ -375,6 +395,7 @@ async function recentCommits(token?: string): Promise<GithubEvent[]> {
       title: firstLine(c.commit.message) ?? 'pushed commits',
       url: c.html_url,
       sha: short(c.sha),
+      thread: null,
       diff: null,
       at: c.commit.committer?.date ?? new Date().toISOString(),
     }))

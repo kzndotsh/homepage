@@ -9,6 +9,12 @@ export type GithubEventKind =
 
 export type GithubDiff = { additions: number; deletions: number; files: number }
 
+/** The pull request or issue an event belongs to, shown as a #number chip. */
+export type GithubThread = {
+  number: number
+  url: string
+}
+
 export type GithubEvent = {
   id: string
   kind: GithubEventKind
@@ -17,6 +23,8 @@ export type GithubEvent = {
   action: string | null
   // Short commit hash (7 chars): merge commit for merged PRs, head for pushes.
   sha: string | null
+  // The pull request or issue this is about; null for pushes and branches.
+  thread: GithubThread | null
   // Size of the change when known (PRs and pushes).
   diff: GithubDiff | null
   title: string

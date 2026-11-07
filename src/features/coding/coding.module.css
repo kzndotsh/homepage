@@ -149,19 +149,26 @@
   align-items: center;
   gap: 4px 14px;
 }
-.evRepo {
+.evRepo,
+.evRef {
   display: inline-flex;
-  /* 24px tall, the minimum touch target; the sha chip beside it is that tall too */
+  /* 24px tall, the minimum touch target */
   padding-block: 3px;
   align-items: center;
   gap: 6px;
   transition: color 0.2s;
 }
-.evRepo:hover {
+.evRepo:hover,
+.evRef:hover {
   color: var(--accent);
 }
 .evDiff {
-  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  /* the same 24px row as the repo, number and hash links beside it */
+  padding-block: 3px;
+  font-size: 12.5px;
   white-space: nowrap;
 }
 .evAdd {
@@ -172,17 +179,6 @@
 }
 .evFiles {
   color: var(--muted);
-}
-.evSha {
-  font-size: 12px;
-  padding: 3px 7px;
-  border-radius: 6px;
-  background: var(--hover);
-  color: var(--body);
-  transition: color 0.2s;
-}
-.evSha:hover {
-  color: var(--accent);
 }
 .evTime {
   font-size: 12px;

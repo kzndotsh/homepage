@@ -1,5 +1,6 @@
 import { SiGithub } from 'react-icons/si'
 
+import { RefIcon } from '@/components/RefIcon'
 import { site } from '@/config/site'
 import { cx } from '@/lib/cx'
 
@@ -54,6 +55,7 @@ export function SiteFooter() {
               href={`${site.repo}/commit/${SHA}`}
               title="The commit this build is made from"
             >
+              <RefIcon kind="commit" />
               {SHA}
             </a>
           )}
