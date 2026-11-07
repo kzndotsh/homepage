@@ -1,6 +1,6 @@
 # kzn.sh
 
-Personal homepage for Logan (Charlotte, NC). Tailwind Plus Spotlight template, customized and forced dark.
+Personal homepage for Logan (Charlotte, NC). Single-page site, forced dark, in the Tokyo Night palette.
 
 ## Commands
 
@@ -78,14 +78,14 @@ Conventions:
   `SPOTIFY_CLIENT_SECRET`, `HARDCOVER_TOKEN`, `CAL_TOKEN`, `TRAKT_CLIENT_ID` (+ optional
   `TRAKT_USERNAME`). Secrets are bound in `alchemy.run.ts`.
 
-The site is a single page with its own anchor nav (`features/home/components/SiteNav.tsx`); the old multi-page site (About, Projects, Playlists, Uses, Stats, Fetch and the Spotlight chrome) was removed.
+The site is a single page with its own anchor nav (`features/home/components/SiteNav.tsx`); the old multi-page site (About, Projects, Playlists, Uses, Stats, Fetch) was removed.
 Playlist copy lives in `src/content/playlists-data.ts` (from the Sound Therapy Notion list) and is exposed by `src/content/playlists.ts`. The always-shuffle note (`playlistsIntro`) is part of the playlists section intro — keep it.
 
 ## Theme & content
 
 - Forced dark: `html` has `className="dark …"`, `ThemeProvider` has `forcedTheme="dark"`. There is no theme toggle (it went with the old Header); do not add one unless asked.
 - Tokens live in `src/styles/tokens.css`: the Tokyo Night palette (`--color-tn-*`, the only place hex codes live) and semantic aliases (`--color-page`, `--color-fg`, `--color-accent`, ...). Use the semantic ones in components.
-- Avatar: `@/images/photos/avatar.png`. Do not replace with Spotlight dummy logos or Spencer Sharp copy.
+- Avatar: `@/images/photos/avatar.png`. Do not replace it with placeholder images.
 - Resume (`src/content/roles.ts`, `public/files/resume.pdf`), projects and playlist copy are real content — preserve them.
 
 ## Code style

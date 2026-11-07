@@ -2,7 +2,7 @@
 
 My personal site: [kzn.sh](https://kzn.sh). One page with my work, what I'm listening to and reading, live code activity, my dotfiles setup, a resume, and a way to book a call. Most of it is real data pulled from the services I use.
 
-It started from the Tailwind Plus Spotlight template and is now a single-page site, forced dark, in the Tokyo Night palette.
+It is a single-page site, forced dark, in the Tokyo Night palette.
 
 ## What's on it
 
@@ -109,4 +109,7 @@ More detail on conventions, versions that must move together, and deploy pitfall
 ## Credits
 
 - Skyline photo: [Nan Palmero](https://commons.wikimedia.org/wiki/File:Charlotte_night_skyline_2016.jpg), CC BY 2.0.
-- Built on the Spotlight template by Tailwind Labs. See [`LICENSE.md`](./LICENSE.md): the license covers the template and does not make this repository open source.
+
+## License
+
+[MIT](./LICENSE). The skyline photo keeps its own CC BY 2.0 license.

@@ -225,8 +225,7 @@ const projects: Project[] = [
   // homepage
   {
     name: 'homepage',
-    description:
-      'Browse the source code that powers this website - base template by TailwindUI',
+    description: 'Browse the source code that powers this website',
     link: {
       href: 'https://github.com/kzndotsh/homepage',
       label: 'github.com',
