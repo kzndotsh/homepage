@@ -2,7 +2,7 @@
 
 import { useMemo, useState, useTransition, type SyntheticEvent } from 'react'
 
-import { person } from '@/content'
+import { person } from '@/content/person'
 import { useMounted } from '@/hooks/useMounted'
 import type { CalAvailability } from '@/lib/integrations/types'
 

@@ -1,4 +1,4 @@
-import { person } from '@/content'
+import { person } from '@/content/person'
 
 export const SLOTS = [
   '10:00 AM',

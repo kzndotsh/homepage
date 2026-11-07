@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 
-import { person } from '@/content'
+import { person } from '@/content/person'
 
 import s from '../home.module.css'
 
