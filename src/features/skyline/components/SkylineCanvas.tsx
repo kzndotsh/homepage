@@ -28,6 +28,19 @@ const hex = (css: string): [number, number, number] => {
     : [(n >> 16) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255]
 }
 
+/**
+ * True when WebGL runs on the CPU (SwiftShader, llvmpipe): a machine with no GPU,
+ * or a lab browser like PageSpeed Insights. Redrawing the full-size canvas every
+ * frame there costs seconds of main-thread time, so it gets one still frame.
+ */
+function isSoftwareRenderer(gl: WebGLRenderingContext) {
+  const info = gl.getExtension('WEBGL_debug_renderer_info')
+  if (!info) return false
+  return /swiftshader|llvmpipe|software/i.test(
+    String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)),
+  )
+}
+
 function compile(gl: WebGLRenderingContext, type: number, src: string) {
   const shader = gl.createShader(type)
   if (!shader) return null
@@ -106,7 +119,10 @@ export function SkylineCanvas({
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
     gl.uniform1i(u('u_tex'), 0)
 
-    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
+    // Reduced motion and CPU-only rendering both show one still frame.
+    const reduced =
+      matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      isSoftwareRenderer(gl)
     const start = performance.now()
     let ready = false
     let sized = false
