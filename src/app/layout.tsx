@@ -1,15 +1,53 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 
 import { Providers } from '@/app/providers'
+import { site } from '@/config/site'
+import { person } from '@/content'
 
 import '@/styles/tailwind.css'
 
 export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
   title: {
-    template: '%s - kzn.sh',
-    default: 'kzn.sh',
+    template: `%s - ${person.name}`,
+    default: person.name,
   },
-  description: 'Full stack developer, linux enthusiast, and creative at heart.',
+  description: site.description,
+  applicationName: site.name,
+  authors: [{ name: person.name, url: site.url }],
+  creator: person.name,
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'website',
+    siteName: site.name,
+    locale: site.locale,
+    url: '/',
+    title: person.name,
+    description: site.description,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    creator: site.twitter,
+    title: person.name,
+    description: site.description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
+  formatDetection: { telephone: false, email: false, address: false },
+}
+
+export const viewport: Viewport = {
+  themeColor: site.themeColor,
+  colorScheme: 'dark',
 }
 
 export default function RootLayout({

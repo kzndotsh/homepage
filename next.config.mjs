@@ -56,6 +56,17 @@ const nextConfig = {
     return [
       { source: '/', headers: discovery('/index.md') },
       { source: '/resume', headers: discovery('/resume.md') },
+      // The Markdown twins and JSON endpoints are for agents; keep them out of search results.
+      ...[
+        '/index.md',
+        '/resume.md',
+        '/llms.txt',
+        '/llms-full.txt',
+        '/api/:path*',
+      ].map((source) => ({
+        source,
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex' }],
+      })),
     ]
   },
 }

@@ -8,8 +8,8 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        // Design explorations, not content.
-        disallow: '/demo/',
+        // Design explorations and JSON endpoints, not content.
+        disallow: ['/demo/', '/api/'],
       },
     ],
     sitemap: absolute('/sitemap.xml'),
