@@ -17,6 +17,8 @@ export const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
+  // Only the Waybar mock uses it, far down the page: no preload.
+  preload: false,
 })
 
 /** Class names that expose every font as a CSS variable. */

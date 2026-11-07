@@ -15,7 +15,12 @@ export function SiteNav() {
   return (
     <header className={s.nav}>
       <div className={s.navIn}>
-        <Link href="/" className={s.brand} aria-label="kzn.sh, back to the top">
+        <Link
+          href="/"
+          prefetch={false}
+          className={s.brand}
+          aria-label="kzn.sh, back to the top"
+        >
           kzn.sh
         </Link>
         <nav aria-label="Sections" className={s.navlinks}>

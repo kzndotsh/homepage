@@ -21,7 +21,7 @@ import {
 import { MonthGrid, MonthNav } from './MonthGrid'
 import { DetailsColumn, PickColumns, SchedulerFrame } from './SchedulerFrame'
 import { SchedulerIntro } from './SchedulerIntro'
-import { TimeZoneSelect } from './TimeZoneSelect'
+import { TimeZoneField } from './TimeZoneField'
 
 // Keep password managers from offering to sign in or fill on a booking form:
 // 1Password, LastPass and Bitwarden each read their own attribute.
@@ -179,7 +179,7 @@ export function Booker({ availability }: { availability: CalAvailability }) {
               >
                 <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3Z" />
               </svg>
-              <TimeZoneSelect
+              <TimeZoneField
                 value={timeZone}
                 host={hostZone}
                 detected={detected}
