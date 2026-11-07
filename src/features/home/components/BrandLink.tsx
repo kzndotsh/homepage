@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import type { ReactNode } from 'react'
 
+import { scrollToTop } from '../scrollToTop'
+
 /**
  * The logo, home. On the homepage a plain link to "/" leaves a `#section` in the
  * URL and the page where it is, so it clears the hash and scrolls to the top itself.
@@ -25,9 +27,7 @@ export function BrandLink({
       onClick={(e) => {
         if (pathname !== '/') return
         e.preventDefault()
-        if (window.location.hash) history.pushState(null, '', '/')
-        const calm = matchMedia('(prefers-reduced-motion: reduce)').matches
-        window.scrollTo({ top: 0, behavior: calm ? 'auto' : 'smooth' })
+        scrollToTop()
       }}
     >
       {children}

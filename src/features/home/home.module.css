@@ -56,10 +56,6 @@
 :where(.root) :where(button:disabled) {
   cursor: not-allowed;
 }
-:where(.root) * {
-  scrollbar-width: thin;
-  scrollbar-color: var(--border2) transparent;
-}
 @media (prefers-reduced-motion: no-preference) {
   .root {
     scroll-behavior: smooth;
@@ -173,6 +169,50 @@
 .cpTrigger:hover {
   color: var(--text);
   border-color: var(--muted);
+}
+.toTop {
+  position: fixed;
+  right: max(36px, env(safe-area-inset-right));
+  bottom: max(36px, env(safe-area-inset-bottom));
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border2);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-page) 88%, transparent);
+  backdrop-filter: blur(10px);
+  color: var(--muted);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition:
+    opacity 0.2s,
+    transform 0.2s,
+    visibility 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+}
+.toTop[data-shown] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+.toTop:hover {
+  color: var(--text);
+  border-color: var(--muted);
+}
+@media (max-width: 720px) {
+  .toTop {
+    right: max(20px, env(safe-area-inset-right));
+    bottom: max(24px, env(safe-area-inset-bottom));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .toTop {
+    transition: none;
+  }
 }
 .cpKbd {
   /* shadcn's Kbd: a 20px key cap, muted fill, no border. */

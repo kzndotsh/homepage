@@ -15,6 +15,7 @@ import { CommandPalette } from './components/CommandPalette'
 import { ScrollSpy } from './components/ScrollSpy'
 import { SiteFooter } from './components/SiteFooter'
 import { SiteNav } from './components/SiteNav'
+import { ToTop } from './components/ToTop'
 import { ApiSection } from './sections/ApiSection'
 import { ContactSection } from './sections/ContactSection'
 import { Hero } from './sections/Hero'
@@ -56,6 +57,7 @@ export async function HomePage() {
       <SiteNav />
       <CommandPalette />
       <ScrollSpy />
+      <ToTop />
       <div className={s.wrap}>
         <main className={s.grid}>
           <Hero />

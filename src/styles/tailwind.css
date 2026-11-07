@@ -49,4 +49,31 @@
   ::file-selector-button {
     border-color: var(--color-line, currentcolor);
   }
+
+  /* Thin, dark scrollbars on the page and every scroller (Chrome, Edge, Firefox, Safari). */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-accent) transparent;
+  }
+}
+
+/* Older WebKit has no scrollbar-color; the same look through the prefixed pseudo-elements. */
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-accent);
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent-hover);
+    background-clip: content-box;
+  }
 }

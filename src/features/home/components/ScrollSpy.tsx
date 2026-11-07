@@ -55,7 +55,8 @@ export function ScrollSpy() {
       if (!frame) frame = requestAnimationFrame(sync)
     }
     const onClick = (e: MouseEvent) => {
-      if ((e.target as Element | null)?.closest('a[href^="#"]')) hold()
+      if (e.target instanceof Element && e.target.closest('a[href^="#"]'))
+        hold()
     }
 
     hold()
