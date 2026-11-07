@@ -12,6 +12,7 @@ import { cx } from '@/lib/cx'
 import { snapshot } from '@/lib/snapshots'
 
 import { CommandPalette } from './components/CommandPalette'
+import { ConsoleEgg } from './components/ConsoleEgg'
 import { ScrollSpy } from './components/ScrollSpy'
 import { SiteFooter } from './components/SiteFooter'
 import { SiteNav } from './components/SiteNav'
@@ -57,6 +58,7 @@ export async function HomePage() {
       <SiteNav />
       <CommandPalette />
       <ScrollSpy />
+      <ConsoleEgg />
       <ToTop />
       <div className={s.wrap}>
         <main className={s.grid}>

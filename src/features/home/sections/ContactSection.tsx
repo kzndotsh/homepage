@@ -112,7 +112,7 @@ export function ContactSection() {
       name: 'Hardcover',
       brand: 'hardcover',
       note: handle(links.hardcover),
-      icon: <HardcoverIcon width="auto" height={SIZE} />,
+      icon: <HardcoverIcon height={SIZE} />,
     },
     {
       href: links.trakt,

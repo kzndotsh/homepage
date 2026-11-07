@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next'
 
-import { Providers } from '@/app/providers'
 import { site } from '@/config/site'
 import { person } from '@/content'
 
@@ -56,14 +55,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html
-      lang="en"
-      className="dark h-full antialiased"
-      suppressHydrationWarning
-    >
-      <body className="bg-page text-fg">
-        <Providers>{children}</Providers>
-      </body>
+    <html lang="en" className="dark h-full antialiased">
+      <body className="bg-page text-fg">{children}</body>
     </html>
   )
 }
