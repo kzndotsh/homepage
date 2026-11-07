@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react'
 
 import { FRAGMENT, PIXEL, VERTEX } from '../shader'
+
 import s from '../skyline.module.css'
 
 /**
@@ -21,7 +22,7 @@ const PALETTE = [
 ] as const
 
 const hex = (css: string): [number, number, number] => {
-  const n = parseInt(css.trim().replace('#', ''), 16)
+  const n = Number.parseInt(css.trim().replace('#', ''), 16)
   return Number.isNaN(n)
     ? [0, 0, 0]
     : [(n >> 16) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255]
@@ -68,6 +69,7 @@ export function SkylineCanvas({
     gl.attachShader(prog, vs)
     gl.attachShader(prog, fs)
     gl.linkProgram(prog)
+    // oxlint-disable-next-line react/hooks -- WebGL's useProgram, not a React hook
     gl.useProgram(prog)
 
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer())

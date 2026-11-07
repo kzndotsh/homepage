@@ -45,7 +45,7 @@ export function EggButton() {
       el.className = s.egg
       el.innerHTML = SVG
       el.style.cssText = `left:${Math.random() * 100}%;width:${size}px;height:${size * 1.25}px;color:${COLORS[i % COLORS.length]}`
-      root.appendChild(el)
+      root.append(el)
       const spin = (Math.random() - 0.5) * 720
       el.animate(
         [

@@ -2,6 +2,7 @@ import { cv, experience } from '@/content'
 import { cx } from '@/lib/cx'
 
 import { DownloadButton } from '../components/DownloadButton'
+
 import s from '../resume.module.css'
 
 const STACK = [

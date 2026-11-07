@@ -1,7 +1,4 @@
 import { fontVariables } from '@/config/fonts'
-import { cx } from '@/lib/cx'
-import { snapshot } from '@/lib/snapshots'
-
 import { BookingSection } from '@/features/booking/sections/BookingSection'
 import { CodingSection } from '@/features/coding/sections/CodingSection'
 import { BooksSection } from '@/features/library/sections/BooksSection'
@@ -11,13 +8,16 @@ import { PlaylistsSection } from '@/features/music/sections/PlaylistsSection'
 import { SetupSection } from '@/features/setup/sections/SetupSection'
 import { ExperienceSection } from '@/features/work/sections/ExperienceSection'
 import { ProjectsSection } from '@/features/work/sections/ProjectsSection'
+import { cx } from '@/lib/cx'
+import { snapshot } from '@/lib/snapshots'
 
-import { SiteFooter } from './components/SiteFooter'
 import { CommandPalette } from './components/CommandPalette'
+import { SiteFooter } from './components/SiteFooter'
 import { SiteNav } from './components/SiteNav'
 import { ApiSection } from './sections/ApiSection'
 import { ContactSection } from './sections/ContactSection'
 import { Hero } from './sections/Hero'
+
 import s from './home.module.css'
 
 /**

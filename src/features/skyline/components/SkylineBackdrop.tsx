@@ -1,7 +1,8 @@
 import { preload } from 'react-dom'
 
-import s from '../skyline.module.css'
 import { SkylineCanvas } from './SkylineCanvas'
+
+import s from '../skyline.module.css'
 
 const PHOTO = '/skyline/charlotte.webp'
 /** A smaller texture for the phone band, which is drawn at 356px wide. */

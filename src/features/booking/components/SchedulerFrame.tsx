@@ -1,8 +1,7 @@
 import type { ReactNode } from 'react'
 
-import ui from '@/components/ui/ui.module.css'
-
 import s from '../booking.module.css'
+import ui from '@/components/ui/ui.module.css'
 
 /** The intro column on the left, whatever is being asked on the right, and a footer line. */
 export function SchedulerFrame({

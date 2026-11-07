@@ -6,6 +6,7 @@ import { person } from '@/content'
 import type { GithubActivity } from '@/lib/integrations/types'
 
 import { GithubLive } from '../components/GithubLive'
+
 import s from '../coding.module.css'
 
 export function CodingSection({ github }: { github: GithubActivity | null }) {

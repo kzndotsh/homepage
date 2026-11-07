@@ -4,6 +4,7 @@ import { featuredProjects, workEntries } from '@/content'
 
 import { FeaturedProjects } from '../components/FeaturedProjects'
 import { ProjectMarquee } from '../components/ProjectMarquee'
+
 import s from '../work.module.css'
 
 /** The stand-out projects shown large above the strip, in this order. */

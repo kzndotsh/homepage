@@ -1,7 +1,8 @@
 import Link from 'next/link'
 
-import s from '../home.module.css'
 import { PaletteTrigger } from './PaletteTrigger'
+
+import s from '../home.module.css'
 
 /** [id, label, shorter label for a phone]. */
 const SECTIONS = [

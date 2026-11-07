@@ -250,9 +250,11 @@ export function ApiPlayground() {
     if (next < 0) return
     e.preventDefault()
     setLang(next)
-    e.currentTarget.parentElement
-      ?.querySelectorAll<HTMLElement>('[role="tab"]')
-      [next]?.focus()
+    const tabs =
+      e.currentTarget.parentElement?.querySelectorAll<HTMLElement>(
+        '[role="tab"]',
+      )
+    tabs?.[next]?.focus()
   }
 
   return (

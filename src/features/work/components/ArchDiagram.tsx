@@ -6,6 +6,7 @@ import {
   layoutWide,
   type DiagramModel,
 } from '../archLayout'
+
 import s from '../arch.module.css'
 
 const HEAD = 6

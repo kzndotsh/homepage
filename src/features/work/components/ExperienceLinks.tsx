@@ -29,7 +29,7 @@ export function ExperienceLinks({ children }: { children: ReactNode }) {
           behavior: calm ? 'auto' : 'smooth',
           block: 'center',
         })
-        row.removeAttribute('data-flash')
+        delete row.dataset.flash
         void row.offsetWidth
         row.dataset.flash = ''
       }}

@@ -72,7 +72,9 @@
   /* ── Surfaces ─────────────────────────────────────────────────────── */
   --color-page: var(--color-tn-bg); /* body */
   --color-deep: var(--color-tn-bg-deep); /* nav, footer, code blocks */
-  --color-surface: var(--color-tn-bg-deep); /* cards: a step darker than the page, as in the editor theme */
+  --color-surface: var(
+    --color-tn-bg-deep
+  ); /* cards: a step darker than the page, as in the editor theme */
   --color-raised: var(--color-tn-bg-raised); /* popovers, menus */
   --color-hover: var(--color-tn-bg-highlight); /* hover, selected rows, pills */
   --color-paper: var(--color-tn-paper);
@@ -91,8 +93,16 @@
   --color-accent: var(--color-tn-blue);
   --color-accent-hover: var(--color-tn-cyan);
   --color-on-accent: var(--color-tn-bg); /* text on a solid accent fill */
-  --color-accent-subtle: color-mix(in srgb, var(--color-tn-blue) 14%, transparent);
-  --color-accent-line: color-mix(in srgb, var(--color-tn-blue) 50%, transparent);
+  --color-accent-subtle: color-mix(
+    in srgb,
+    var(--color-tn-blue) 14%,
+    transparent
+  );
+  --color-accent-line: color-mix(
+    in srgb,
+    var(--color-tn-blue) 50%,
+    transparent
+  );
 
   /* ── State ────────────────────────────────────────────────────────── */
   --color-success: var(--color-tn-green);

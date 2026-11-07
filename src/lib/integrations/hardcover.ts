@@ -63,7 +63,7 @@ type Response = {
   }
 }
 
-const clean = (s: string) => s.replace(/\s+/g, ' ').trim()
+const clean = (s: string) => s.replaceAll(/\s+/g, ' ').trim()
 
 // "Atomic habits: An Easy & Proven Way..." -> "Atomic habits"
 const shortTitle = (t: string) => clean(t.split(/[:(]/)[0] ?? t) || clean(t)
@@ -135,8 +135,8 @@ export async function fetchHardcoverLibrary(): Promise<HardcoverLibrary | null> 
       fetchedAt: new Date().toISOString(),
       books,
     }
-  } catch (err) {
-    console.error('[hardcover] fetch failed:', err)
+  } catch (error) {
+    console.error('[hardcover] fetch failed:', error)
     return null
   }
 }

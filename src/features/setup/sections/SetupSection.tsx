@@ -7,6 +7,7 @@ import type { NowPlaying } from '@/lib/integrations/lastfm-history-types'
 import { Prompt } from '../components/Prompt'
 import { Waybar } from '../components/Waybar'
 import { DOTFILES_URL, FETCH_INFO, SWATCHES } from '../data'
+
 import s from '../setup.module.css'
 import ui from '@/components/ui/ui.module.css'
 

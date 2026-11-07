@@ -60,6 +60,6 @@ const nextConfig = {
   },
 }
 
-initOpenNextCloudflareForDev()
+void initOpenNextCloudflareForDev()
 
 export default nextConfig

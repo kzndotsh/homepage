@@ -1,7 +1,5 @@
 import 'server-only'
-
 import { getGithubActivity } from '@/lib/integrations'
-import { findAlbumArt } from '@/lib/integrations/spotify'
 import type {
   CodingVsListening,
   GenreMap,
@@ -16,6 +14,7 @@ import type {
   TopPeriod,
   WeeklyStream,
 } from '@/lib/integrations/lastfm-history-types'
+import { findAlbumArt } from '@/lib/integrations/spotify'
 
 // Every function resolves to null on missing credentials or upstream failure.
 //
@@ -30,7 +29,7 @@ const TZ = 'America/New_York'
 // Only dedupes callers within one render; the long-lived copy is a snapshot in
 // R2 (lib/snapshots), which is shared between invocations.
 const TTL_MS = 60 * 1000
-const DAY_S = 86400
+const DAY_S = 86_400
 const CONCURRENCY = 6
 const PLACEHOLDER_IMAGE = '2a96cbd8b46e442fc41c2b86b821562f'
 
@@ -58,8 +57,8 @@ async function lfm<T>(
       const body = (await res.json()) as T & { error?: number }
       if (body.error) throw new Error(`lastfm ${method} error ${body.error}`)
       return body
-    } catch (err) {
-      lastErr = err
+    } catch (error) {
+      lastErr = error
     }
   }
   throw lastErr
@@ -86,7 +85,7 @@ async function mapLimit<T, R>(
 
 const cache = new Map<string, { at: number; p: Promise<unknown> }>()
 
-function cached<T>(
+async function cached<T>(
   name: string,
   fn: () => Promise<T | null>,
 ): Promise<T | null> {
@@ -97,8 +96,8 @@ function cached<T>(
       if (v === null && cache.get(name)?.p === p) cache.delete(name)
       return v
     },
-    (err: unknown) => {
-      console.error(`[lastfm] ${name} failed:`, err)
+    (error: unknown) => {
+      console.error(`[lastfm] ${name} failed:`, error)
       if (cache.get(name)?.p === p) cache.delete(name)
       return null
     },
@@ -174,7 +173,7 @@ async function buildHistory(key: string): Promise<ScrobbleHistory> {
   const rest = await mapLimit(
     Array.from({ length: Math.max(0, totalPages - 1) }, (_, i) => i + 2),
     CONCURRENCY,
-    (page) =>
+    async (page) =>
       lfm<RecentPage>(
         'user.getrecenttracks',
         { ...params, page: String(page) },
@@ -254,7 +253,7 @@ async function buildHistory(key: string): Promise<ScrobbleHistory> {
 
   const today = etParts(nowS).date
   let currentStreak = 0
-  const last = dates[dates.length - 1]
+  const last = dates.at(-1)
   if (last !== undefined && dayNumber(today) - dayNumber(last) <= 1) {
     currentStreak = 1
     for (let i = dates.length - 1; i > 0; i--) {
@@ -278,10 +277,10 @@ async function buildHistory(key: string): Promise<ScrobbleHistory> {
   }
 }
 
-export function getScrobbleHistory(): Promise<ScrobbleHistory | null> {
+export async function getScrobbleHistory(): Promise<ScrobbleHistory | null> {
   return cached('history', async () => {
     const key = process.env.LASTFM_TOKEN
-    return key ? buildHistory(key) : null
+    return key ? await buildHistory(key) : null
   })
 }
 
@@ -340,10 +339,10 @@ async function buildWeekly(key: string): Promise<WeeklyStream> {
   }
 }
 
-export function getWeeklyStream(): Promise<WeeklyStream | null> {
+export async function getWeeklyStream(): Promise<WeeklyStream | null> {
   return cached('weekly', async () => {
     const key = process.env.LASTFM_TOKEN
-    return key ? buildWeekly(key) : null
+    return key ? await buildWeekly(key) : null
   })
 }
 
@@ -402,7 +401,7 @@ type TagsResp = { toptags: { tag?: RawTag[] | RawTag } }
 const TAG_TTL_MS = 7 * 24 * 60 * 60 * 1000
 const tagCache = new Map<string, { at: number; p: Promise<RawTag[]> }>()
 
-function artistTags(name: string, key: string): Promise<RawTag[]> {
+async function artistTags(name: string, key: string): Promise<RawTag[]> {
   const id = name.toLowerCase()
   const hit = tagCache.get(id)
   if (hit && Date.now() - hit.at < TAG_TTL_MS) return hit.p
@@ -472,7 +471,7 @@ async function tagsFor(
   key: string,
 ): Promise<Map<string, RawTag[]>> {
   // One unknown or malformed artist (Last.fm error 6) must not sink the rest.
-  const lists = await mapLimit(names, 3, (n) =>
+  const lists = await mapLimit(names, 3, async (n) =>
     artistTags(n, key).catch((): RawTag[] => []),
   )
   return new Map(names.map((n, i) => [n.toLowerCase(), lists[i]]))
@@ -491,7 +490,7 @@ async function buildGenres(key: string): Promise<GenreMap> {
 
 // One genre map per time range (about 100 tag lookups cold, cached a week).
 async function buildGenresByPeriod(key: string): Promise<GenresByPeriod> {
-  const lists = await mapLimit(PERIODS, 3, (p) => topArtistsFor(p, key))
+  const lists = await mapLimit(PERIODS, 3, async (p) => topArtistsFor(p, key))
   const names = [...new Set(lists.flat().map((a) => a.name))]
   const tags = await tagsFor(names, key)
   const out = {} as GenresByPeriod
@@ -520,7 +519,7 @@ export async function computeGenres(known: TagStore): Promise<{
 } | null> {
   const key = process.env.LASTFM_TOKEN
   if (!key) return null
-  const lists = await mapLimit(PERIODS, 3, (p) => topArtistsFor(p, key))
+  const lists = await mapLimit(PERIODS, 3, async (p) => topArtistsFor(p, key))
 
   const played = new Map<string, { name: string; plays: number }>()
   for (const a of lists.flat()) {
@@ -538,7 +537,7 @@ export async function computeGenres(known: TagStore): Promise<{
     })
     .sort((x, y) => y.plays - x.plays)
   const batch = missing.slice(0, TAG_LOOKUPS_PER_REFRESH)
-  const looked = await mapLimit(batch, 3, (a) =>
+  const looked = await mapLimit(batch, 3, async (a) =>
     artistTags(a.name, key).catch((): null => null),
   )
 
@@ -559,28 +558,28 @@ export async function computeGenres(known: TagStore): Promise<{
   return { data, tags, partial }
 }
 
-export function getGenresByPeriod(): Promise<GenresByPeriod | null> {
+export async function getGenresByPeriod(): Promise<GenresByPeriod | null> {
   return cached('genres-by-period', async () => {
     const key = process.env.LASTFM_TOKEN
-    return key ? buildGenresByPeriod(key) : null
+    return key ? await buildGenresByPeriod(key) : null
   })
 }
 
-export function getGenreMap(): Promise<GenreMap | null> {
+export async function getGenreMap(): Promise<GenreMap | null> {
   return cached('genres', async () => {
     const key = process.env.LASTFM_TOKEN
-    return key ? buildGenres(key) : null
+    return key ? await buildGenres(key) : null
   })
 }
 
 // ---------- period tops ----------
 
-export function getPeriodTops(): Promise<PeriodTops | null> {
+export async function getPeriodTops(): Promise<PeriodTops | null> {
   return cached('tops', async () => {
     const key = process.env.LASTFM_TOKEN
     if (!key) return null
     const results = await Promise.all(
-      PERIODS.map((period) =>
+      PERIODS.map(async (period) =>
         lfm<TopArtistsResp>('user.gettopartists', { period, limit: '10' }, key),
       ),
     )
@@ -607,7 +606,7 @@ type InfoResp = {
   }
 }
 
-export function getLastfmStats(): Promise<LastfmStats | null> {
+export async function getLastfmStats(): Promise<LastfmStats | null> {
   return cached('stats', async () => {
     const key = process.env.LASTFM_TOKEN
     if (!key) return null
@@ -659,7 +658,7 @@ function topRows(kind: TopKind, r: TopChartResp): TopItem[] {
 
 // 18 requests (3 kinds x 6 periods), made 3 at a time to stay well inside
 // Last.fm's undocumented per-IP limit; cached for 6h like the rest.
-export function getTopCharts(): Promise<TopCharts | null> {
+export async function getTopCharts(): Promise<TopCharts | null> {
   return cached('charts', async () => {
     const key = process.env.LASTFM_TOKEN
     if (!key) return null
@@ -667,7 +666,7 @@ export function getTopCharts(): Promise<TopCharts | null> {
     const jobs = kinds.flatMap((kind) =>
       PERIODS.map((period) => ({ kind, period })),
     )
-    const rows = await mapLimit(jobs, 3, ({ kind, period }) =>
+    const rows = await mapLimit(jobs, 3, async ({ kind, period }) =>
       lfm<TopChartResp>(TOP_METHODS[kind], { period, limit: '10' }, key),
     )
     const out = { artists: {}, albums: {}, tracks: {} } as TopCharts
@@ -753,7 +752,7 @@ function topArtistDays(
     .map(([artist, days]) => ({ artist, days }))
 }
 
-export function getCodingVsListening(): Promise<CodingVsListening | null> {
+export async function getCodingVsListening(): Promise<CodingVsListening | null> {
   return cached('coding', async () => {
     const [history, gh] = await Promise.all([
       getScrobbleHistory(),

@@ -404,8 +404,8 @@ const TAGLINES: Record<string, string> = {
 const slugify = (id: string) =>
   id
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '')
+    .replaceAll(/[^a-z0-9]+/g, '-')
+    .replaceAll(/^-|-$/g, '')
 
 const roles: WorkEntry[] = experience.map((r) => ({
   id: r.id,

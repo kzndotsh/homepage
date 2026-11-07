@@ -1,8 +1,5 @@
-import { type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { FaGithub, FaReact } from 'react-icons/fa'
-
-import { TbBrandNextjs, TbBrandTailwind, TbMarkdown } from 'react-icons/tb'
-
 import {
   SiNixos,
   SiMui,
@@ -33,6 +30,7 @@ import {
   SiSpotify,
   SiSway,
 } from 'react-icons/si'
+import { TbBrandNextjs, TbBrandTailwind, TbMarkdown } from 'react-icons/tb'
 
 export type ProjectStackItem = {
   name: string

@@ -35,8 +35,8 @@ function locationLabel(t: EventTypeResponse): string | null {
     return (
       INTEGRATIONS[loc.integration] ??
       loc.integration
-        .replace(/[-_]/g, ' ')
-        .replace(/\b\w/g, (c) => c.toUpperCase())
+        .replaceAll(/[-_]/g, ' ')
+        .replaceAll(/\b\w/g, (c) => c.toUpperCase())
     )
   }
   return (

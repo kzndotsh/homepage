@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react'
 import type { WorkEntry } from '@/content'
 
 import { ArchThumb } from './ArchThumb'
+
 import s from '../work.module.css'
 
 const MAX_TAGS = 3
@@ -179,7 +180,7 @@ export function ProjectMarquee({ entries }: { entries: WorkEntry[] }) {
         const now = performance.now()
         const recent = samples.filter((s) => now - s.t < 120)
         const first = recent[0]
-        const lastS = recent[recent.length - 1]
+        const lastS = recent.at(-1)
         if (first && lastS && lastS.t > first.t && now - lastS.t < 80) {
           const v = ((lastS.left - first.left) / (lastS.t - first.t)) * 1000
           fling = Math.max(-3000, Math.min(3000, v))

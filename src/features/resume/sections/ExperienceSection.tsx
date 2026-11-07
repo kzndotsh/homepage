@@ -3,6 +3,7 @@ import { rangeLabel } from '@/content/cvDates'
 
 import { ExpandControls } from '../components/ExpandControls'
 import { Toggle } from '../components/Toggle'
+
 import s from '../resume.module.css'
 
 export function ExperienceSection() {

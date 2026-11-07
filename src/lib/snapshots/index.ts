@@ -1,5 +1,4 @@
 import 'server-only'
-
 import { refreshSnapshot } from './refresh'
 import { SOURCES, type SnapshotData, type SourceName } from './sources'
 import { bindings, readStored } from './store'
@@ -34,15 +33,15 @@ async function refreshOnce<N extends SourceName>(name: N): Promise<Round<N>> {
         return null
       }
       return (await res.json()) as Round<N>
-    } catch (err) {
-      console.error(`[snapshots] refresh ${name} failed:`, err)
+    } catch (error) {
+      console.error(`[snapshots] refresh ${name} failed:`, error)
       return null
     }
   }
   // On Workers never fetch in the render itself: it would use up its budget.
   if (self && process.env.NODE_ENV === 'production') return null
   // `next dev` and plain Node have no budget to protect.
-  return (await refreshSnapshot(name)) as Round<N>
+  return await refreshSnapshot(name)
 }
 
 /**

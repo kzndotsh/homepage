@@ -3,10 +3,10 @@ import { SiGithub } from 'react-icons/si'
 import { site } from '@/config/site'
 import { cx } from '@/lib/cx'
 
-import ui from '@/components/ui/ui.module.css'
+import { EggButton } from './EggButton'
 
 import s from '../home.module.css'
-import { EggButton } from './EggButton'
+import ui from '@/components/ui/ui.module.css'
 
 /**
  * Each glyph with the space to add after it, in em. Measured from Manrope 800

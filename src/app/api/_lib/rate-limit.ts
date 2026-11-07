@@ -1,6 +1,6 @@
 export const LIMIT = 60
 const WINDOW_MS = 60_000
-const MAX_TRACKED = 5_000
+const MAX_TRACKED = 5000
 
 type Slot = { count: number; resetAt: number }
 

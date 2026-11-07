@@ -11,4 +11,4 @@ export const bullets = (items: readonly string[]) =>
 
 /** Join blocks with a blank line between them, skipping empty ones. */
 export const doc = (...blocks: (string | false | null | undefined)[]) =>
-  blocks.filter(Boolean).join('\n\n') + '\n'
+  `${blocks.filter(Boolean).join('\n\n')}\n`

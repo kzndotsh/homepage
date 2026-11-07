@@ -81,7 +81,7 @@ export async function fetchSpotifyPlaylists(): Promise<Record<
     const token = await accessToken(id, secret)
     if (!token) return null
     const results = await Promise.all(
-      playlistIds().map((pid) => one(pid, token)),
+      playlistIds().map(async (pid) => one(pid, token)),
     )
     const out: Record<string, SpotifyPlaylistInfo> = {}
     for (const r of results) if (r) out[r.id] = r
@@ -104,7 +104,7 @@ type SearchResponse = {
 const norm = (v: string) =>
   v
     .toLowerCase()
-    .replace(/[^\p{L}\p{N}]+/gu, ' ')
+    .replaceAll(/[^\p{L}\p{N}]+/gu, ' ')
     .trim()
 const artCache = new Map<
   string,
@@ -115,7 +115,7 @@ const artCache = new Map<
  * Album art for a track Last.fm has no cover for. Only accepts a result whose
  * artist matches, so a wrong cover is never shown for an obscure track.
  */
-export function findAlbumArt(
+export async function findAlbumArt(
   track: string,
   artist: string,
 ): Promise<{ image: string; album: string } | null> {
@@ -129,7 +129,7 @@ export function findAlbumArt(
     try {
       const token = await accessToken(id, secret)
       if (!token) return null
-      const q = `track:${track.replace(/"/g, '')} artist:${artist.replace(/"/g, '')}`
+      const q = `track:${track.replaceAll('"', '')} artist:${artist.replaceAll('"', '')}`
       const res = await fetch(
         `https://api.spotify.com/v1/search?${new URLSearchParams({ q, type: 'track', limit: '5' })}`,
         {

@@ -15,6 +15,7 @@ import type { LastfmFavorites } from '@/lib/integrations/types'
 
 import { MusicSplit } from '../components/MusicSplit'
 import { NowPlayingCard } from '../components/NowPlayingCard'
+
 import s from '../music.module.css'
 import ui from '@/components/ui/ui.module.css'
 

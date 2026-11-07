@@ -53,7 +53,7 @@ export type ZoneOption = {
 }
 
 const city = (zone: string) =>
-  (zone.split('/').pop() ?? zone).replace(/_/g, ' ')
+  (zone.split('/').pop() ?? zone).replaceAll('_', ' ')
 
 /** UTC offsets in January and July: equal signatures mean the same clock all year. */
 const signature = (zone: string, year: number) =>
@@ -121,7 +121,7 @@ export function buildZoneOptions({
       search:
         `${g.cities.join(' ')} ${g.zones.join(' ')} ${gmtLabel(g.rep, at)}`
           .toLowerCase()
-          .replace(/_/g, ' '),
+          .replaceAll('_', ' '),
     }
   })
 }

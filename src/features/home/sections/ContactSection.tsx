@@ -16,6 +16,7 @@ import { Panel } from '@/components/ui/Panel'
 import { person } from '@/content'
 
 import { CopyTile } from '../components/CopyTile'
+
 import s from '../home.module.css'
 import ui from '@/components/ui/ui.module.css'
 

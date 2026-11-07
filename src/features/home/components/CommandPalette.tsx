@@ -25,7 +25,7 @@ const RAIN_EVENT = 'kzn:rain-eggs'
 const calm = () => matchMedia('(prefers-reduced-motion: reduce)').matches
 
 function jump(id: string) {
-  document.getElementById(id)?.scrollIntoView({
+  document.querySelector(`#${id}`)?.scrollIntoView({
     behavior: calm() ? 'auto' : 'smooth',
     block: 'start',
   })

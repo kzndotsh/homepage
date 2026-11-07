@@ -9,11 +9,12 @@ import {
 } from '@headlessui/react'
 import { useMemo, useRef, useState } from 'react'
 
-import s from '../booking.module.css'
 import { gmtLabel } from '../slots'
 import { buildZoneOptions } from '../timezones'
 
-const pretty = (zone: string) => zone.replace(/_/g, ' ')
+import s from '../booking.module.css'
+
+const pretty = (zone: string) => zone.replaceAll('_', ' ')
 
 /** A searchable timezone picker: the visitor's and the host's first, then the main zones by offset. */
 export function TimeZoneSelect({
@@ -44,7 +45,7 @@ export function TimeZoneSelect({
 
   // The closed field is narrow, so show the city and offset only.
   const label = `${gmtLabel(value, at)} ${pretty(value.split('/').pop() ?? value)}`
-  const needle = query.trim().toLowerCase().replace(/_/g, ' ')
+  const needle = query.trim().toLowerCase().replaceAll('_', ' ')
   const shown = needle
     ? options.filter((o) => o.search.includes(needle))
     : options

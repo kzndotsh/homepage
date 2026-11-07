@@ -7,8 +7,9 @@ import { rangeLabel } from '@/content/cvDates'
 import { cx } from '@/lib/cx'
 
 import { ExperienceLinks } from '../components/ExperienceLinks'
-import { EXP_ID } from '../expId'
 import { Timeline } from '../components/Timeline'
+import { EXP_ID } from '../expId'
+
 import s from '../work.module.css'
 import ui from '@/components/ui/ui.module.css'
 

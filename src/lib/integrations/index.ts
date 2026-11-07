@@ -1,5 +1,4 @@
 import 'server-only'
-
 import {
   fetchCalAvailability,
   fetchPublicEventTypeIds,
@@ -21,37 +20,37 @@ import type {
 // Every function resolves to null when credentials are missing or the
 // upstream call fails, so callers always render a static fallback.
 export async function getGithubActivity(): Promise<GithubActivity | null> {
-  return fetchGithubActivity()
+  return await fetchGithubActivity()
 }
 
 export async function getSpotifyPlaylists(): Promise<Record<
   string,
   SpotifyPlaylistInfo
 > | null> {
-  return fetchSpotifyPlaylists()
+  return await fetchSpotifyPlaylists()
 }
 
 export async function getLastfmFavorites(): Promise<LastfmFavorites | null> {
-  return fetchLastfmFavorites()
+  return await fetchLastfmFavorites()
 }
 
 export async function getCalAvailability(): Promise<CalAvailability | null> {
-  return fetchCalAvailability()
+  return await fetchCalAvailability()
 }
 
 export { createCalBooking } from '@/lib/integrations/cal'
 export type { BookingOutcome, BookingRequest } from '@/lib/integrations/cal'
 
 export async function getPublicEventTypeIds(): Promise<number[]> {
-  return fetchPublicEventTypeIds()
+  return await fetchPublicEventTypeIds()
 }
 
 export async function getHardcoverLibrary(): Promise<HardcoverLibrary | null> {
-  return fetchHardcoverLibrary()
+  return await fetchHardcoverLibrary()
 }
 
 export async function getTraktActivity(): Promise<TraktActivity | null> {
-  return fetchTraktActivity()
+  return await fetchTraktActivity()
 }
 
 export { playlistIds } from '@/lib/integrations/spotify'

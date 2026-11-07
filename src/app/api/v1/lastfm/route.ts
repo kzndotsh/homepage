@@ -1,5 +1,4 @@
 import { json, limited, methodGuards } from '@/app/api/_lib/respond'
-import { snapshot } from '@/lib/snapshots'
 import {
   getCodingVsListening,
   getPeriodTops,
@@ -15,6 +14,7 @@ import {
   MUSIC_PERIODS,
   MUSIC_SECTIONS,
 } from '@/lib/musicSections'
+import { snapshot } from '@/lib/snapshots'
 
 const bad = (message: string) =>
   json(
@@ -68,10 +68,12 @@ async function get(request: Request): Promise<Response> {
         recent: cut(data.recent),
       })
     }
-    case 'now':
+    case 'now': {
       return json(await snapshot('lastfm-now'))
-    case 'stats':
+    }
+    case 'stats': {
       return json((await snapshot('lastfm-stats')) ?? none)
+    }
     case 'tops': {
       const data = await getPeriodTops()
       if (!data) return json(none)
@@ -112,10 +114,12 @@ async function get(request: Request): Promise<Response> {
       const data = await getWeeklyStream()
       return json(data ? { ...data, series: cut(data.series) } : none)
     }
-    case 'history':
+    case 'history': {
       return json((await getScrobbleHistory()) ?? none)
-    case 'coding':
+    }
+    case 'coding': {
       return json((await getCodingVsListening()) ?? none)
+    }
   }
 }
 

@@ -4,9 +4,7 @@ import { useState } from 'react'
 
 import { person } from '@/content'
 import { useMounted } from '@/hooks/useMounted'
-import ui from '@/components/ui/ui.module.css'
 
-import s from '../booking.module.css'
 import {
   SLOTS,
   dateKey,
@@ -20,6 +18,9 @@ import {
 import { MonthGrid, MonthNav } from './MonthGrid'
 import { PickColumns, SchedulerFrame } from './SchedulerFrame'
 import { SchedulerIntro } from './SchedulerIntro'
+
+import s from '../booking.module.css'
+import ui from '@/components/ui/ui.module.css'
 
 /** Fallback when live availability is unavailable: propose a time by email. */
 export function EmailScheduler() {

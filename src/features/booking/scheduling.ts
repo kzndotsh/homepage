@@ -29,7 +29,7 @@ export function todayIn(timeZone: string): Ymd {
 export const nyToday = () => todayIn('America/New_York')
 
 /** Sortable number for a date. */
-export const dateKey = (v: Ymd) => v.y * 10000 + v.m * 100 + v.d
+export const dateKey = (v: Ymd) => v.y * 10_000 + v.m * 100 + v.d
 
 export const longDate = (v: Ymd) =>
   new Date(Date.UTC(v.y, v.m, v.d, 12)).toLocaleDateString('en-US', {

@@ -32,7 +32,7 @@ export function buildHeatmap(calendar: Day[]) {
     if (!first) return
     const m = Number(first.date.slice(5, 7)) - 1
     if (m !== last) {
-      const prev = months[months.length - 1]
+      const prev = months.at(-1)
       if (!prev || i - prev.x >= 3) months.push({ x: i, label: MONTHS[m] })
       last = m
     }
@@ -50,7 +50,5 @@ export function buildHeatmap(calendar: Day[]) {
 }
 
 /** 0 (none) to 4 (busiest), given the cut-offs from buildHeatmap. */
-export const heatLevel = (
-  n: number,
-  cuts: readonly [number, number, number],
-) => (n === 0 ? 0 : n <= cuts[0] ? 1 : n <= cuts[1] ? 2 : n <= cuts[2] ? 3 : 4)
+export const heatLevel = (n: number, cuts: readonly [number, number, number]) =>
+  n === 0 ? 0 : n <= cuts[0] ? 1 : n <= cuts[1] ? 2 : n <= cuts[2] ? 3 : 4

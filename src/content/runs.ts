@@ -4,8 +4,8 @@ import type { Run } from './types'
 const slug = (v: string) =>
   v
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '')
+    .replaceAll(/[^a-z0-9]+/g, '-')
+    .replaceAll(/^-|-$/g, '')
 
 export const runs: Run[] = roles.map((r) => {
   const running = r.end === 'Present'

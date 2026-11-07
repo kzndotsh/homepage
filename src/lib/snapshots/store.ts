@@ -1,5 +1,4 @@
 import 'server-only'
-
 import { getCloudflareContext } from '@opennextjs/cloudflare'
 
 /** One stored result: when it was made, and whether more rounds are still due. */
@@ -22,7 +21,7 @@ type Env = {
 /** The Cloudflare bindings, or null when not running on Workers (or in `next dev`). */
 export function bindings(): Env | null {
   try {
-    return getCloudflareContext().env as unknown as Env
+    return getCloudflareContext().env
   } catch {
     return null
   }
@@ -36,8 +35,8 @@ export async function readStored<T>(name: string): Promise<Stored<T> | null> {
   try {
     const obj = await bucket.get(keyFor(name))
     return obj ? ((await obj.json()) as Stored<T>) : null
-  } catch (err) {
-    console.error(`[snapshots] read ${name} failed:`, err)
+  } catch (error) {
+    console.error(`[snapshots] read ${name} failed:`, error)
     return null
   }
 }
@@ -52,7 +51,7 @@ export async function writeStored<T>(
     await bucket.put(keyFor(name), JSON.stringify(value), {
       httpMetadata: { contentType: 'application/json' },
     })
-  } catch (err) {
-    console.error(`[snapshots] write ${name} failed:`, err)
+  } catch (error) {
+    console.error(`[snapshots] write ${name} failed:`, error)
   }
 }

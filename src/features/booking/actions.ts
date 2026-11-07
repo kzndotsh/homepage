@@ -17,7 +17,8 @@ export type BookSlotInput = {
 }
 
 export type BookSlotResult =
-  { ok: true; uid: string; pending: boolean } | { ok: false; error: string }
+  | { ok: true; uid: string; pending: boolean }
+  | { ok: false; error: string }
 
 const FAILED = 'Could not book that time. Please try another or email me.'
 const MAX_PER_HOUR = 5

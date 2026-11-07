@@ -61,7 +61,7 @@ export function ScrollRow({
       if (prev.current) prev.current.disabled = fits || el.scrollLeft <= 4
       if (next.current) next.current.disabled = fits || max - el.scrollLeft <= 4
       root.toggleAttribute('data-fit', fits)
-      root.setAttribute('data-ready', '')
+      root.dataset.ready = ''
       el.toggleAttribute('data-scroll', !fits)
     }
     const schedule = () => {
@@ -83,7 +83,7 @@ export function ScrollRow({
     }
     const settle = (speed: number) => {
       const max = el.scrollWidth - el.clientWidth
-      const pad = parseFloat(getComputedStyle(el).scrollPaddingLeft) || 0
+      const pad = Number.parseFloat(getComputedStyle(el).scrollPaddingLeft) || 0
       const base = el.getBoundingClientRect().left
       const stops = [...el.children].map((c) =>
         Math.min(
@@ -110,8 +110,7 @@ export function ScrollRow({
       const duration = Math.min(700, 360 + Math.abs(dist) * 0.7)
       const t0 = performance.now()
       // ease-out-back: runs a little past the card, then settles back onto it
-      const ease = (k: number) =>
-        1 + 2.4 * Math.pow(k - 1, 3) + 1.4 * Math.pow(k - 1, 2)
+      const ease = (k: number) => 1 + 2.4 * (k - 1) ** 3 + 1.4 * (k - 1) ** 2
       const step = (now: number) => {
         const k = Math.min(1, (now - t0) / duration)
         // the overshoot is capped at 16px so a long throw does not swing far past

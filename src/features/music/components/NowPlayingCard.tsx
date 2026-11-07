@@ -1,8 +1,8 @@
 'use client'
 
 import { useNow } from '@/hooks/useNow'
-import { relativeTime } from '@/lib/relativeTime'
 import type { NowPlaying } from '@/lib/integrations/lastfm-history-types'
+import { relativeTime } from '@/lib/relativeTime'
 
 import s from '../music.module.css'
 

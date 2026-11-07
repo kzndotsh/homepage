@@ -1,6 +1,7 @@
 import type { WorkEntry } from '@/content'
 
 import { ArchThumb } from './ArchThumb'
+
 import s from '../work.module.css'
 
 export type Featured = { entry: WorkEntry; blurb: string }

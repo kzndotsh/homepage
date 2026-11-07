@@ -12,7 +12,7 @@ export function json(
   data: unknown,
   init: { status?: number; headers?: Record<string, string> } = {},
 ): Response {
-  return new Response(JSON.stringify(data, null, 2) + '\n', {
+  return new Response(`${JSON.stringify(data, null, 2)}\n`, {
     status: init.status ?? 200,
     headers: {
       ...base,
@@ -26,7 +26,7 @@ export function text(
   body: string,
   init: { status?: number; headers?: Record<string, string> } = {},
 ): Response {
-  return new Response(body.endsWith('\n') ? body : body + '\n', {
+  return new Response(body.endsWith('\n') ? body : `${body}\n`, {
     status: init.status ?? 200,
     headers: {
       ...base,

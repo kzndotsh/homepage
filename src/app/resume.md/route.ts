@@ -1,5 +1,5 @@
-import { markdown } from '@/lib/llms/response'
 import { resumeMarkdown } from '@/lib/llms/pages'
+import { markdown } from '@/lib/llms/response'
 
 export const dynamic = 'force-static'
 

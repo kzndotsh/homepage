@@ -10,6 +10,7 @@ import type { SpotifyPlaylistInfo } from '@/lib/integrations/types'
 
 import { GenreFlow } from '../components/GenreFlow'
 import { findPlaylistInfo } from '../findPlaylistInfo'
+
 import s from '../music.module.css'
 
 const EMPHASIS = 'always shuffle'
@@ -35,7 +36,7 @@ export function PlaylistsSection({
         }
       />
       <p className={s.shuffleNote}>
-        {emphasisAt < 0 ? (
+        {emphasisAt === -1 ? (
           playlistsIntro
         ) : (
           <>

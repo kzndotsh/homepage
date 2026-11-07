@@ -1,5 +1,5 @@
-import { cv, person } from '@/content'
 import { absolute, site } from '@/config/site'
+import { cv, person } from '@/content'
 
 import { bullets, doc, h1, h2, link, quote } from './md'
 import { homeMarkdown, resumeMarkdown } from './pages'

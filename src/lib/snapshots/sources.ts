@@ -1,5 +1,4 @@
 import 'server-only'
-
 import { fetchCalAvailability } from '@/lib/integrations/cal'
 import { fetchGithubActivity } from '@/lib/integrations/github'
 import { fetchHardcoverLibrary } from '@/lib/integrations/hardcover'

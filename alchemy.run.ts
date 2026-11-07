@@ -23,7 +23,8 @@ const SECRET_ENV = [
 ] as const
 
 function secretBindings():
-  Record<string, ReturnType<typeof alchemy.secret>> | undefined {
+  | Record<string, ReturnType<typeof alchemy.secret>>
+  | undefined {
   const entries: (readonly [string, ReturnType<typeof alchemy.secret>])[] =
     SECRET_ENV.flatMap((key) => {
       const value = process.env[key]

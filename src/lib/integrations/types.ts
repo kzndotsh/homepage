@@ -1,5 +1,11 @@
 export type GithubEventKind =
-  'push' | 'pr' | 'issue' | 'comment' | 'review' | 'branch' | 'other'
+  | 'push'
+  | 'pr'
+  | 'issue'
+  | 'comment'
+  | 'review'
+  | 'branch'
+  | 'other'
 
 export type GithubDiff = { additions: number; deletions: number; files: number }
 

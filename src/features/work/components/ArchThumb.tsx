@@ -1,6 +1,7 @@
 import type { ArchSpec } from '@/content'
 
 import { layoutWide } from '../archLayout'
+
 import s from '../arch.module.css'
 
 /**

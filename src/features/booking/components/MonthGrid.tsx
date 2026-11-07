@@ -1,6 +1,3 @@
-import ui from '@/components/ui/ui.module.css'
-
-import s from '../booking.module.css'
 import {
   WEEKDAYS,
   dateKey,
@@ -10,6 +7,9 @@ import {
   type Month,
   type Ymd,
 } from '../scheduling'
+
+import s from '../booking.module.css'
+import ui from '@/components/ui/ui.module.css'
 
 const Chev = ({ d }: { d: string }) => (
   <svg
@@ -43,7 +43,7 @@ export function MonthNav({
 }) {
   return (
     <div className={s.monthRow}>
-      <span aria-live="polite">{view ? monthLabel(view) : '\u00a0'}</span>
+      <span aria-live="polite">{view ? monthLabel(view) : '\u00A0'}</span>
       <span style={{ display: 'flex', gap: 6 }}>
         <button
           type="button"

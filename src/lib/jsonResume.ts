@@ -1,3 +1,4 @@
+import { absolute } from '@/config/site'
 import {
   cv,
   earlierWork,
@@ -6,7 +7,6 @@ import {
   person,
   skills,
 } from '@/content'
-import { absolute } from '@/config/site'
 
 /** "2023-2024" -> ["2023", "2024"]. */
 const years = (range: string) => range.split('-')

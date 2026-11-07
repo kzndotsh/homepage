@@ -5,10 +5,8 @@ import { useMemo, useState, useTransition, type FormEvent } from 'react'
 import { person } from '@/content'
 import { useMounted } from '@/hooks/useMounted'
 import type { CalAvailability } from '@/lib/integrations/types'
-import ui from '@/components/ui/ui.module.css'
 
 import { bookSlot } from '../actions'
-import s from '../booking.module.css'
 import { isoDate, longDate, monthAt, todayIn } from '../scheduling'
 import {
   dayKeyOf,
@@ -22,6 +20,9 @@ import { MonthGrid, MonthNav } from './MonthGrid'
 import { DetailsColumn, PickColumns, SchedulerFrame } from './SchedulerFrame'
 import { SchedulerIntro } from './SchedulerIntro'
 import { TimeZoneField } from './TimeZoneField'
+
+import s from '../booking.module.css'
+import ui from '@/components/ui/ui.module.css'
 
 // Keep password managers from offering to sign in or fill on a booking form:
 // 1Password, LastPass and Bitwarden each read their own attribute.
@@ -77,8 +78,8 @@ export function Booker({ availability }: { availability: CalAvailability }) {
     const next = groupByDay(type.slots, zone)
     const nextKeys = [...next.keys()].sort()
     const nextFirst = parseDay(nextKeys[0])
-    const target = slot !== null ? parseDay(dayKeyOf(slot, zone)) : nextFirst
-    setPickedDay(slot !== null ? dayKeyOf(slot, zone) : null)
+    const target = slot === null ? nextFirst : parseDay(dayKeyOf(slot, zone))
+    setPickedDay(slot === null ? null : dayKeyOf(slot, zone))
     setOffset(target.y * 12 + target.m - (nextFirst.y * 12 + nextFirst.m))
   }
 
@@ -255,7 +256,7 @@ export function Booker({ availability }: { availability: CalAvailability }) {
           <p className={s.summary} aria-live="polite">
             {longDate(parseDay(dayKey))}, {timeLabel(slot, timeZone)}
             <span className={s.hostHint}>
-              {(timeZone.split('/').pop() ?? timeZone).replace(/_/g, ' ')},{' '}
+              {(timeZone.split('/').pop() ?? timeZone).replaceAll('_', ' ')},{' '}
               {type.minutes} min
               {timeZone !== hostZone &&
                 ` · ${timeLabel(slot, hostZone)} ${zoneAbbrev(hostZone, slot)} for me`}

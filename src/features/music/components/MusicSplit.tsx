@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react'
 import type { KeyboardEvent } from 'react'
 
+import { cx } from '@/lib/cx'
 import type {
   GenresByPeriod,
   TopCharts as TopChartsData,
@@ -10,12 +11,11 @@ import type {
   TopPeriod,
 } from '@/lib/integrations/lastfm-history-types'
 
-import { cx } from '@/lib/cx'
+import { GenreTreemap } from './GenreTreemap'
+import { KINDS, PERIODS, TopCharts } from './TopCharts'
 
 import s from '../music.module.css'
 import ui from '@/components/ui/ui.module.css'
-import { GenreTreemap } from './GenreTreemap'
-import { KINDS, PERIODS, TopCharts } from './TopCharts'
 
 /** Top charts on the left, the genre map for the same time range on the right. */
 export function MusicSplit({

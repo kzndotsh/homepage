@@ -59,7 +59,7 @@ function wrapLines(text: string, max: number): string[] {
   const lines: string[] = []
   let line = ''
   for (const word of text.split(' ')) {
-    if (line && (line + ' ' + word).length > max) {
+    if (line && `${line} ${word}`.length > max) {
       lines.push(line)
       line = word
     } else line = line ? `${line} ${word}` : word

@@ -1,7 +1,8 @@
 import type { NowPlaying } from '@/lib/integrations/lastfm-history-types'
 
-import s from '../setup.module.css'
 import { WaybarClock } from './WaybarClock'
+
+import s from '../setup.module.css'
 
 // Waybar's mpris module caps the label at 40 characters.
 const MAX_LABEL = 40

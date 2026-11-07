@@ -1,6 +1,7 @@
 import { cvProjects } from '@/content'
 
 import { Toggle } from '../components/Toggle'
+
 import s from '../resume.module.css'
 
 export function ProjectsSection() {

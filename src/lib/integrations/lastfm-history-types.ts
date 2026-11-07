@@ -30,7 +30,12 @@ export type WeeklyStream = {
 export type GenreMap = { tags: { name: string; weight: number }[] }
 
 export type TopPeriod =
-  '7day' | '1month' | '3month' | '6month' | '12month' | 'overall'
+  | '7day'
+  | '1month'
+  | '3month'
+  | '6month'
+  | '12month'
+  | 'overall'
 
 export type PeriodTops = Record<
   TopPeriod,

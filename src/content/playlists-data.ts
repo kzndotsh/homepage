@@ -1,4 +1,4 @@
-import { type StaticImageData } from 'next/image'
+import type { StaticImageData } from 'next/image'
 
 import cratesCover from '@/images/playlists/crates.jpg'
 import deeperCover from '@/images/playlists/deeper.jpg'

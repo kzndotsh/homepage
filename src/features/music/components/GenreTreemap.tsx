@@ -6,11 +6,11 @@ import type { PointerEvent } from 'react'
 import { useElementSize } from '@/hooks/useElementSize'
 import type { GenreMap } from '@/lib/integrations/lastfm-history-types'
 
-import ui from '@/components/ui/ui.module.css'
+import { TIER_FILLS } from '../tiers'
+import { LEADING, PAD, fitLabel, squarify, type Item } from '../treemap'
 
 import s from '../music.module.css'
-import { LEADING, PAD, fitLabel, squarify, type Item } from '../treemap'
-import { TIER_FILLS } from '../tiers'
+import ui from '@/components/ui/ui.module.css'
 
 // Size for the first (server) render only. The map stays invisible until the
 // real box has been measured, so the guess is never seen.

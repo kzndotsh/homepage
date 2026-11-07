@@ -2,8 +2,9 @@
 
 import { useSyncExternalStore } from 'react'
 
-import s from '../home.module.css'
 import { openPalette } from './CommandPalette'
+
+import s from '../home.module.css'
 
 /** The nav button that opens the command menu. Shows ⌘K on a Mac, Ctrl K elsewhere. */
 export function PaletteTrigger() {

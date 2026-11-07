@@ -4,12 +4,13 @@ import { fontVariables } from '@/config/fonts'
 import { cx } from '@/lib/cx'
 
 import { DownloadButton } from './components/DownloadButton'
-import s from './resume.module.css'
 import { EducationSection } from './sections/EducationSection'
 import { ExperienceSection } from './sections/ExperienceSection'
 import { Intro } from './sections/Intro'
 import { ProjectsSection } from './sections/ProjectsSection'
 import { SkillsSection } from './sections/SkillsSection'
+
+import s from './resume.module.css'
 
 /** The resume as a page: scan it, fold open what you care about, or download the PDF. */
 export function ResumePage() {

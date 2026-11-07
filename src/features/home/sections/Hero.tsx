@@ -2,14 +2,14 @@ import Image from 'next/image'
 
 import { Panel } from '@/components/ui/Panel'
 import { person } from '@/content'
-import { cx } from '@/lib/cx'
 import { SkylineBackdrop } from '@/features/skyline/components/SkylineBackdrop'
 import avatar from '@/images/photos/avatar.png'
-
-import ui from '@/components/ui/ui.module.css'
+import { cx } from '@/lib/cx'
 
 import { Clock } from '../components/Clock'
+
 import s from '../home.module.css'
+import ui from '@/components/ui/ui.module.css'
 
 export function Hero() {
   return (

@@ -64,7 +64,7 @@ const KIND: Record<string, GithubEventKind> = {
   DeleteEvent: 'branch',
 }
 
-function headers(token?: string): HeadersInit {
+function headers(token?: string): Record<string, string> {
   return {
     Accept: 'application/vnd.github+json',
     'User-Agent': 'kzn.sh-site',
@@ -202,8 +202,7 @@ function mapEvent(e: RawEvent, details: Map<string, Detail>): GithubEvent {
     const pushed = p.head
       ? details.get(`commit:${e.repo.name}@${p.head}`)
       : undefined
-    const message =
-      firstLine(commits[commits.length - 1]?.message) ?? pushed?.title
+    const message = firstLine(commits.at(-1)?.message) ?? pushed?.title
     action = message ? 'pushed' : null
     title = message ?? (branch ? `pushed to ${branch}` : 'pushed commits')
     sha = pushed?.sha ?? short(p.head)

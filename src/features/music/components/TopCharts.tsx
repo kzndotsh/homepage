@@ -4,18 +4,18 @@ import { useRef } from 'react'
 import type { KeyboardEvent } from 'react'
 import { LuPlay } from 'react-icons/lu'
 
+import { cx } from '@/lib/cx'
+import { formatNumber as nf } from '@/lib/formatNumber'
 import type {
   TopCharts as TopChartsData,
   TopKind,
   TopPeriod,
 } from '@/lib/integrations/lastfm-history-types'
 
-import { cx } from '@/lib/cx'
-import { formatNumber as nf } from '@/lib/formatNumber'
+import { TIER_FILLS, tierForRank } from '../tiers'
 
 import s from '../music.module.css'
 import ui from '@/components/ui/ui.module.css'
-import { TIER_FILLS, tierForRank } from '../tiers'
 
 export const KINDS: { id: TopKind; label: string }[] = [
   { id: 'artists', label: 'Artists' },

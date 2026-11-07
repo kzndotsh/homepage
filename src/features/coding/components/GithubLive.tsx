@@ -6,9 +6,10 @@ import { formatNumber as nf } from '@/lib/formatNumber'
 import type { GithubActivity, GithubEventKind } from '@/lib/integrations/types'
 import { relativeTime } from '@/lib/relativeTime'
 
-import s from '../coding.module.css'
 import { KIND } from '../eventKinds'
 import { buildHeatmap, heatLevel } from '../heatmap'
+
+import s from '../coding.module.css'
 import ui from '@/components/ui/ui.module.css'
 
 function Heatmap({

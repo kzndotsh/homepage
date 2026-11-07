@@ -1,3 +1,4 @@
+import { absolute } from '@/config/site'
 import {
   cv,
   cvProjects,
@@ -9,7 +10,6 @@ import {
   workEntries,
 } from '@/content'
 import { rangeLabel } from '@/content/cvDates'
-import { absolute } from '@/config/site'
 import { DOTFILES_URL, FETCH_INFO } from '@/features/setup/data'
 
 import { bullet, bullets, doc, h1, h2, h3, link, quote } from './md'
@@ -75,7 +75,7 @@ export function homeMarkdown(): string {
     bullets([
       `${link('llms.txt', absolute('/llms.txt'))}: index of this site for language models`,
       `${link('Resume API', absolute('/api/v1/resume'))}: JSON Resume format, read-only, no key needed`,
-      `${link('API index', absolute('/api'))}`,
+      link('API index', absolute('/api')),
     ]),
   )
 }

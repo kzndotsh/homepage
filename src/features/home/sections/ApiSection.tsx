@@ -2,6 +2,7 @@ import { Panel } from '@/components/ui/Panel'
 import { PanelHeader } from '@/components/ui/PanelHeader'
 
 import { ApiPlayground } from '../components/ApiPlayground'
+
 import s from '../home.module.css'
 
 export function ApiSection() {
