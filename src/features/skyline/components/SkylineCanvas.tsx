@@ -41,9 +41,12 @@ function compile(gl: WebGLRenderingContext, type: number, src: string) {
  */
 export function SkylineCanvas({
   src,
+  srcPhone,
   fill = false,
 }: {
   src: string
+  /** A smaller texture used instead of `src` on a phone-width screen. */
+  srcPhone?: string
   /** Cover the positioned parent instead of sizing itself. */
   fill?: boolean
 }) {
@@ -123,8 +126,13 @@ export function SkylineCanvas({
         canvas.dataset.ready = 'true'
       }
     }
-    const loop = () => {
-      draw()
+    // Phones redraw at half rate: the twinkle does not need 60fps and it saves battery.
+    let lastDraw = 0
+    const loop = (now = performance.now()) => {
+      if (!phone.matches || now - lastDraw >= 33) {
+        lastDraw = now
+        draw()
+      }
       if (running) raf = requestAnimationFrame(loop)
     }
 
@@ -135,7 +143,7 @@ export function SkylineCanvas({
       ready = true
       draw()
     }
-    photo.src = src
+    photo.src = fill && srcPhone && phone.matches ? srcPhone : src
 
     const size = () => {
       const r = canvas.getBoundingClientRect()
@@ -169,7 +177,7 @@ export function SkylineCanvas({
       visible.disconnect()
       photo.onload = null
     }
-  }, [src, fill])
+  }, [src, srcPhone, fill])
 
   return (
     <canvas ref={ref} className={fill ? s.fill : s.canvas} aria-hidden="true" />

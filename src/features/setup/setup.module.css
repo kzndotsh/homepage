@@ -1,12 +1,24 @@
 /* Setup: a Sway desktop sketch (square corners, 1px borders, thin gaps, Waybar along the bottom) */
 .dk {
+  /* Skipped while off screen, so the wallpaper only downloads near the viewport. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 480px;
+  position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   border: 1px solid var(--border);
   overflow: hidden;
-  /* Sway: output * background wallpaper.png fill */
-  background: var(--color-tn-bg-deep) url('/ikigai-wallpaper.png') center
-    bottom / cover no-repeat;
+  background: var(--color-tn-bg-deep);
+}
+/* Sway: output * background wallpaper fill. On a pseudo-element because an
+   element's own background paints even while its contents are skipped. */
+.dk::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url('/ikigai-wallpaper.webp') center bottom / cover no-repeat;
 }
 .dkTiles {
   display: grid;

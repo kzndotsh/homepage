@@ -3,7 +3,9 @@ import { preload } from 'react-dom'
 import s from '../skyline.module.css'
 import { SkylineCanvas } from './SkylineCanvas'
 
-const PHOTO = '/skyline/charlotte.jpg'
+const PHOTO = '/skyline/charlotte.webp'
+/** A smaller texture for the phone band, which is drawn at 356px wide. */
+const PHOTO_MOBILE = '/skyline/charlotte-mobile.webp'
 /** One frame of the shader, baked by scripts/skyline-placeholder.py. */
 const STILL = '/skyline/charlotte-dither.png'
 /** The phone band's frame, baked with `--mobile`. */
@@ -28,11 +30,12 @@ export function SkylineBackdrop() {
     fetchPriority: 'high',
     media: '(max-width: 720px)',
   })
-  preload(PHOTO, { as: 'image' })
+  preload(PHOTO, { as: 'image', media: '(min-width: 721px)' })
+  preload(PHOTO_MOBILE, { as: 'image', media: '(max-width: 720px)' })
   return (
     <>
       <div className={s.backdrop}>
-        <SkylineCanvas src={PHOTO} fill />
+        <SkylineCanvas src={PHOTO} srcPhone={PHOTO_MOBILE} fill />
       </div>
       <a className={s.credit} href={CREDIT_URL}>
         Photo: Nan Palmero, CC BY 2.0

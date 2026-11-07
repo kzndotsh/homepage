@@ -29,8 +29,9 @@ Package manager: **npm**. Node `>= 20.9`.
 ```
 ├── alchemy.run.ts          # Cloudflare IaC (Alchemy 0.94 Nextjs resource, R2 cache, images)
 ├── open-next.config.ts     # OpenNext Cloudflare adapter
-├── public/ikigai-wallpaper.png   # real Sway wallpaper from kzndotsh/dotfiles
-├── public/skyline/charlotte.jpg  # CC BY 2.0 night photo (credit in CREDITS.txt and on the page)
+├── public/ikigai-wallpaper.webp  # real Sway wallpaper from kzndotsh/dotfiles (loads only near the viewport)
+├── public/skyline/charlotte.webp # CC BY 2.0 night photo, WebP (+ charlotte-mobile.webp texture); original JPEG in scripts/source/
+│                                 # re-bake the dither stills after changing either (scripts/skyline-placeholder.mjs)
 └── src/
     ├── app/                # routes only: thin pages and API route handlers
     │   ├── page.tsx        # homepage: renders features/home/HomePage
