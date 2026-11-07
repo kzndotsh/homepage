@@ -603,7 +603,7 @@
 }
 .topRank {
   font-size: 13px;
-  color: var(--faint);
+  color: var(--subtle);
 }
 .topName {
   display: flex;

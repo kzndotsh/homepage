@@ -48,6 +48,7 @@
   --color-tn-fg-muted: #8a93bd; /* derived: AA-safe between fg-dark and dark5 */
   --color-tn-dark5: #737aa2;
   --color-tn-comment: #565f89;
+  --color-tn-fg-subtle: #7a83ad; /* derived: 4.6:1 on --color-tn-bg, for small secondary text */
 
   /* Accents */
   --color-tn-blue: #7aa2f7;
@@ -88,6 +89,9 @@
   --color-fg-secondary: var(--color-tn-fg-dark); /* body copy */
   --color-fg-muted: var(--color-tn-fg-muted); /* captions, meta (AA) */
   --color-fg-faint: var(--color-tn-comment); /* decoration only, never body */
+  --color-fg-subtle: var(
+    --color-tn-fg-subtle
+  ); /* quiet labels and dates (AA) */
 
   /* ── Accent ───────────────────────────────────────────────────────── */
   --color-accent: var(--color-tn-blue);

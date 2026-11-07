@@ -76,7 +76,7 @@ export function MusicSplit({
               type="button"
               className={ui.filterMin}
               aria-pressed={period === p.id}
-              aria-label={p.label}
+              aria-label={`${p.short}, ${p.label}`}
               onClick={() => setPeriod(p.id)}
             >
               <span className={s.periodFull}>{p.label}</span>

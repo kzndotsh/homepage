@@ -34,12 +34,7 @@ export function CopyTile({
   }
 
   return (
-    <button
-      type="button"
-      className={s.sign}
-      onClick={copy}
-      aria-label={done ? `${name} username copied` : `Copy ${name} username`}
-    >
+    <button type="button" className={s.sign} onClick={copy}>
       <span
         className={s.signIcon}
         style={{
@@ -51,6 +46,7 @@ export function CopyTile({
       </span>
       <span className={s.signName}>{name}</span>
       <span className={s.signNote}>{done ? 'Copied' : note}</span>
+      {!done && <span className="sr-only">, click to copy</span>}
       <svg
         className={s.signCopy}
         data-done={done}

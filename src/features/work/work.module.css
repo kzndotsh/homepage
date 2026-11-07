@@ -29,7 +29,7 @@
   margin: 4px 0 0;
   font-size: 12.5px;
   line-height: 1.5;
-  color: var(--faint);
+  color: var(--subtle);
   font-variant-numeric: tabular-nums;
 }
 .xlBody {
@@ -177,7 +177,7 @@
   height: 16px;
   margin-left: 170px;
   font-size: 11px;
-  color: var(--faint);
+  color: var(--subtle);
 }
 .ganttAxis span {
   position: absolute;
@@ -375,7 +375,7 @@ button.ganttRow[data-active='true'] .ganttTrack {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--faint);
+  color: var(--subtle);
 }
 .fpGrid {
   display: grid;

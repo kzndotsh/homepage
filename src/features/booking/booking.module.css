@@ -97,7 +97,7 @@
 }
 .day:disabled {
   background: transparent;
-  color: var(--faint);
+  color: var(--subtle);
 }
 .day[aria-pressed='true'] {
   background: var(--text);
@@ -160,7 +160,7 @@
   border-color: var(--border2);
 }
 .slot:disabled {
-  color: var(--faint);
+  color: var(--subtle);
 }
 .slot[aria-pressed='true'] {
   border-color: var(--text);
@@ -329,7 +329,7 @@
   display: block;
   margin-top: 2px;
   white-space: nowrap;
-  color: var(--faint);
+  color: var(--subtle);
   font-size: 11.5px;
 }
 
@@ -337,7 +337,7 @@
   line-height: 1;
   /* Same line as the summary, so choosing a zone never adds a row. */
   margin-left: 10px;
-  color: var(--faint);
+  color: var(--subtle);
   font-size: 13px;
   white-space: nowrap;
 }
