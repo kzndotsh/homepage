@@ -9,8 +9,8 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "tsx --env-file=.env alchemy.run.ts --stage production",
-    "deploy:preview": "tsx --env-file=.env alchemy.run.ts",
+    "deploy": "rm -rf .next/cache/fetch-cache && tsx --env-file=.env alchemy.run.ts --stage production",
+    "deploy:preview": "rm -rf .next/cache/fetch-cache && tsx --env-file=.env alchemy.run.ts",
     "destroy": "tsx --env-file=.env alchemy.run.ts --stage production --destroy"
   },
   "type": "module",
