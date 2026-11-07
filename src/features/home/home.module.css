@@ -111,6 +111,9 @@
 .navlinks a:hover {
   color: var(--text);
 }
+.navShort {
+  display: none;
+}
 @media (max-width: 380px) {
   .actions {
     gap: 8px;
@@ -133,6 +136,12 @@
   }
   .navlinks a:last-child {
     padding-right: 28px;
+  }
+  .navFull {
+    display: none;
+  }
+  .navShort {
+    display: inline;
   }
   .navIn {
     gap: 12px;
@@ -324,6 +333,17 @@
   }
 }
 @media (max-width: 720px) {
+  /* Sit near the top and stay short, so the on-screen keyboard does not cover the list. */
+  .cpOverlay {
+    padding: 12px 12px 12px;
+  }
+  .cpDialog {
+    max-height: min(520px, 58dvh);
+  }
+  /* iOS zooms the page when it focuses an input under 16px. */
+  .cpInput {
+    font-size: 16px;
+  }
   .cpTriggerText,
   .cpTrigger .cpKbdGroup {
     display: none;
