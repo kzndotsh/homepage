@@ -227,7 +227,8 @@
   padding: 0 4px;
   border-radius: 4px;
   background: var(--hover);
-  color: var(--muted);
+  /* --muted on this fill is just under 4.5:1; the body colour is 6:1 */
+  color: var(--body);
   font-family: inherit;
   font-size: 12px;
   font-weight: 500;
