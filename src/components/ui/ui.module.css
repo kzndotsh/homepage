@@ -309,17 +309,29 @@
 .scrollMask[data-scroll] {
   -webkit-mask-image: linear-gradient(
     to right,
-    transparent,
+    rgb(0 0 0 / 0.45),
+    rgb(0 0 0 / 0.6) calc(var(--fl) * 0.25),
+    rgb(0 0 0 / 0.75) calc(var(--fl) * 0.5),
+    rgb(0 0 0 / 0.91) calc(var(--fl) * 0.75),
     #000 var(--fl),
     #000 calc(100% - var(--fr)),
-    transparent
+    rgb(0 0 0 / 0.91) calc(100% - var(--fr) * 0.75),
+    rgb(0 0 0 / 0.75) calc(100% - var(--fr) * 0.5),
+    rgb(0 0 0 / 0.6) calc(100% - var(--fr) * 0.25),
+    rgb(0 0 0 / 0.45)
   );
   mask-image: linear-gradient(
     to right,
-    transparent,
+    rgb(0 0 0 / 0.45),
+    rgb(0 0 0 / 0.6) calc(var(--fl) * 0.25),
+    rgb(0 0 0 / 0.75) calc(var(--fl) * 0.5),
+    rgb(0 0 0 / 0.91) calc(var(--fl) * 0.75),
     #000 var(--fl),
     #000 calc(100% - var(--fr)),
-    transparent
+    rgb(0 0 0 / 0.91) calc(100% - var(--fr) * 0.75),
+    rgb(0 0 0 / 0.75) calc(100% - var(--fr) * 0.5),
+    rgb(0 0 0 / 0.6) calc(100% - var(--fr) * 0.25),
+    rgb(0 0 0 / 0.45)
   );
 }
 @media (hover: hover) {
@@ -391,19 +403,31 @@
 @media (max-width: 560px) {
   /* a phone swipes, so no arrows; the track shows even before the script runs */
   .scrollMask {
-    --fr: 28px;
+    --fr: 24px;
     -webkit-mask-image: linear-gradient(
       to right,
       transparent,
+      rgb(0 0 0 / 0.16) calc(var(--fl) * 0.25),
+      rgb(0 0 0 / 0.75) calc(var(--fl) * 0.5),
+      rgb(0 0 0 / 0.91) calc(var(--fl) * 0.75),
       #000 var(--fl),
       #000 calc(100% - var(--fr)),
+      rgb(0 0 0 / 0.91) calc(100% - var(--fr) * 0.75),
+      rgb(0 0 0 / 0.75) calc(100% - var(--fr) * 0.5),
+      rgb(0 0 0 / 0.16) calc(100% - var(--fr) * 0.25),
       transparent
     );
     mask-image: linear-gradient(
       to right,
       transparent,
+      rgb(0 0 0 / 0.16) calc(var(--fl) * 0.25),
+      rgb(0 0 0 / 0.75) calc(var(--fl) * 0.5),
+      rgb(0 0 0 / 0.91) calc(var(--fl) * 0.75),
       #000 var(--fl),
       #000 calc(100% - var(--fr)),
+      rgb(0 0 0 / 0.91) calc(100% - var(--fr) * 0.75),
+      rgb(0 0 0 / 0.75) calc(100% - var(--fr) * 0.5),
+      rgb(0 0 0 / 0.16) calc(100% - var(--fr) * 0.25),
       transparent
     );
   }

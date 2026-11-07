@@ -53,7 +53,7 @@ export function ScrollRow({
         ? Math.min(1, el.clientWidth / el.scrollWidth)
         : 1
       const at = fits ? 0 : el.scrollLeft / max
-      const more = (left: number) => (!fits && left > 4 ? '28px' : '0px')
+      const more = (left: number) => (!fits && left > 4 ? '24px' : '0px')
       root.style.setProperty('--tw', `${thumb * 100}%`)
       root.style.setProperty('--tx', `${at * (1 - thumb) * 100}%`)
       el.style.setProperty('--fl', more(el.scrollLeft))
