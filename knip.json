@@ -1,0 +1,19 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "entry": [
+    "alchemy.run.ts",
+    "open-next.config.ts",
+    "scripts/*.mjs",
+    "oxlint.config.ts",
+    "oxfmt.config.ts"
+  ],
+  "ignore": ["src/app/demo/**"],
+  "ignoreDependencies": [
+    "server-only",
+    "sharp",
+    "oxlint-tsgolint",
+    "ultracite",
+    "oxlint-plugin-react-doctor"
+  ],
+  "ignoreExportsUsedInFile": { "interface": true, "type": true }
+}

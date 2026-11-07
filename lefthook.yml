@@ -1,0 +1,14 @@
+# Fast checks on staged files only. Install with `npx lefthook install` (the `prepare` script does it).
+pre-commit:
+  parallel: false
+  skip:
+    - merge
+    - rebase
+  commands:
+    format:
+      glob: '*.{ts,tsx,js,mjs,cjs,json,jsonc,css,md,yml,yaml}'
+      run: npx oxfmt --no-error-on-unmatched-pattern {staged_files}
+      stage_fixed: true
+    lint:
+      glob: '*.{ts,tsx,js,mjs}'
+      run: npx oxlint {staged_files}

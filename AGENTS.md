@@ -7,7 +7,10 @@ Personal homepage for Logan (Charlotte, NC). Single-page site, forced dark, in t
 ```bash
 npm run dev            # Next.js dev server
 npm run build          # next build
-npm run lint           # eslint
+npm run lint           # oxlint (type-aware); lint:fix applies safe fixes
+npm run format         # oxfmt; format:check to verify
+npm run check          # lint + format:check + typecheck
+npm run knip           # unused files, exports and dependencies
 npm run typecheck      # tsc --noEmit
 npm run preview        # OpenNext local Workers preview
 npm run deploy         # Alchemy production (Worker kzn-sh, domain kzn.sh)
@@ -60,26 +63,13 @@ Package manager: **npm**. Node `>= 20.9`.
 
 Conventions:
 
-- A feature section is a server component wrapped in `Panel`; interactive pieces
-  are small client components in `components/`. Pure logic (layout math, date
-  math, grouping) lives in plain `.ts` next to them so it stays testable.
-- CSS Modules are per feature. A class used by more than one feature belongs in
-  `components/ui/ui.module.css`. A selector must never reference classes from two
-  modules, and rules in different modules must not fight over the same property
-  on one element (module load order is not guaranteed).
-- `llms.txt` follows llmstxt.org. Its pages and the Markdown twins (`/index.md`, `/resume.md`)
-  are built from `src/content` by `lib/llms`, so they cannot drift from the site. A request
-  with `Accept: text/markdown` to `/` or `/resume` is rewritten to the twin (`next.config.mjs`).
-  Add a page to `llms.txt` and the sitemap when you add a route. Production code must not
-  import from `src/app/demo`.
-- Every integration in `lib/integrations` resolves to `null` on missing
-  credentials or failure; sections render a fallback.
-- Integration env vars: `GITHUB_TOKEN`, `LASTFM_TOKEN`, `SPOTIFY_CLIENT_ID`,
-  `SPOTIFY_CLIENT_SECRET`, `HARDCOVER_TOKEN`, `CAL_TOKEN`, `TRAKT_CLIENT_ID` (+ optional
-  `TRAKT_USERNAME`). Secrets are bound in `alchemy.run.ts`.
+- A feature section is a server component wrapped in `Panel`; interactive pieces are small client components in `components/`. Pure logic (layout math, date math, grouping) lives in plain `.ts` next to them so it stays testable.
+- CSS Modules are per feature. A class used by more than one feature belongs in `components/ui/ui.module.css`. A selector must never reference classes from two modules, and rules in different modules must not fight over the same property on one element (module load order is not guaranteed).
+- `llms.txt` follows llmstxt.org. Its pages and the Markdown twins (`/index.md`, `/resume.md`) are built from `src/content` by `lib/llms`, so they cannot drift from the site. A request with `Accept: text/markdown` to `/` or `/resume` is rewritten to the twin (`next.config.mjs`). Add a page to `llms.txt` and the sitemap when you add a route. Production code must not import from `src/app/demo`.
+- Every integration in `lib/integrations` resolves to `null` on missing credentials or failure; sections render a fallback.
+- Integration env vars: `GITHUB_TOKEN`, `LASTFM_TOKEN`, `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, `HARDCOVER_TOKEN`, `CAL_TOKEN`, `TRAKT_CLIENT_ID` (+ optional `TRAKT_USERNAME`). Secrets are bound in `alchemy.run.ts`.
 
-The site is a single page with its own anchor nav (`features/home/components/SiteNav.tsx`); the old multi-page site (About, Projects, Playlists, Uses, Stats, Fetch) was removed.
-Playlist copy lives in `src/content/playlists-data.ts` (from the Sound Therapy Notion list) and is exposed by `src/content/playlists.ts`. The always-shuffle note (`playlistsIntro`) is part of the playlists section intro — keep it.
+The site is a single page with its own anchor nav (`features/home/components/SiteNav.tsx`); the old multi-page site (About, Projects, Playlists, Uses, Stats, Fetch) was removed. Playlist copy lives in `src/content/playlists-data.ts` (from the Sound Therapy Notion list) and is exposed by `src/content/playlists.ts`. The always-shuffle note (`playlistsIntro`) is part of the playlists section intro — keep it.
 
 ## Theme & content
 
@@ -105,7 +95,7 @@ Playlist copy lives in `src/content/playlists-data.ts` (from the Sound Therapy N
 - **Keep `/` static**: its `revalidate` only works while nothing in the render path is dynamic. A `cache: 'no-store'` fetch (or `cookies()`/`headers()`) turns the page into a per-request render. The integration fetchers therefore pass no Next cache option at all (an uncached plain `fetch` leaves the page static); booking's `no-store` is in a server action, which is fine.
 - **The 50-request limit**: on the Workers Free plan one invocation may make only 50 outgoing requests (R2/KV/Cache calls count too). Fetching every integration in one render takes ~180, so sections silently went missing in production. The homepage therefore never fetches in its own render: `src/lib/snapshots` keeps each source's result as a JSON snapshot in the R2 bucket (`snapshots/<name>.json`), and `snapshot(name)` returns it while fresh. When it is stale it POSTs to `/api/internal/refresh/<name>` through the Worker's own service binding (`WORKER_SELF_REFERENCE`), which runs as a separate invocation with a fresh budget, stores the result and returns it. Rules: one source's compute must stay well under 50 requests (the genre map keeps artist tags in the `lastfm-tags` snapshot and does at most 30 new lookups per round, repeating while `partial`); a failed refresh never overwrites the last good snapshot; add a source in `sources.ts` and read it with `snapshot()`. `next build` skips snapshots, and `next dev` computes in-process. The refresh route answers 404 without the `REFRESH_SECRET` header (derived from `ALCHEMY_PASSWORD` in `alchemy.run.ts`).
 - **Secrets**: `npm run deploy` and `deploy:preview` run `tsx --env-file=.env` so Alchemy sees the tokens and `ALCHEMY_PASSWORD` and binds them as Worker secrets. Without the flag no secrets are bound (OpenNext still bundles `.env`, which hid this).
-- **Versions**: `@opennextjs/cloudflare` needs `next >= 16.4.5` and `wrangler ^4.148`; keep them moving together. Do not take `typescript` 7 or `eslint` 10 yet: `typescript-eslint` (via `eslint-config-next`) caps TypeScript below 6.1.
+- **Versions**: `@opennextjs/cloudflare` needs `next >= 16.4.5` and `wrangler ^4.148`; keep them moving together. ESLint and Prettier are gone: lint is oxlint (`oxlint.config.ts`, the Ultracite core/react/next presets plus type-aware rules through `oxlint-tsgolint`) and formatting is oxfmt (`oxfmt.config.ts`, which keeps the old no-semicolon, single-quote style and sorts imports and Tailwind classes). Style-only rules are off and the numerous real-but-minor ones are warnings: burn them down, do not add new ones. A lefthook pre-commit hook formats and lints staged files. Removing `eslint-config-next` also lifts the old cap that kept `typescript` below 6.1.
 - **State**: `.alchemy/` is gitignored (secrets). `wrangler.jsonc` is generated by Alchemy — gitignored; do not hand-edit as source of truth.
 - First-time domain bind fails if `kzn.sh` still has Pages/DNS records Cloudflare considers “externally managed”. Remove the hostname from the Pages project first.
 

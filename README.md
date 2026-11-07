@@ -18,14 +18,15 @@ It is a single-page site, forced dark, in the Tokyo Night palette.
 
 ## Stack
 
-|                |                                                                                              |
-| -------------- | -------------------------------------------------------------------------------------------- |
-| Framework      | Next.js 16 (App Router) and React 19, strict TypeScript                                      |
-| Styling        | Tailwind CSS v4 for tokens, CSS Modules per feature, Headless UI                             |
-| Hosting        | A Cloudflare Worker through [OpenNext](https://opennext.js.org/cloudflare)                   |
-| Infrastructure | [Alchemy](https://alchemy.run) 0.94 (`alchemy.run.ts`)                                       |
-| Storage        | R2 for the incremental cache and the data snapshots, a Durable Object queue for revalidation |
-| Images         | The Workers `IMAGES` binding behind `/_next/image`                                           |
+|  |  |
+| --- | --- |
+| Framework | Next.js 16 (App Router) and React 19, strict TypeScript |
+| Styling | Tailwind CSS v4 for tokens, CSS Modules per feature, Headless UI |
+| Tooling | oxlint (type-aware) and oxfmt via Ultracite presets, knip, lefthook |
+| Hosting | A Cloudflare Worker through [OpenNext](https://opennext.js.org/cloudflare) |
+| Infrastructure | [Alchemy](https://alchemy.run) 0.94 (`alchemy.run.ts`) |
+| Storage | R2 for the incremental cache and the data snapshots, a Durable Object queue for revalidation |
+| Images | The Workers `IMAGES` binding behind `/_next/image` |
 
 ## Getting started
 
@@ -41,22 +42,25 @@ Every integration is optional. With no token its section shows a fallback instea
 
 ### Environment
 
-| Variable                                     | For                                                                    |
-| -------------------------------------------- | ---------------------------------------------------------------------- |
-| `GITHUB_TOKEN`                               | Contribution calendar and private activity (falls back to public data) |
-| `LASTFM_TOKEN`                               | Scrobbles, charts, genres                                              |
-| `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET` | Playlist stats                                                         |
-| `HARDCOVER_TOKEN`                            | Books                                                                  |
-| `TRAKT_CLIENT_ID`, `TRAKT_USERNAME`          | Watching                                                               |
-| `CAL_TOKEN`                                  | Live booking slots                                                     |
-| `ALCHEMY_PASSWORD`                           | Deploys only. Encrypts the secrets Alchemy stores; keep it             |
+| Variable | For |
+| --- | --- |
+| `GITHUB_TOKEN` | Contribution calendar and private activity (falls back to public data) |
+| `LASTFM_TOKEN` | Scrobbles, charts, genres |
+| `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET` | Playlist stats |
+| `HARDCOVER_TOKEN` | Books |
+| `TRAKT_CLIENT_ID`, `TRAKT_USERNAME` | Watching |
+| `CAL_TOKEN` | Live booking slots |
+| `ALCHEMY_PASSWORD` | Deploys only. Encrypts the secrets Alchemy stores; keep it |
 
 ### Scripts
 
 ```bash
 npm run dev             # dev server
 npm run build           # next build
-npm run lint            # eslint
+npm run lint            # oxlint
+npm run format          # oxfmt
+npm run check           # lint, format check and typecheck
+npm run knip            # unused files, exports and dependencies
 npm run typecheck       # tsc --noEmit
 npm run preview         # build with OpenNext and preview locally on Workers
 npm run deploy          # production: Worker kzn-sh on kzn.sh
