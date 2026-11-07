@@ -23,6 +23,8 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      # next-env.d.ts is gitignored; without it image imports have no types and the type-aware lint fails.
+      - run: npx next typegen
       - run: npm run check
       - run: npx next build
 
