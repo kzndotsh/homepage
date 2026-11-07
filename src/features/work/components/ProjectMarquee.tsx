@@ -67,7 +67,6 @@ export function ProjectMarquee({ entries }: { entries: WorkEntry[] }) {
   useEffect(() => {
     const el = track.current
     if (!el) return
-    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
 
     const copy = () => {
       const a = el.children[0] as HTMLElement | undefined
@@ -75,7 +74,9 @@ export function ProjectMarquee({ entries }: { entries: WorkEntry[] }) {
       return a && b ? b.offsetLeft - a.offsetLeft : 0
     }
 
-    let pos = copy()
+    // Measured on resize only: reading offsetLeft every frame forced a layout.
+    let width = copy()
+    let pos = width
     el.scrollLeft = pos
     let rate = 1
     let hover = false
@@ -102,7 +103,6 @@ export function ProjectMarquee({ entries }: { entries: WorkEntry[] }) {
     const frame = (now: number) => {
       const dt = Math.min((now - last) / 1000, 0.05)
       last = now
-      const width = copy()
       // Something else moved it (drag, swipe, wheel): follow it.
       if (Math.abs(el.scrollLeft - pos) > 3) pos = el.scrollLeft
       if (Math.abs(fling) > 8) {
@@ -112,7 +112,7 @@ export function ProjectMarquee({ entries }: { entries: WorkEntry[] }) {
       } else {
         fling = 0
       }
-      const target = hover || held || reduced || !visible || fling !== 0 ? 0 : 1
+      const target = hover || held || !visible || fling !== 0 ? 0 : 1
       rate += (target - rate) * Math.min(1, dt * EASE)
       if (rate > 0.002) {
         pos += SPEED * rate * dt
@@ -213,9 +213,11 @@ export function ProjectMarquee({ entries }: { entries: WorkEntry[] }) {
     el.addEventListener('pointercancel', up)
     el.addEventListener('wheel', wheel, { passive: true })
     const onResize = () => {
-      pos = copy() + (el.scrollLeft % (copy() || 1))
+      width = copy()
+      pos = width + (el.scrollLeft % (width || 1))
     }
-    window.addEventListener('resize', onResize)
+    const resize = new ResizeObserver(onResize)
+    resize.observe(el)
 
     return () => {
       cancelAnimationFrame(raf)
@@ -231,7 +233,7 @@ export function ProjectMarquee({ entries }: { entries: WorkEntry[] }) {
       el.removeEventListener('pointerup', up)
       el.removeEventListener('pointercancel', up)
       el.removeEventListener('wheel', wheel)
-      window.removeEventListener('resize', onResize)
+      resize.disconnect()
     }
   }, [entries.length])
 
