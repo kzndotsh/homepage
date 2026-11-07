@@ -1,5 +1,4 @@
-import Link from 'next/link'
-
+import { BrandLink } from './BrandLink'
 import { PaletteTrigger } from './PaletteTrigger'
 
 import s from '../home.module.css'
@@ -17,14 +16,7 @@ export function SiteNav() {
   return (
     <header className={s.nav}>
       <div className={s.navIn}>
-        <Link
-          href="/"
-          prefetch={false}
-          className={s.brand}
-          aria-label="kzn.sh, back to the top"
-        >
-          kzn.sh
-        </Link>
+        <BrandLink className={s.brand}>kzn.sh</BrandLink>
         <nav aria-label="Sections" className={s.navlinks}>
           {SECTIONS.map((section) => {
             const [id, label] = section

@@ -12,6 +12,7 @@ import { cx } from '@/lib/cx'
 import { snapshot } from '@/lib/snapshots'
 
 import { CommandPalette } from './components/CommandPalette'
+import { ScrollSpy } from './components/ScrollSpy'
 import { SiteFooter } from './components/SiteFooter'
 import { SiteNav } from './components/SiteNav'
 import { ApiSection } from './sections/ApiSection'
@@ -54,6 +55,7 @@ export async function HomePage() {
     <div className={cx(s.root, fontVariables)}>
       <SiteNav />
       <CommandPalette />
+      <ScrollSpy />
       <div className={s.wrap}>
         <main className={s.grid}>
           <Hero />
