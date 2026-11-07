@@ -189,13 +189,13 @@ export function GithubLive({ data }: { data: GithubActivity }) {
                   </svg>
                 </span>
                 <span className={s.evTitle}>
-                  {e.action && (
-                    <span className={s.evAction}>
-                      {e.action}
-                      <span aria-hidden="true"> /</span>{' '}
-                    </span>
-                  )}
                   <a href={e.url} title={e.title}>
+                    {e.action && (
+                      <span className={s.evAction}>
+                        {e.action}
+                        <span aria-hidden="true"> /</span>{' '}
+                      </span>
+                    )}
                     {e.title}
                   </a>
                 </span>
