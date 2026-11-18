@@ -47,7 +47,7 @@ export function SiteFooter() {
         <div className={s.footRight}>
           <a className={s.footSource} href={site.repo}>
             <SiGithub aria-hidden="true" />
-            View source
+            <span className={s.footSourceLabel}>View source</span>
           </a>
           {SHA && (
             <a
